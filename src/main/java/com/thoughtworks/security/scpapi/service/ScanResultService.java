@@ -1,10 +1,14 @@
 package com.thoughtworks.security.scpapi.service;
 
 
-import com.thoughtworks.security.scpapi.entity.ScanResultEntity;
+import com.thoughtworks.security.scpapi.domain.ScanResult;
 
 import java.util.List;
 
 public interface ScanResultService {
-    List<ScanResultEntity> findByAppId(Integer appId);
+    List<ScanResult> findByAppId(Integer appId);
+
+    ScanResult findByTaskId(Integer taskIn);
+
+    ScanResult findById(Integer resultId);
 }
