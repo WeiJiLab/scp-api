@@ -1,0 +1,19 @@
+spring:
+  application:
+    name: scp-api
+  profiles:
+    active: local
+  flyway:
+    locations: classpath:db/migration
+    table: flyway_schema_history
+
+server:
+  port: 8081
+
+# ===== 自定义swagger配置 ===== #
+swagger:
+  enable: true
+  application-name: ${spring.application.name}
+  application-version: 1.0
+  application-description: security check platform
+  try-host: http://localhost:${server.port}

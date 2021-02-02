@@ -1,0 +1,150 @@
+plugins {
+	id 'org.springframework.boot' version '2.4.1'
+	id 'io.spring.dependency-management' version '1.0.10.RELEASE'
+	id 'java'
+    id 'checkstyle'
+    id 'jacoco'
+	id "org.flywaydb.flyway" version "7.5.0"
+}
+
+group = 'com.thoughtworks.security'
+version = '0.0.1-SNAPSHOT'
+sourceCompatibility = '11'
+//apply plugin: 'org.flywaydb.flyway'
+configurations {
+	compileOnly {
+		extendsFrom annotationProcessor
+	}
+}
+
+repositories {
+	mavenCentral()
+	maven { url 'https://repo.spring.io/milestone' }
+}
+
+ext {
+	set('springCloudVersion', "2020.0.0")
+}
+
+checkstyleMain {
+	maxWarnings = 0
+	maxErrors = 0
+}
+
+checkstyleTest {
+	maxWarnings = 0
+	maxErrors = 0
+}
+
+jacoco {
+	toolVersion = "0.8.5"
+}
+
+jacocoTestReport {
+	reports {
+		xml.enabled false
+		csv.enabled false
+		html.destination file("${buildDir}/jacocoHtml")
+
+		afterEvaluate {
+			classDirectories.setFrom(files(classDirectories.files.collect {
+				fileTree(dir: it,
+						exclude: [
+								'com/thoughtworks/security/scpapi/ScpApiApplication.class'
+						]
+				)
+			}))
+		}
+	}
+}
+
+jacocoTestCoverageVerification {
+	violationRules {
+		rule {
+			element = 'CLASS'
+			limit {
+				counter = 'LINE'
+				minimum = 0.0
+			}
+			excludes = [
+					'com.thoughtworks.security.scpapi.ScpApiApplication'
+			]
+		}
+	}
+}
+flyway {
+	url = 'jdbc:mysql://localhost:3306'
+	user = 'root'
+	password = '12345678'
+	schemas = ['scp']
+}
+dependencies {
+	implementation 'org.springframework.boot:spring-boot-starter-actuator'
+	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+	implementation 'org.springframework.boot:spring-boot-starter-validation'
+	implementation 'org.springframework.boot:spring-boot-starter-web'
+	implementation 'org.flywaydb:flyway-core'
+//	implementation 'org.springframework.cloud:spring-cloud-sleuth-zipkin'
+//	implementation 'org.springframework.cloud:spring-cloud-starter-sleuth'
+	implementation 'io.springfox:springfox-boot-starter:3.0.0'
+	implementation platform('com.amazonaws:aws-java-sdk-bom:1.11.939')
+	implementation 'com.amazonaws:aws-java-sdk-s3'
+	compile group: 'org.flywaydb', name: 'flyway-core', version: '7.5.0'
+//	implementation platform('software.amazon.awssdk:bom:2.15.0')
+//	implementation 'software.amazon.awssdk:kinesis'
+	//classpath(group: 'org.flywaydb', name: 'flyway-gradle-plugin', version: "4.0.3")
+	compileOnly 'org.projectlombok:lombok'
+	runtimeOnly 'com.h2database:h2'
+	runtimeOnly 'io.micrometer:micrometer-registry-prometheus'
+	runtimeOnly 'mysql:mysql-connector-java'
+	annotationProcessor 'org.projectlombok:lombok'
+	testImplementation 'org.springframework.boot:spring-boot-starter-test'
+
+//	compile('org.springframework.boot:spring-boot-starter-data-jpa')
+//	compile('org.springframework.boot:spring-boot-starter-web')
+//	runtime('mysql:mysql-connector-java')
+//	compile('org.springframework.boot:spring-boot-starter-tomcat')
+//	testCompile('org.springframework.boot:spring-boot-starter-test')
+//	compile "org.flywaydb:flyway-core:${flywayVersion}"
+
+	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+	implementation 'org.springframework.boot:spring-boot-starter-web'
+	runtimeOnly 'mysql:mysql-connector-java'
+	testImplementation('org.springframework.boot:spring-boot-starter-test') {
+		exclude group: 'org.junit.vintage', module: 'junit-vintage-engine'
+	}
+
+}
+
+dependencyManagement {
+	imports {
+		mavenBom "org.springframework.cloud:spring-cloud-dependencies:${springCloudVersion}"
+	}
+}
+
+test {
+	useJUnitPlatform()
+	exclude "**/integration/**"
+
+	testLogging {
+		events "passed", "skipped", "failed"
+	}
+}
+
+task integrationTest(type: Test) {
+	useJUnitPlatform()
+	include "**/integration/**"
+
+	testLogging {
+		events "passed", "skipped", "failed"
+	}
+	mustRunAfter test
+}
+
+test.finalizedBy jacocoTestReport
+check.dependsOn jacocoTestCoverageVerification
+check.dependsOn integrationTest
+
+bootRun {
+	jvmArgs = ["-agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=*:5005"]
+}
