@@ -13,7 +13,7 @@ public class TaskSearchRequest {
     private Integer appId;
     private Integer toolId;
     private Integer projectId;
-    private Integer useCaseId;
+    private Long useCaseId;
 
     private ScanTaskEnum status;
 }
