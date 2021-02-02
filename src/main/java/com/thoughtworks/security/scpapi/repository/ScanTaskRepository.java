@@ -15,9 +15,9 @@ public interface ScanTaskRepository extends JpaRepository<ScanTaskEntity, Intege
 
     List<ScanTaskEntity> findAllByToolId(Integer toolId);
 
-    List<ScanTaskEntity> findAllByUseCaseId(Integer useCaseId);
+    List<ScanTaskEntity> findAllByUseCaseId(Long useCaseId);
 
-    List<ScanTaskEntity> findAllByUseCaseIdIn(Collection<Integer> useCaseId);
+    List<ScanTaskEntity> findAllByUseCaseIdIn(Collection<Long> useCaseId);
 
     List<ScanTaskEntity> findAllByStatus(ScanTaskEnum status);
 }

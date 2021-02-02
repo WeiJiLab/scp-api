@@ -18,7 +18,7 @@ public interface ScanTaskService {
 
     List<ScanTaskEntity> getScanTaskByToolIs(Integer toolId);
 
-    List<ScanTaskEntity> getScanTaskByUseCaseId(Integer sseCaseId);
+    List<ScanTaskEntity> getScanTaskByUseCaseId(Long sseCaseId);
 
     List<ScanTaskEntity> getScanTaskByProjectId(Integer projectId);
 

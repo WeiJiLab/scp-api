@@ -95,7 +95,7 @@ public class ScanTaskServiceImpl implements ScanTaskService {
     }
 
     @Override
-    public List<ScanTaskEntity> getScanTaskByUseCaseId(Integer useCaseId) {
+    public List<ScanTaskEntity> getScanTaskByUseCaseId(Long useCaseId) {
         return scanTaskRepository.findAllByUseCaseId(useCaseId);
     }
 
