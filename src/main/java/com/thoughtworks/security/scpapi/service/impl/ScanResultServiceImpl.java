@@ -53,7 +53,7 @@ public class ScanResultServiceImpl implements ScanResultService {
     }
 
     @Override
-    public ScanResult findById(Integer resultId) {
+    public ScanResult findById(Long resultId) {
         ScanResultEntity scanResultEntity = scanResultRepository.findById(resultId)
                 .orElseThrow(ScanResultNotFoundException::new);
         return generateScanResult(scanResultEntity);

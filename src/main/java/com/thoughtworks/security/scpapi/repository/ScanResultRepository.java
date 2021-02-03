@@ -7,7 +7,7 @@ import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
 
-public interface ScanResultRepository extends JpaRepository<ScanResultEntity, Integer> {
+public interface ScanResultRepository extends JpaRepository<ScanResultEntity, Long> {
 
     List<ScanResultEntity> findAllByScanTaskIdIn(Collection<Integer> scanTaskId);
 
