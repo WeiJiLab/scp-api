@@ -22,7 +22,7 @@ public class ScanResultController {
 
     @ApiOperation(value = "通过 ResultId 查询扫描任务结果")
     @GetMapping("/{resultId}")
-    public ScanResult findById(@PathVariable Integer resultId) {
+    public ScanResult findById(@PathVariable Long resultId) {
         return scanResultService.findById(resultId);
     }
 

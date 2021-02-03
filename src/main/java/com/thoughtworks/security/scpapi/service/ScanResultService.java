@@ -10,5 +10,5 @@ public interface ScanResultService {
 
     ScanResult findByTaskId(Integer taskIn);
 
-    ScanResult findById(Integer resultId);
+    ScanResult findById(Long resultId);
 }
