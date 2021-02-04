@@ -6,3 +6,20 @@ resource "aws_s3_bucket" "inspec-report-bucket" {
     enabled = false
   }
 }
+
+resource "aws_s3_bucket_policy" "inspec-report-bucket-policy" {
+  bucket = aws_s3_bucket.inspec-report-bucket.id
+
+  policy = <<POLICY
+{
+  "Statement": [
+    {
+      "Effect": "Allow",
+      "Principal": "*",
+      "Action": "s3:GetObject",
+      "Resource": "arn:aws:s3:::sss-inspec-report-bucket-ap-northeast-1/*"
+    }
+  ]
+}
+POLICY
+}
