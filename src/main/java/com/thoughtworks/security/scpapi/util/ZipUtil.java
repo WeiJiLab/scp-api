@@ -81,7 +81,7 @@ public class ZipUtil {
             String zipEntryName = entry.getName();
 
             InputStream in = zip.getInputStream(entry);
-            String outPath = (descDir + zipEntryName).replaceAll("\\\\", "/");
+            String outPath = (descDir + "/" + zipEntryName).replaceAll("\\\\", "/");
 
             //判断路径是否存在,不存在则创建文件路径
             File file = new File(outPath.substring(0, outPath.lastIndexOf('/')));

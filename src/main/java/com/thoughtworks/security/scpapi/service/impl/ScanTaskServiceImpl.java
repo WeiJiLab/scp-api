@@ -6,8 +6,10 @@ import com.thoughtworks.security.scpapi.entity.Application;
 import com.thoughtworks.security.scpapi.entity.ScanTaskEntity;
 import com.thoughtworks.security.scpapi.enums.ScanTaskEnum;
 import com.thoughtworks.security.scpapi.exception.ScanTaskNotFoundException;
+import com.thoughtworks.security.scpapi.repository.ScanResultRepository;
 import com.thoughtworks.security.scpapi.repository.ScanTaskRepository;
 import com.thoughtworks.security.scpapi.repository.UseCaseRepository;
+import com.thoughtworks.security.scpapi.service.ComplianceScanThread;
 import com.thoughtworks.security.scpapi.service.ProjectService;
 import com.thoughtworks.security.scpapi.service.ScanTaskService;
 import lombok.RequiredArgsConstructor;
@@ -25,6 +27,8 @@ public class ScanTaskServiceImpl implements ScanTaskService {
     private final ScanTaskRepository scanTaskRepository;
 
     private final UseCaseRepository useCaseRepository;
+
+    private final ScanResultRepository scanResultRepository;
 
     private final ProjectService projectService;
 
@@ -52,7 +56,16 @@ public class ScanTaskServiceImpl implements ScanTaskService {
     }
 
     private void startScan(List<ScanTaskEntity> scanTaskEntityList) {
+
         // TODO : start scan
+        scanTaskEntityList
+                .forEach(it ->
+                        new ComplianceScanThread(it,
+                                scanResultRepository,
+                                scanTaskRepository,
+                                useCaseRepository
+                        ).start()
+                );
     }
 
     @Override
