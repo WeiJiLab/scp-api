@@ -16,6 +16,7 @@ import lombok.AllArgsConstructor;
 
 import java.io.*;
 import java.sql.Timestamp;
+import java.time.Instant;
 import java.util.Date;
 
 import static com.thoughtworks.security.scpapi.util.ConstantsValue.*;
@@ -65,6 +66,7 @@ public class ComplianceScanThread extends Thread {
 
             // task
             scanTaskEntity.setStatus(ScanTaskEnum.RUNNING);
+            scanTaskEntity.setStartTime(Instant.now());
             scanTaskRepository.saveAndFlush(scanTaskEntity);
 
             // result
@@ -91,6 +93,7 @@ public class ComplianceScanThread extends Thread {
             if ((exitValue == 100) || (exitValue == 101) || (exitValue == 0)) {
                 // success
                 scanTaskEntity.setStatus(ScanTaskEnum.DONE);
+                scanTaskEntity.setEndTime(Instant.now());
                 scanTaskRepository.saveAndFlush(scanTaskEntity);
 
                 scanResultEntity.setResultPath(reportName);
