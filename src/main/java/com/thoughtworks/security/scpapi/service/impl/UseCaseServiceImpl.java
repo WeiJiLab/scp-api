@@ -64,7 +64,7 @@ public class UseCaseServiceImpl implements UseCaseService {
             OperateObject.putObject(filePath, S3_BUCKET_NAME);
 
             dest.deleteOnExit();
-            return filePath;
+            return keyName;
 
         } catch (IOException e) {
             log.info("upload file error");
