@@ -90,10 +90,11 @@ public class ComplianceScanThread extends Thread {
             String shellStr = "inspec exec " + useCaseUrl + "/my_puppet --reporter html:"  + reportFullPath;
             Process process = Runtime.getRuntime().exec(shellStr);
             int exitValue = process.waitFor();
+            scanTaskEntity.setEndTime(Instant.now());
             if ((exitValue == 100) || (exitValue == 101) || (exitValue == 0)) {
                 // success
                 scanTaskEntity.setStatus(ScanTaskEnum.DONE);
-                scanTaskEntity.setEndTime(Instant.now());
+
                 scanTaskRepository.saveAndFlush(scanTaskEntity);
 
                 scanResultEntity.setResultPath(reportName);
@@ -109,8 +110,7 @@ public class ComplianceScanThread extends Thread {
             // error
             scanTaskEntity.setStatus(ScanTaskEnum.FAILED);
             scanTaskRepository.saveAndFlush(scanTaskEntity);
-
-            scanResultEntity.setResultPath(reportName);
+            
             scanResultEntity.setResult(1);
             scanResultRepository.saveAndFlush(scanResultEntity);
 
