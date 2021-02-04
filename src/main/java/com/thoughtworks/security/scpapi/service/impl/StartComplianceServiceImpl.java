@@ -33,8 +33,8 @@ public class StartComplianceServiceImpl implements StartComplianceService {
     public void start(Integer taskId, Long[] useCaseIds) {
         ArrayList<ScanResultEntity> securityResults = insertScanResult(taskId, useCaseIds);
         for (ScanResultEntity tmp : securityResults) {
-            ComplianceScanThread securityScanThread = new ComplianceScanThread(tmp.getId(), tmp.getUseCaseId(), complianceResultRepo, complianceUseCaseRepo);
-            securityScanThread.start();
+//            ComplianceScanThread securityScanThread = new ComplianceScanThread(tmp.getId(), tmp.getUseCaseId(), complianceResultRepo, complianceUseCaseRepo);
+//            securityScanThread.start();
         }
     }
 }
