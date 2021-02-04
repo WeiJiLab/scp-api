@@ -22,7 +22,7 @@ public class UseCaseController {
     private final UseCaseService useCaseService;
 
     @ApiOperation(value = "上传合规用例")
-    @PostMapping
+    @PutMapping
     @ResponseStatus(CREATED)
     public UseCaseEntity uploadComplianceUseCase(@RequestParam("file") MultipartFile file,
                                                  @RequestParam String description,
