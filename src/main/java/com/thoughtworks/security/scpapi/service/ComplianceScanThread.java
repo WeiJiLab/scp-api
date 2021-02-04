@@ -85,10 +85,9 @@ public class ComplianceScanThread extends Thread {
             String reportName = fileNamePre + currDate + ".html";
             String reportFullPath = REPORT_PATH_TMP + "/" + reportName;
             // todo 改一下inspec exec
-            String shellStr = "inspec exec " + useCaseUrl + "/my_puppet --reporter html:" + REPORT_PATH_TMP + " " + reportFullPath;
+            String shellStr = "inspec exec " + useCaseUrl + "/my_puppet --reporter html:"  + reportFullPath;
             Process process = Runtime.getRuntime().exec(shellStr);
             int exitValue = process.waitFor();
-
             if ((exitValue == 100) || (exitValue == 101) || (exitValue == 0)) {
                 // success
                 scanTaskEntity.setStatus(ScanTaskEnum.DONE);
@@ -99,7 +98,7 @@ public class ComplianceScanThread extends Thread {
                 scanResultRepository.saveAndFlush(scanResultEntity);
 
                 //读出来再写
-                OperateObject.putObject(reportName, S3_BUCKET_NAME);
+                OperateObject.putObject(reportFullPath, S3_BUCKET_NAME);
                 //securityResultRepository.updateState(resultId, ScanResultEnum.SUCCESS.getValue(), reportName);
                 return;
             }
