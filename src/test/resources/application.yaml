@@ -2,7 +2,7 @@ spring:
   application:
     name: scp-api
   profiles:
-    active: default
+    active: test
 
 server:
   port: 8081

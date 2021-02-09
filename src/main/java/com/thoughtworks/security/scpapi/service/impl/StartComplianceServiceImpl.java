@@ -3,7 +3,6 @@ package com.thoughtworks.security.scpapi.service.impl;
 import com.thoughtworks.security.scpapi.entity.ScanResultEntity;
 import com.thoughtworks.security.scpapi.repository.ScanResultRepository;
 import com.thoughtworks.security.scpapi.repository.UseCaseRepository;
-import com.thoughtworks.security.scpapi.service.ComplianceScanThread;
 import com.thoughtworks.security.scpapi.service.StartComplianceService;
 import com.thoughtworks.security.scpapi.util.ScanResultEnum;
 import lombok.AllArgsConstructor;
@@ -31,10 +30,10 @@ public class StartComplianceServiceImpl implements StartComplianceService {
     }
     @Override
     public void start(Integer taskId, Long[] useCaseIds) {
-        ArrayList<ScanResultEntity> securityResults = insertScanResult(taskId, useCaseIds);
-        for (ScanResultEntity tmp : securityResults) {
-//            ComplianceScanThread securityScanThread = new ComplianceScanThread(tmp.getId(), tmp.getUseCaseId(), complianceResultRepo, complianceUseCaseRepo);
-//            securityScanThread.start();
-        }
+//        ArrayList<ScanResultEntity> securityResults = insertScanResult(taskId, useCaseIds);
+//        for (ScanResultEntity tmp : securityResults) {
+////            ComplianceScanThread securityScanThread = new ComplianceScanThread(tmp.getId(), tmp.getUseCaseId(), complianceResultRepo, complianceUseCaseRepo);
+////            securityScanThread.start();
+//        }
     }
 }

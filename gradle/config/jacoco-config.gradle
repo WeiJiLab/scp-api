@@ -1,0 +1,67 @@
+apply plugin: 'jacoco'
+
+def generalExcludes = [
+        '**/com/thoughtworks/security/scpapi/utils/**',
+        '**/com/thoughtworks/security/scpapi/Constants.class',
+        '**/com/thoughtworks/security/scpapi/Messages.class',
+        '**/com/thoughtworks/security/scpapi/Application**',
+        '**/com/thoughtworks/security/scpapi/**/entity/**',
+        '**/com/thoughtworks/security/scpapi/**/valobj/**'
+]
+
+def coverageExcludes = [
+        '**/com/thoughtworks/security/scpapi/infrastructure/**',
+        '**/com/thoughtworks/security/scpapi/**/domain/**',
+        '**/com/thoughtworks/security/scpapi/**/repo/**',
+        '**/com/thoughtworks/security/scpapi/**/enums/**',
+        '**/com/thoughtworks/security/scpapi/utils/**',
+]
+
+test {
+    jacoco {
+        destinationFile = file("$buildDir/jacoco/jacocoTest.exec")
+    }
+}
+
+jacoco {
+    toolVersion = "0.8.2"
+}
+
+jacocoTestReport {
+    reports {
+        xml.enabled false
+        html.enabled true
+    }
+    afterEvaluate {
+        classDirectories.setFrom(files(classDirectories.files.collect {
+            fileTree(dir: it, exclude: generalExcludes)
+        }))
+    }
+}
+
+
+jacocoTestCoverageVerification {
+    afterEvaluate {
+        classDirectories.setFrom(files(classDirectories.files.collect {
+            fileTree(dir: it, exclude: generalExcludes + coverageExcludes)
+        }))
+    }
+
+    violationRules {
+        rule {
+            limit {
+                counter = "LINE"
+                value = 'COVEREDRATIO'
+                minimum = 0.0
+            }
+            limit {
+                counter = "BRANCH"
+                value = 'COVEREDRATIO'
+                minimum = 0.0
+            }
+        }
+    }
+}
+
+jacocoTestCoverageVerification.dependsOn jacocoTestReport
+check.dependsOn jacocoTestCoverageVerification

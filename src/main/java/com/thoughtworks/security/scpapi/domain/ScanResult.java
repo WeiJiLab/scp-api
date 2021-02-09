@@ -1,15 +1,10 @@
 package com.thoughtworks.security.scpapi.domain;
 
 import com.thoughtworks.security.scpapi.entity.AuditModel;
-import com.thoughtworks.security.scpapi.entity.ScanTaskEntity;
 import com.thoughtworks.security.scpapi.util.ScanResultEnum;
 import lombok.*;
-import org.springframework.data.annotation.CreatedDate;
-import org.springframework.data.annotation.LastModifiedDate;
 
-import javax.persistence.*;
 import java.time.OffsetDateTime;
-
 
 @Builder
 @Getter
@@ -33,4 +28,3 @@ public class ScanResult extends AuditModel {
     private OffsetDateTime updatedAt;
 
 }
-
