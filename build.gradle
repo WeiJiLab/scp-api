@@ -94,9 +94,9 @@ dependencies {
 
 	// https://mvnrepository.com/artifact/org.codehaus.groovy/groovy
 	compile group: 'org.codehaus.groovy', name: 'groovy-all', version: '3.0.7'
+	compile group: 'pl.project13.maven', name: 'git-commit-id-plugin', version: '4.0.3'
 	testImplementation('com.github.hippoom:test-data-builder:0.5.0')
 	testImplementation('com.github.hippoom:wiremock-contract-verifier:0.3.0')
-	implementation('pl.project13.maven:git-commit-id-plugin:2.2.6')
 }
 
 dependencyManagement {
