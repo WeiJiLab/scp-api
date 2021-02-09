@@ -1,0 +1,47 @@
+{
+  "request": {
+    "method": "GET",
+    "url": "/scanTasks"
+  },
+  "response": {
+    "status": 200,
+    "jsonBody": [
+      {
+        "identifier": 1,
+        "ticketId": "TB000000001",
+        "followerUid": "Frank1",
+        "followUpDate": "2019-05-22 10:05",
+        "nextFollowUpDate": "2019-05-22 10:05",
+        "status": "follow_up_successfully",
+        "detail": "user_booking",
+        "comments": "test1",
+        "links": [
+        ]
+      },
+      {
+        "identifier": 2,
+        "ticketId": "TB000000002",
+        "followerUid": "Frank2",
+        "followUpDate": "2019-05-22 10:05",
+        "nextFollowUpDate": "2019-05-22 10:05",
+        "status": "follow_up_successfully",
+        "detail": "user_booking",
+        "comments": "test2",
+        "links": [
+        ]
+      },
+      {
+        "identifier": 3,
+        "ticketId": "TB000000003",
+        "followerUid": "Frank3",
+        "followUpDate": "2019-05-22 10:05",
+        "nextFollowUpDate": "",
+        "status": "follow_up_successfully",
+        "detail": "user_refuse",
+        "comments": "practically_low",
+        "links": [
+        ]
+      }
+    ]
+  }
+}

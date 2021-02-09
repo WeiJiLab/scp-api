@@ -1,0 +1,13 @@
+task gitExecutableHooks {
+    doLast {
+        Runtime.getRuntime().exec("chmod -R +x .git/hooks/");
+    }
+}
+
+task installGitHooks(type: Copy) {
+    from new File("${rootProject.rootDir}/config/git/pre-push")
+    into { new File("${rootProject.rootDir}/.git/hooks") }
+}
+
+gitExecutableHooks.dependsOn installGitHooks
+assemble.dependsOn gitExecutableHooks

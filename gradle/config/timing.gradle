@@ -1,0 +1,44 @@
+// Log timings per task.
+class TimingsListener implements TaskExecutionListener, BuildListener {
+    private long timeStarted
+    private timings = []
+
+    @Override
+    void beforeExecute(Task task) {
+        timeStarted = System.currentTimeMillis()
+    }
+
+    @Override
+    void afterExecute(Task task, TaskState taskState) {
+        def s = (System.currentTimeMillis() - timeStarted) * 1.0 / 1000.0f
+        if (s > 3) {
+            timings.add([s, task.path])
+            task.project.logger.warn "${task.path} took ${s}s"
+        }
+    }
+
+    @Override
+    void buildFinished(BuildResult result) {
+        if (!timings.isEmpty()) {
+            println "Top task timings:"
+            for (timing in timings) {
+                printf "%7ss  %s\n", timing
+            }
+        }
+    }
+
+    @Override
+    void buildStarted(Gradle gradle) {}
+
+    @Override
+    void projectsEvaluated(Gradle gradle) {}
+
+    @Override
+    void projectsLoaded(Gradle gradle) {}
+
+    @Override
+    void settingsEvaluated(Settings settings) {}
+
+}
+
+gradle.addListener new TimingsListener()
