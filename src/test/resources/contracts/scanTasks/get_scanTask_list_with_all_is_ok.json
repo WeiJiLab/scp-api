@@ -6,42 +6,46 @@
   "response": {
     "status": 200,
     "jsonBody": [
-      {
-        "identifier": 1,
-        "ticketId": "TB000000001",
-        "followerUid": "Frank1",
-        "followUpDate": "2019-05-22 10:05",
-        "nextFollowUpDate": "2019-05-22 10:05",
-        "status": "follow_up_successfully",
-        "detail": "user_booking",
-        "comments": "test1",
-        "links": [
-        ]
-      },
-      {
-        "identifier": 2,
-        "ticketId": "TB000000002",
-        "followerUid": "Frank2",
-        "followUpDate": "2019-05-22 10:05",
-        "nextFollowUpDate": "2019-05-22 10:05",
-        "status": "follow_up_successfully",
-        "detail": "user_booking",
-        "comments": "test2",
-        "links": [
-        ]
-      },
-      {
-        "identifier": 3,
-        "ticketId": "TB000000003",
-        "followerUid": "Frank3",
-        "followUpDate": "2019-05-22 10:05",
-        "nextFollowUpDate": "",
-        "status": "follow_up_successfully",
-        "detail": "user_refuse",
-        "comments": "practically_low",
-        "links": [
-        ]
-      }
+      [
+        {
+          "createdAt": "2021-02-09T21:23:57+08:00",
+          "updatedAt": "2021-02-09T21:23:57+08:00",
+          "id": 1,
+          "appId": 1,
+          "toolId": 1,
+          "useCaseId": 1,
+          "status": "READY",
+          "startTime": "2021-02-09T13:23:57Z",
+          "endTime": "2021-02-09T13:23:57Z",
+          "application": {
+            "createdAt": "2021-02-09T21:25:12+08:00",
+            "updatedAt": "2021-02-09T21:25:12+08:00",
+            "id": 1,
+            "projectId": 1,
+            "name": "app1",
+            "description": "第一个app",
+            "ownerId": null
+          },
+          "securityTool": {
+            "createdAt": "2021-02-09T21:23:34+08:00",
+            "updatedAt": "2021-02-09T21:23:34+08:00",
+            "id": 1,
+            "name": "tools1",
+            "category": "SCA",
+            "description": "tools",
+            "metadata": "tools"
+          },
+          "useCase": {
+            "createdAt": "2021-02-09T21:22:44+08:00",
+            "updatedAt": "2021-02-09T21:22:44+08:00",
+            "id": 1,
+            "name": "useCase1",
+            "description": "用例1",
+            "securityToolId": 1,
+            "scriptPath": "xxxxxxxxxxx"
+          }
+        }
+      ]
     ]
   }
 }
