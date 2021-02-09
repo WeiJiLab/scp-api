@@ -1,7 +1,6 @@
 package com.thoughtworks.security.scpapi.service;
 
 import com.thoughtworks.security.scpapi.api.s3.OperateObject;
-import com.thoughtworks.security.scpapi.domain.ScanResult;
 import com.thoughtworks.security.scpapi.entity.ScanResultEntity;
 import com.thoughtworks.security.scpapi.entity.ScanTaskEntity;
 import com.thoughtworks.security.scpapi.entity.UseCaseEntity;
@@ -10,7 +9,6 @@ import com.thoughtworks.security.scpapi.exception.UseCaseNotFoundException;
 import com.thoughtworks.security.scpapi.repository.ScanResultRepository;
 import com.thoughtworks.security.scpapi.repository.ScanTaskRepository;
 import com.thoughtworks.security.scpapi.repository.UseCaseRepository;
-import com.thoughtworks.security.scpapi.util.ScanResultEnum;
 import com.thoughtworks.security.scpapi.util.ZipUtil;
 import lombok.AllArgsConstructor;
 

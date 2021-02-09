@@ -1,8 +1,6 @@
 package com.thoughtworks.security.scpapi.controller;
 
-
 import com.thoughtworks.security.scpapi.domain.ScanResult;
-import com.thoughtworks.security.scpapi.entity.ScanResultEntity;
 import com.thoughtworks.security.scpapi.service.ScanResultService;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;

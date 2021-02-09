@@ -2,7 +2,6 @@ package com.thoughtworks.security.scpapi.service.impl;
 
 import com.thoughtworks.security.scpapi.controller.request.AddUseCaseRequest;
 import com.thoughtworks.security.scpapi.controller.request.UseCaseGroupCreateRequest;
-import com.thoughtworks.security.scpapi.entity.UseCaseEntity;
 import com.thoughtworks.security.scpapi.entity.UseCaseGroupEntity;
 import com.thoughtworks.security.scpapi.exception.DuplicatedUseCaseGroupException;
 import com.thoughtworks.security.scpapi.exception.UseCaseGroupNotFoundException;
@@ -14,7 +13,6 @@ import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor

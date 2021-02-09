@@ -3,7 +3,6 @@ package com.thoughtworks.security.scpapi.service.impl;
 import com.thoughtworks.security.scpapi.entity.ScanResultEntity;
 import com.thoughtworks.security.scpapi.repository.ScanResultRepository;
 import com.thoughtworks.security.scpapi.repository.UseCaseRepository;
-import com.thoughtworks.security.scpapi.service.ComplianceScanThread;
 import com.thoughtworks.security.scpapi.service.StartComplianceService;
 import com.thoughtworks.security.scpapi.util.ScanResultEnum;
 import lombok.AllArgsConstructor;
