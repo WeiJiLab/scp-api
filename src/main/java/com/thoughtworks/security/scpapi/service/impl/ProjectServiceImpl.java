@@ -29,7 +29,7 @@ public class ProjectServiceImpl implements ProjectService {
     }
 
     @Override
-    public Project findById(Integer id) {
+    public Project findById(Long id) {
         return getProject(id);
     }
 
@@ -44,7 +44,7 @@ public class ProjectServiceImpl implements ProjectService {
     }
 
     @Override
-    public void delete(Integer id) {
+    public void delete(Long id) {
         try {
             projectRepository.deleteById(id);
         } catch (EmptyResultDataAccessException emptyResultDataAccessException) {
@@ -53,12 +53,12 @@ public class ProjectServiceImpl implements ProjectService {
     }
 
     @Override
-    public List<Application> getApplications(Integer id) {
+    public List<Application> getApplications(Long id) {
         return getProject(id).getApplications();
     }
 
     @Override
-    public Application getApplication(Integer id, Integer applicationId) {
+    public Application getApplication(Long id, Long applicationId) {
         var project = getProject(id);
         return project.getApplications()
                 .stream()
@@ -68,13 +68,13 @@ public class ProjectServiceImpl implements ProjectService {
     }
 
     @Override
-    public void deleteApplication(Integer id, Integer applicationId) {
+    public void deleteApplication(Long id, Long applicationId) {
         var project = getProject(id);
         project.removeApplicationById(applicationId);
         projectRepository.save(project);
     }
 
-    private Project getProject(Integer id) {
+    private Project getProject(Long id) {
         return projectRepository.findById(id).orElseThrow(ProjectNotFoundException::new);
     }
 }

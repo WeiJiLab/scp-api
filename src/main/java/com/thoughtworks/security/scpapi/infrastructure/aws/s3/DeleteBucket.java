@@ -1,4 +1,4 @@
-package com.thoughtworks.security.scpapi.api.s3;
+package com.thoughtworks.security.scpapi.infrastructure.aws.s3;
 
 import com.amazonaws.AmazonServiceException;
 import com.amazonaws.regions.Regions;

@@ -16,11 +16,11 @@ public class ScanTaskEntity extends AuditModel {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
+    private Long id;
 
-    private Integer appId;
+    private Long appId;
 
-    private Integer toolId;
+    private Long toolId;
 
     private Long useCaseId;
 
@@ -37,7 +37,7 @@ public class ScanTaskEntity extends AuditModel {
 
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "toolId", referencedColumnName = "id", insertable = false, updatable = false)
-    private SecurityTool securityTool;
+    private SecurityToolEntity securityToolEntity;
 
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "useCaseId", referencedColumnName = "id", insertable = false, updatable = false)

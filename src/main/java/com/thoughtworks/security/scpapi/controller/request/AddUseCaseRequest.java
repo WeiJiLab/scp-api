@@ -13,5 +13,5 @@ import java.util.List;
 @Getter
 public class AddUseCaseRequest {
 
-    List<Integer> useCaseIds;
+    List<Long> useCaseIds;
 }

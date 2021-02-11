@@ -34,7 +34,7 @@ public class ScanTaskController {
 
     @ApiOperation(value = "查询扫描任务列表")
     @GetMapping("/{id}")
-    public ScanTaskEntity findById(@PathVariable Integer id) {
+    public ScanTaskEntity findById(@PathVariable Long id) {
         return scanTaskService.findById(id);
     }
 

@@ -1,8 +1,8 @@
 package com.thoughtworks.security.scpapi.service.impl;
 
 import com.amazonaws.AmazonServiceException;
-import com.thoughtworks.security.scpapi.api.s3.OperateObject;
-import com.thoughtworks.security.scpapi.dto.ComplianceUseCaseInputDto;
+import com.thoughtworks.security.scpapi.infrastructure.aws.s3.OperateObject;
+import com.thoughtworks.security.scpapi.controller.request.ComplianceUseCaseInputDto;
 import com.thoughtworks.security.scpapi.entity.UseCaseEntity;
 import com.thoughtworks.security.scpapi.exception.UploadFileException;
 import com.thoughtworks.security.scpapi.exception.UseCaseNotFoundException;
@@ -23,7 +23,7 @@ import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
 
-import static com.thoughtworks.security.scpapi.util.ConstantsValue.S3_BUCKET_NAME;
+import static com.thoughtworks.security.scpapi.utils.ConstantsValue.S3_BUCKET_NAME;
 
 @Service
 @RequiredArgsConstructor
@@ -32,7 +32,7 @@ public class UseCaseServiceImpl implements UseCaseService {
     private final UseCaseRepository useCaseRepository;
 
     @Override
-    public UseCaseEntity addUseCase(MultipartFile file, String description, String name, Integer toolId) {
+    public UseCaseEntity addUseCase(MultipartFile file, String description, String name, Long toolId) {
 
         String filePath = uploadFile(file);
 
@@ -110,7 +110,7 @@ public class UseCaseServiceImpl implements UseCaseService {
     }
 
     @Override
-    public UseCaseEntity update(Long id, MultipartFile file, String description, String name, Integer toolId) {
+    public UseCaseEntity update(Long id, MultipartFile file, String description, String name, Long toolId) {
 
         UseCaseEntity useCaseEntity = useCaseRepository.findById(id)
                 .orElseThrow(UseCaseNotFoundException::new);
@@ -131,7 +131,7 @@ public class UseCaseServiceImpl implements UseCaseService {
     }
 
     @Override
-    public List<UseCaseEntity> findUseCaseByToolId(Integer id) {
+    public List<UseCaseEntity> findUseCaseByToolId(Long id) {
         return useCaseRepository.findAllBySecurityToolId(id);
     }
 }

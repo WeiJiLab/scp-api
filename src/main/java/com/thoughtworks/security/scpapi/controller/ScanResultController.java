@@ -26,13 +26,13 @@ public class ScanResultController {
 
     @ApiOperation(value = "通过 AppId 查询扫描任务结果")
     @GetMapping("/appId/{appId}")
-    public List<ScanResult> findByAppId(@PathVariable Integer appId) {
+    public List<ScanResult> findByAppId(@PathVariable Long appId) {
         return scanResultService.findByAppId(appId);
     }
 
     @ApiOperation(value = "通过 taskId 查询扫描任务结果")
     @GetMapping("/taskId/{taskId}")
-    public ScanResult findByTaskId(@PathVariable Integer taskId) {
+    public ScanResult findByTaskId(@PathVariable Long taskId) {
         return scanResultService.findByTaskId(taskId);
     }
 

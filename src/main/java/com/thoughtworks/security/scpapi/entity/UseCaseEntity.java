@@ -23,7 +23,7 @@ public class UseCaseEntity extends AuditModel {
 
     private String description;
 
-    private Integer securityToolId;
+    private Long securityToolId;
 
     private String scriptPath;
 

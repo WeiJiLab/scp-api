@@ -9,17 +9,17 @@ public interface ProjectService {
 
     Project create(Project project);
 
-    Project findById(Integer id);
+    Project findById(Long id);
 
     List<Project> findAll();
 
     Project update(Project project);
 
-    void delete(Integer id);
+    void delete(Long id);
 
-    List<Application> getApplications(Integer id);
+    List<Application> getApplications(Long id);
 
-    Application getApplication(Integer id, Integer applicationId);
+    Application getApplication(Long id, Long applicationId);
 
-    void deleteApplication(Integer id, Integer applicationId);
+    void deleteApplication(Long id, Long applicationId);
 }

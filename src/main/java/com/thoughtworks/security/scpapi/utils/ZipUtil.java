@@ -1,4 +1,6 @@
-package com.thoughtworks.security.scpapi.util;
+package com.thoughtworks.security.scpapi.utils;
+
+import lombok.extern.slf4j.Slf4j;
 
 import java.io.*;
 import java.text.SimpleDateFormat;
@@ -8,6 +10,7 @@ import java.util.zip.ZipEntry;
 import java.util.zip.ZipFile;
 import java.util.zip.ZipOutputStream;
 
+@Slf4j
 public class ZipUtil {
     public static String createZip(String filePath, String filePre) {
         String path = "/tmp/";
@@ -76,7 +79,7 @@ public class ZipUtil {
             pathFile.mkdirs();
         }
         ZipFile zip = new ZipFile(zipFile);
-        for (Enumeration entries = zip.entries(); entries.hasMoreElements();) {
+        for (Enumeration entries = zip.entries(); entries.hasMoreElements(); ) {
             ZipEntry entry = (ZipEntry) entries.nextElement();
             String zipEntryName = entry.getName();
 
@@ -104,6 +107,6 @@ public class ZipUtil {
             in.close();
             out.close();
         }
-        System.out.println("******************解压完毕********************");
+        log.info("******************解压完毕********************");
     }
 }

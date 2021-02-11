@@ -1,6 +1,5 @@
 package com.thoughtworks.security.scpapi.service.impl;
 
-
 import com.thoughtworks.security.scpapi.domain.ScanResult;
 import com.thoughtworks.security.scpapi.entity.ScanResultEntity;
 import com.thoughtworks.security.scpapi.entity.ScanTaskEntity;
@@ -11,7 +10,6 @@ import com.thoughtworks.security.scpapi.repository.ScanResultRepository;
 import com.thoughtworks.security.scpapi.repository.ScanTaskRepository;
 import com.thoughtworks.security.scpapi.repository.UseCaseRepository;
 import com.thoughtworks.security.scpapi.service.ScanResultService;
-import com.thoughtworks.security.scpapi.util.ScanResultEnum;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -27,11 +25,11 @@ public class ScanResultServiceImpl implements ScanResultService {
     private final UseCaseRepository useCaseRepository;
 
     @Override
-    public List<ScanResult> findByAppId(Integer appId) {
+    public List<ScanResult> findByAppId(Long appId) {
 
         List<ScanTaskEntity> allByAppId = scanTaskRepository.findAllByAppId(appId);
 
-        List<Integer> taskIds = allByAppId.stream()
+        List<Long> taskIds = allByAppId.stream()
                 .map(ScanTaskEntity::getId)
                 .collect(Collectors.toList());
 
@@ -44,7 +42,7 @@ public class ScanResultServiceImpl implements ScanResultService {
     }
 
     @Override
-    public ScanResult findByTaskId(Integer taskIn) {
+    public ScanResult findByTaskId(Long taskIn) {
         ScanResultEntity scanResultEntity = scanResultRepository.findByScanTaskId(taskIn)
                 .orElseThrow(ScanResultNotFoundException::new);
 
@@ -65,7 +63,7 @@ public class ScanResultServiceImpl implements ScanResultService {
 
         return ScanResult.builder()
                 .id(scanResultEntity.getId())
-                .result(ScanResultEnum.parse(scanResultEntity.getResult()))
+                .result(scanResultEntity.getResult())
                 .resultPath(scanResultEntity.getResultPath())
                 .scanTaskId(scanResultEntity.getScanTaskId())
                 .useCaseName(useCaseEntity.getName())

@@ -1,4 +1,4 @@
-package com.thoughtworks.security.scpapi.dto;
+package com.thoughtworks.security.scpapi.controller.request;
 
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
@@ -15,5 +15,5 @@ public class ComplianceUseCaseDto {
     private Long id;
     private String description;
     private String name;
-    private Integer toolId;
+    private Long toolId;
 }

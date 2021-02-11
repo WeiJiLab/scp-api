@@ -1,12 +1,12 @@
 package com.thoughtworks.security.scpapi.controller;
 
 import com.thoughtworks.security.scpapi.controller.request.CreateSecurityToolRequest;
-import com.thoughtworks.security.scpapi.entity.SecurityTool;
+import com.thoughtworks.security.scpapi.controller.response.SecurityToolResponse;
+import com.thoughtworks.security.scpapi.domain.SecurityTool;
 import com.thoughtworks.security.scpapi.entity.UseCaseEntity;
 import com.thoughtworks.security.scpapi.service.SecurityToolService;
 import com.thoughtworks.security.scpapi.service.UseCaseService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
@@ -14,10 +14,9 @@ import java.util.List;
 
 import static org.springframework.http.HttpStatus.CREATED;
 import static org.springframework.http.HttpStatus.OK;
-import static org.springframework.http.ResponseEntity.status;
 
 @RestController
-@RequestMapping("tools")
+@RequestMapping("/tools")
 @RequiredArgsConstructor
 public class SecurityToolController {
 
@@ -26,25 +25,29 @@ public class SecurityToolController {
     private final UseCaseService useCaseService;
 
     @PostMapping
-    public ResponseEntity<SecurityTool> create(@Validated @RequestBody CreateSecurityToolRequest createSecurityToolRequest) {
-        var project = service.create(SecurityTool.from(createSecurityToolRequest));
-        return status(CREATED).body(project);
+    @ResponseStatus(CREATED)
+    public SecurityToolResponse create(@Validated @RequestBody CreateSecurityToolRequest request) {
+        SecurityTool securityTool = service.create(SecurityTool.from(request));
+        return SecurityToolResponse.fromSecurityTool(securityTool);
     }
 
     @GetMapping("{id}")
-    public ResponseEntity<SecurityTool> findById(@PathVariable Integer id) {
-        var project = service.findById(id);
-        return status(OK).body(project);
+    @ResponseStatus(OK)
+    public SecurityToolResponse findById(@PathVariable Long id) {
+        SecurityTool securityTool = service.findById(id);
+        return SecurityToolResponse.fromSecurityTool(securityTool);
     }
 
     @GetMapping
-    public ResponseEntity<List<SecurityTool>> findAll() {
-        var projects = service.findAll();
-        return status(OK).body(projects);
+    @ResponseStatus(OK)
+    public List<SecurityToolResponse> findAll() {
+        List<SecurityTool> securityTools = service.findAll();
+        return SecurityToolResponse.fromSecurityTools(securityTools);
     }
 
     @GetMapping("{id}/useCases")
-    public List<UseCaseEntity> findUseCaseByToolId(@PathVariable Integer id) {
+    @ResponseStatus(OK)
+    public List<UseCaseEntity> findUseCaseByToolId(@PathVariable Long id) {
         return useCaseService.findUseCaseByToolId(id);
     }
 }

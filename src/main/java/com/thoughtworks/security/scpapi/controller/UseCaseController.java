@@ -27,7 +27,7 @@ public class UseCaseController {
     public UseCaseEntity uploadComplianceUseCase(@RequestParam("file") MultipartFile file,
                                                  @RequestParam String description,
                                                  @RequestParam String name,
-                                                 @RequestParam Integer toolId) {
+                                                 @RequestParam Long toolId) {
         return useCaseService.addUseCase(file, description, name, toolId);
     }
 
@@ -57,7 +57,7 @@ public class UseCaseController {
                                 @RequestParam("file") MultipartFile file,
                                 @RequestParam String description,
                                 @RequestParam String name,
-                                @RequestParam Integer toolId) {
+                                @RequestParam Long toolId) {
         return useCaseService.update(id, file, description, name, toolId);
     }
 
