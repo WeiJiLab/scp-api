@@ -1,7 +1,6 @@
 package com.thoughtworks.security.scpapi.domain;
 
 import com.thoughtworks.security.scpapi.controller.request.CreateSecurityToolRequest;
-import com.thoughtworks.security.scpapi.entity.SecurityToolEntity;
 import com.thoughtworks.security.scpapi.enums.SecurityToolCategory;
 import lombok.*;
 

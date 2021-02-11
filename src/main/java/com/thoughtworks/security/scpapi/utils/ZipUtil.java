@@ -97,6 +97,7 @@ public class ZipUtil {
             }
             //输出文件路径信息
             System.out.println(outPath);
+            log.info("outPath : " + outPath);
 
             OutputStream out = new FileOutputStream(outPath);
             byte[] buf1 = new byte[1024];
