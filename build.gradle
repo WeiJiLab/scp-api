@@ -94,26 +94,26 @@ dependencyManagement {
         mavenBom "org.springframework.cloud:spring-cloud-dependencies:${springCloudVersion}"
     }
 }
-//
-//test {
-//    useJUnitPlatform()
-//    testLogging {
-//        events "passed", "skipped", "failed"
-//    }
-//}
-//
-//task integrationTest(type: Test) {
-//    useJUnitPlatform()
-//
-//    testLogging {
-//        events "passed", "skipped", "failed"
-//    }
-//    mustRunAfter test
-//}
 
-//test.finalizedBy jacocoTestReport
-//check.dependsOn jacocoTestCoverageVerification
-//check.dependsOn integrationTest
+test {
+    useJUnitPlatform()
+    testLogging {
+        events "passed", "skipped", "failed"
+    }
+}
+
+task integrationTest(type: Test) {
+    useJUnitPlatform()
+
+    testLogging {
+        events "passed", "skipped", "failed"
+    }
+    mustRunAfter test
+}
+
+test.finalizedBy jacocoTestReport
+check.dependsOn jacocoTestCoverageVerification
+check.dependsOn integrationTest
 
 bootRun {
     jvmArgs = ["-agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=*:5005"]
