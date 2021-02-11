@@ -96,18 +96,14 @@ dependencyManagement {
 }
 
 test {
-    useJUnitPlatform {
-        includeEngines 'junit-jupiter', 'junit-vintage'
-    }
+    useJUnitPlatform()
     testLogging {
         events "passed", "skipped", "failed"
     }
 }
 
 task integrationTest(type: Test) {
-    useJUnitPlatform {
-        includeEngines 'junit-jupiter', 'junit-vintage'
-    }
+    useJUnitPlatform()
 
     testLogging {
         events "passed", "skipped", "failed"
