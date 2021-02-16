@@ -10,7 +10,7 @@ import java.util.List;
 @ApiModel(value = "启动合规检测需要携带的参数")
 public class ScanTaskRequest {
     @NotNull
-    private Integer appId;
+    private Long appId;
 
     private List<Long> useCaseIds;
 }

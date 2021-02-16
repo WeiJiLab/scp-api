@@ -13,7 +13,8 @@ public interface UseCaseRepository extends JpaRepository<UseCaseEntity, Long> {
     void deleteAllByIdIn(Collection<Long> id);
 
     List<UseCaseEntity> findAllByIdIn(Collection<Long> id);
-    List<UseCaseEntity> findAllBySecurityToolId(Integer securityToolId);
+
+    List<UseCaseEntity> findAllBySecurityToolId(Long securityToolId);
 
 
 }

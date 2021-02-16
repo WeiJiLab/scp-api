@@ -1,6 +1,7 @@
 package com.thoughtworks.security.scpapi.service;
 
-import com.thoughtworks.security.scpapi.api.s3.OperateObject;
+import com.thoughtworks.security.scpapi.enums.ScanResultEnum;
+import com.thoughtworks.security.scpapi.infrastructure.aws.s3.OperateObject;
 import com.thoughtworks.security.scpapi.entity.ScanResultEntity;
 import com.thoughtworks.security.scpapi.entity.ScanTaskEntity;
 import com.thoughtworks.security.scpapi.entity.UseCaseEntity;
@@ -9,7 +10,7 @@ import com.thoughtworks.security.scpapi.exception.UseCaseNotFoundException;
 import com.thoughtworks.security.scpapi.repository.ScanResultRepository;
 import com.thoughtworks.security.scpapi.repository.ScanTaskRepository;
 import com.thoughtworks.security.scpapi.repository.UseCaseRepository;
-import com.thoughtworks.security.scpapi.util.ZipUtil;
+import com.thoughtworks.security.scpapi.utils.ZipUtil;
 import lombok.AllArgsConstructor;
 
 import java.io.*;
@@ -17,7 +18,7 @@ import java.sql.Timestamp;
 import java.time.Instant;
 import java.util.Date;
 
-import static com.thoughtworks.security.scpapi.util.ConstantsValue.*;
+import static com.thoughtworks.security.scpapi.utils.ConstantsValue.*;
 
 
 @AllArgsConstructor
@@ -70,7 +71,7 @@ public class ComplianceScanThread extends Thread {
             // result
             ScanResultEntity scanResultEntity = scanResultRepository.saveAndFlush(
                     ScanResultEntity.builder()
-                            .result(0)
+                            .result(ScanResultEnum.SCANNING)
                             .resultPath("")
                             .scanTaskId(scanTaskEntity.getId())
                             .useCaseId(useCaseEntity.getId())
@@ -85,7 +86,7 @@ public class ComplianceScanThread extends Thread {
             String reportName = fileNamePre + currDate + ".html";
             String reportFullPath = REPORT_PATH_TMP + "/" + reportName;
             // todo 改一下inspec exec
-            String shellStr = "inspec exec " + useCaseUrl + "/my_puppet --reporter html:"  + reportFullPath;
+            String shellStr = "inspec exec " + useCaseUrl + "/my_puppet --reporter html:" + reportFullPath;
             Process process = Runtime.getRuntime().exec(shellStr);
             int exitValue = process.waitFor();
             scanTaskEntity.setEndTime(Instant.now());
@@ -96,7 +97,7 @@ public class ComplianceScanThread extends Thread {
                 scanTaskRepository.saveAndFlush(scanTaskEntity);
 
                 scanResultEntity.setResultPath(reportName);
-                scanResultEntity.setResult(2);
+                scanResultEntity.setResult(ScanResultEnum.SUCCESS);
                 scanResultRepository.saveAndFlush(scanResultEntity);
 
                 //读出来再写
@@ -108,8 +109,8 @@ public class ComplianceScanThread extends Thread {
             // error
             scanTaskEntity.setStatus(ScanTaskEnum.FAILED);
             scanTaskRepository.saveAndFlush(scanTaskEntity);
-            
-            scanResultEntity.setResult(1);
+
+            scanResultEntity.setResult(ScanResultEnum.FAILED);
             scanResultRepository.saveAndFlush(scanResultEntity);
 
             System.out.println("==================call shell failed. error code is :" + exitValue);
@@ -120,13 +121,4 @@ public class ComplianceScanThread extends Thread {
         }
     }
 
-    private static void closeStream(Closeable stream) {
-        if (stream != null) {
-            try {
-                stream.close();
-            } catch (Exception e) {
-                // nothing
-            }
-        }
-    }
 }

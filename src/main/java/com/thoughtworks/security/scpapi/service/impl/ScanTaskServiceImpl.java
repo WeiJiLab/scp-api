@@ -98,12 +98,12 @@ public class ScanTaskServiceImpl implements ScanTaskService {
     }
 
     @Override
-    public List<ScanTaskEntity> getScanTaskByAppId(Integer appId) {
+    public List<ScanTaskEntity> getScanTaskByAppId(Long appId) {
         return scanTaskRepository.findAllByAppId(appId);
     }
 
     @Override
-    public List<ScanTaskEntity> getScanTaskByToolIs(Integer toolId) {
+    public List<ScanTaskEntity> getScanTaskByToolIs(Long toolId) {
         return scanTaskRepository.findAllByToolId(toolId);
     }
 
@@ -113,17 +113,17 @@ public class ScanTaskServiceImpl implements ScanTaskService {
     }
 
     @Override
-    public List<ScanTaskEntity> getScanTaskByProjectId(Integer projectId) {
+    public List<ScanTaskEntity> getScanTaskByProjectId(Long projectId) {
 
         List<Application> applications = projectService.getApplications(projectId);
-        List<Integer> appIds = applications.stream()
+        List<Long> appIds = applications.stream()
                 .map(Application::getId)
                 .collect(Collectors.toList());
         return scanTaskRepository.findAllByAppIdIn(appIds);
     }
 
     @Override
-    public ScanTaskEntity findById(Integer id) {
+    public ScanTaskEntity findById(Long id) {
         return scanTaskRepository.findById(id)
                 .orElseThrow(ScanTaskNotFoundException::new);
     }

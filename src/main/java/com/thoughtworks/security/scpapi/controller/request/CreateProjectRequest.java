@@ -20,5 +20,5 @@ public class CreateProjectRequest {
     private String description;
 
     @NotNull
-    private Integer ownerId;
+    private Long ownerId;
 }

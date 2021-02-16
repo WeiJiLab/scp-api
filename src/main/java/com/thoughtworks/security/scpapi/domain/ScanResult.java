@@ -1,7 +1,6 @@
 package com.thoughtworks.security.scpapi.domain;
 
-import com.thoughtworks.security.scpapi.entity.AuditModel;
-import com.thoughtworks.security.scpapi.util.ScanResultEnum;
+import com.thoughtworks.security.scpapi.enums.ScanResultEnum;
 import lombok.*;
 
 import java.time.OffsetDateTime;
@@ -11,11 +10,11 @@ import java.time.OffsetDateTime;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class ScanResult extends AuditModel {
+public class ScanResult {
 
     private Long id;
 
-    private Integer scanTaskId;
+    private Long scanTaskId;
 
     private ScanResultEnum result;
 
@@ -26,5 +25,4 @@ public class ScanResult extends AuditModel {
     private OffsetDateTime createdAt;
 
     private OffsetDateTime updatedAt;
-
 }

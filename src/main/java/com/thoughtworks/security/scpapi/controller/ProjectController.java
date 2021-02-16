@@ -29,7 +29,7 @@ public class ProjectController {
     }
 
     @GetMapping("{id}")
-    public ResponseEntity<Project> findById(@PathVariable Integer id) {
+    public ResponseEntity<Project> findById(@PathVariable Long id) {
         var project = service.findById(id);
         return status(OK).body(project);
     }
@@ -41,13 +41,13 @@ public class ProjectController {
     }
 
     @DeleteMapping("{id}")
-    public ResponseEntity delete(@PathVariable Integer id) {
+    public ResponseEntity delete(@PathVariable Long id) {
         service.delete(id);
         return status(NO_CONTENT).build();
     }
 
     @PostMapping("{id}/applications")
-    public ResponseEntity<Application> createApplication(@PathVariable Integer id,
+    public ResponseEntity<Application> createApplication(@PathVariable Long id,
                                                          @Validated @RequestBody CreateApplicationRequest createApplicationRequest) {
         var project = service.findById(id);
         var application = Application.from(createApplicationRequest);
@@ -63,17 +63,17 @@ public class ProjectController {
     }
 
     @GetMapping("{id}/applications")
-    public ResponseEntity<List<Application>> getApplications(@PathVariable Integer id) {
+    public ResponseEntity<List<Application>> getApplications(@PathVariable Long id) {
         return status(OK).body(service.getApplications(id));
     }
 
     @GetMapping("{id}/applications/{applicationId}")
-    public ResponseEntity<Application> getApplication(@PathVariable Integer id, @PathVariable Integer applicationId) {
+    public ResponseEntity<Application> getApplication(@PathVariable Long id, @PathVariable Long applicationId) {
         return status(OK).body(service.getApplication(id, applicationId));
     }
 
     @DeleteMapping("{id}/applications/{applicationId}")
-    public ResponseEntity deleteApplication(@PathVariable Integer id, @PathVariable Integer applicationId) {
+    public ResponseEntity deleteApplication(@PathVariable Long id, @PathVariable Long applicationId) {
         service.deleteApplication(id, applicationId);
         return status(NO_CONTENT).build();
     }

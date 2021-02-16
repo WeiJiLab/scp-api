@@ -9,13 +9,13 @@ import java.util.List;
 public interface UseCaseGroupService {
     UseCaseGroupEntity create(UseCaseGroupCreateRequest useCaseGroupRequest);
 
-    UseCaseGroupEntity findById(Integer id);
+    UseCaseGroupEntity findById(Long id);
 
     List<UseCaseGroupEntity> findAll();
 
-    void delete(Integer id);
+    void delete(Long id);
 
-    UseCaseGroupEntity update(Integer id, UseCaseGroupCreateRequest request);
+    UseCaseGroupEntity update(Long id, UseCaseGroupCreateRequest request);
 
-    UseCaseGroupEntity addUseCase(Integer useGroupId, AddUseCaseRequest request);
+    UseCaseGroupEntity addUseCase(Long useGroupId, AddUseCaseRequest request);
 }

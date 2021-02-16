@@ -28,7 +28,7 @@ public class UseCaseGroupController {
 
     @GetMapping("{id}")
     @ResponseStatus(OK)
-    public UseCaseGroupEntity findById(@PathVariable Integer id) {
+    public UseCaseGroupEntity findById(@PathVariable Long id) {
         return useCaseGroupService.findById(id);
     }
 
@@ -40,13 +40,13 @@ public class UseCaseGroupController {
 
     @DeleteMapping("{id}")
     @ResponseStatus(OK)
-    public void delete(@PathVariable Integer id) {
+    public void delete(@PathVariable Long id) {
         useCaseGroupService.delete(id);
     }
 
     @PatchMapping("{id}")
     @ResponseStatus(OK)
-    public UseCaseGroupEntity update(@PathVariable Integer id,
+    public UseCaseGroupEntity update(@PathVariable Long id,
                                      @Validated @RequestBody UseCaseGroupCreateRequest useCaseGroupCreateRequest) {
         return useCaseGroupService.update(id, useCaseGroupCreateRequest);
     }
@@ -54,7 +54,7 @@ public class UseCaseGroupController {
 
     @PostMapping("/{useGroupId}/useCases")
     @ResponseStatus(CREATED)
-    public UseCaseGroupEntity addUseCase(@PathVariable Integer useGroupId,
+    public UseCaseGroupEntity addUseCase(@PathVariable Long useGroupId,
                                          @RequestBody AddUseCaseRequest request) {
         return useCaseGroupService.addUseCase(useGroupId, request);
     }

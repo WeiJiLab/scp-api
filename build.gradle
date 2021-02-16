@@ -19,7 +19,7 @@ apply from: rootProject.file('gradle/config/timing.gradle')
 group = 'com.thoughtworks.security'
 version = '0.0.1-SNAPSHOT'
 sourceCompatibility = '11'
-//apply plugin: 'org.flywaydb.flyway'
+
 configurations {
     compileOnly {
         extendsFrom annotationProcessor
@@ -56,34 +56,37 @@ flyway {
     schemas = ['scp']
 }
 dependencies {
+    // -------- springboot ------------
     implementation 'org.springframework.boot:spring-boot-starter-actuator'
     implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
     implementation 'org.springframework.boot:spring-boot-starter-validation'
     implementation 'org.springframework.boot:spring-boot-starter-web'
-    implementation 'org.flywaydb:flyway-core'
 
-    implementation 'io.springfox:springfox-boot-starter:3.0.0'
+    // -------- db ------------
+    implementation 'org.flywaydb:flyway-core'
+    runtimeOnly 'mysql:mysql-connector-java'
+    runtimeOnly 'com.h2database:h2'
+
+    // -------- aws ------------
     implementation platform('com.amazonaws:aws-java-sdk-bom:1.11.939')
     implementation 'com.amazonaws:aws-java-sdk-s3'
-    compile group: 'org.flywaydb', name: 'flyway-core', version: '7.5.0'
 
+
+    // -------- lombok ------------
     compileOnly 'org.projectlombok:lombok'
-    runtimeOnly 'com.h2database:h2'
-    runtimeOnly 'io.micrometer:micrometer-registry-prometheus'
-    runtimeOnly 'mysql:mysql-connector-java'
     annotationProcessor 'org.projectlombok:lombok'
-    testImplementation 'org.springframework.boot:spring-boot-starter-test'
 
-
-    implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
-    implementation 'org.springframework.boot:spring-boot-starter-web'
-    runtimeOnly 'mysql:mysql-connector-java'
+    // -------- test ------------
     testImplementation('org.springframework.boot:spring-boot-starter-test') {
         exclude group: 'org.junit.vintage', module: 'junit-vintage-engine'
     }
-
-    compile group: 'pl.project13.maven', name: 'git-commit-id-plugin', version: '4.0.3'
     testCompile 'org.jeasy:easy-random-core:4.2.0'
+
+
+    implementation 'io.springfox:springfox-boot-starter:3.0.0'
+    runtimeOnly 'io.micrometer:micrometer-registry-prometheus'
+    compile group: 'pl.project13.maven', name: 'git-commit-id-plugin', version: '4.0.3'
+
 }
 
 dependencyManagement {
@@ -94,8 +97,6 @@ dependencyManagement {
 
 test {
     useJUnitPlatform()
-    exclude "**/integration/**"
-
     testLogging {
         events "passed", "skipped", "failed"
     }
@@ -103,7 +104,6 @@ test {
 
 task integrationTest(type: Test) {
     useJUnitPlatform()
-    include "**/integration/**"
 
     testLogging {
         events "passed", "skipped", "failed"

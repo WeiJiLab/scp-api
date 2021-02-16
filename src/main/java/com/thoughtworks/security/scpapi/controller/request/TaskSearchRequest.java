@@ -10,9 +10,9 @@ import lombok.*;
 @NoArgsConstructor
 public class TaskSearchRequest {
 
-    private Integer appId;
-    private Integer toolId;
-    private Integer projectId;
+    private Long appId;
+    private Long toolId;
+    private Long projectId;
     private Long useCaseId;
 
     private ScanTaskEnum status;

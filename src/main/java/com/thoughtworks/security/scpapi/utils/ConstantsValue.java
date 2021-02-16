@@ -1,4 +1,4 @@
-package com.thoughtworks.security.scpapi.util;
+package com.thoughtworks.security.scpapi.utils;
 
 public class ConstantsValue {
     public static final String REPORT_PATH_TMP = "/tmp/compliance_report";

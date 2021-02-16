@@ -35,7 +35,7 @@ public class UseCaseGroupServiceImpl implements UseCaseGroupService {
     }
 
     @Override
-    public UseCaseGroupEntity findById(Integer id) {
+    public UseCaseGroupEntity findById(Long id) {
         return useCaseGroupRepository.findById(id)
                 .orElseThrow(UseCaseGroupNotFoundException::new);
     }
@@ -46,7 +46,7 @@ public class UseCaseGroupServiceImpl implements UseCaseGroupService {
     }
 
     @Override
-    public void delete(Integer id) {
+    public void delete(Long id) {
         try {
             useCaseGroupRepository.deleteById(id);
         } catch (EmptyResultDataAccessException emptyResultDataAccessException) {
@@ -55,7 +55,7 @@ public class UseCaseGroupServiceImpl implements UseCaseGroupService {
     }
 
     @Override
-    public UseCaseGroupEntity update(Integer id, UseCaseGroupCreateRequest request) {
+    public UseCaseGroupEntity update(Long id, UseCaseGroupCreateRequest request) {
 
         UseCaseGroupEntity useCaseGroupEntity = useCaseGroupRepository.findById(id)
                 .orElseThrow(UseCaseGroupNotFoundException::new);
@@ -69,7 +69,7 @@ public class UseCaseGroupServiceImpl implements UseCaseGroupService {
     }
 
     @Override
-    public UseCaseGroupEntity addUseCase(Integer useGroupId, AddUseCaseRequest request) {
+    public UseCaseGroupEntity addUseCase(Long useGroupId, AddUseCaseRequest request) {
 
         if (!useCaseGroupRepository.existsById(useGroupId)) {
             throw new UseCaseGroupNotFoundException();

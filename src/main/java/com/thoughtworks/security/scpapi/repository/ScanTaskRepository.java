@@ -7,13 +7,13 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import java.util.Collection;
 import java.util.List;
 
-public interface ScanTaskRepository extends JpaRepository<ScanTaskEntity, Integer> {
+public interface ScanTaskRepository extends JpaRepository<ScanTaskEntity, Long> {
 
-    List<ScanTaskEntity> findAllByAppId(Integer appId);
+    List<ScanTaskEntity> findAllByAppId(Long appId);
 
-    List<ScanTaskEntity> findAllByAppIdIn(Collection<Integer> appIds);
+    List<ScanTaskEntity> findAllByAppIdIn(Collection<Long> appId);
 
-    List<ScanTaskEntity> findAllByToolId(Integer toolId);
+    List<ScanTaskEntity> findAllByToolId(Long toolId);
 
     List<ScanTaskEntity> findAllByUseCaseId(Long useCaseId);
 
