@@ -24,7 +24,7 @@ spec:
     command:
     - cat
   - name: jnlp
-    image: "jenkins/jnlp-slave"
+    image: "729601114034.dkr.ecr.ap-northeast-1.amazonaws.com/jnlp-slave-docker:latest"
     env:
       - name: DOCKER_HOST
         value: "tcp://localhost:2375"
