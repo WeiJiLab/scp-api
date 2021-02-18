@@ -1,13 +1,11 @@
 package com.thoughtworks.security.scpapi.controller.request;
 
-import com.thoughtworks.security.scpapi.entity.SecurityToolCategory;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import com.thoughtworks.security.scpapi.enums.SecurityToolCategory;
+import lombok.*;
 
 import javax.validation.constraints.NotNull;
 
+@Setter
 @Getter
 @Builder
 @NoArgsConstructor

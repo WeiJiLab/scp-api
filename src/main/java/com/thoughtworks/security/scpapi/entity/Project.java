@@ -19,13 +19,13 @@ public class Project extends AuditModel {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
+    private Long id;
 
     private String name;
 
     private String description;
 
-    private Integer ownerId;
+    private Long ownerId;
 
     @OneToMany(
             cascade = CascadeType.ALL,
@@ -51,7 +51,7 @@ public class Project extends AuditModel {
         applications.add(application);
     }
 
-    public void removeApplicationById(Integer applicationId) {
+    public void removeApplicationById(Long applicationId) {
         var application = applications.stream()
                 .filter(app -> app.getId().equals(applicationId))
                 .findFirst().orElseThrow(ApplicationNotFoundException::new);

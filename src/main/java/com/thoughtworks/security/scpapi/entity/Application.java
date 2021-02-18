@@ -18,15 +18,15 @@ public class Application extends AuditModel {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
+    private Long id;
 
-    private Integer projectId;
+    private Long projectId;
 
     private String name;
 
     private String description;
 
-    private Integer ownerId;
+    private Long ownerId;
 
     public static Application from(CreateApplicationRequest createApplicationRequest) {
         return Application.builder()

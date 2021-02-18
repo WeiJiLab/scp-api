@@ -1,5 +1,6 @@
 package com.thoughtworks.security.scpapi.entity;
 
+import com.thoughtworks.security.scpapi.enums.ScanResultEnum;
 import lombok.*;
 
 import javax.persistence.*;
@@ -16,9 +17,9 @@ public class ScanResultEntity extends AuditModel {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private Integer scanTaskId;
+    private Long scanTaskId;
 
-    private Integer result;
+    private ScanResultEnum result;
 
     private String resultPath;
 

@@ -23,3 +23,15 @@ spec:
     tty: true
     command:
     - cat
+  - name: jnlp
+    image: "729601114034.dkr.ecr.ap-northeast-1.amazonaws.com/jnlp-slave-docker:latest"
+    env:
+      - name: DOCKER_HOST
+        value: "tcp://localhost:2375"
+  - name: "dind"
+    image: "docker:20.10.3-dind"
+    env:
+      - name: DOCKER_TLS_CERTDIR
+        value: ""
+    securityContext:
+      privileged: true

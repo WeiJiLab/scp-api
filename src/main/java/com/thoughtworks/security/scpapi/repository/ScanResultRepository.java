@@ -9,9 +9,9 @@ import java.util.Optional;
 
 public interface ScanResultRepository extends JpaRepository<ScanResultEntity, Long> {
 
-    List<ScanResultEntity> findAllByScanTaskIdIn(Collection<Integer> scanTaskId);
+    List<ScanResultEntity> findAllByScanTaskIdIn(Collection<Long> scanTaskId);
 
-    Optional<ScanResultEntity> findByScanTaskId(Integer scanTaskId);
+    Optional<ScanResultEntity> findByScanTaskId(Long scanTaskId);
 
 }
 

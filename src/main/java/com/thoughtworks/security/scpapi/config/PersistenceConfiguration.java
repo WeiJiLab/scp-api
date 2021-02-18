@@ -1,4 +1,4 @@
-package com.thoughtworks.security.scpapi.repository;
+package com.thoughtworks.security.scpapi.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

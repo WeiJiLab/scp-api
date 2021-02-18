@@ -14,15 +14,15 @@ public interface ScanTaskService {
 
     List<ScanTaskEntity> getScanTaskByStatus(ScanTaskEnum status);
 
-    List<ScanTaskEntity> getScanTaskByAppId(Integer appId);
+    List<ScanTaskEntity> getScanTaskByAppId(Long appId);
 
-    List<ScanTaskEntity> getScanTaskByToolIs(Integer toolId);
+    List<ScanTaskEntity> getScanTaskByToolIs(Long toolId);
 
     List<ScanTaskEntity> getScanTaskByUseCaseId(Long sseCaseId);
 
-    List<ScanTaskEntity> getScanTaskByProjectId(Integer projectId);
+    List<ScanTaskEntity> getScanTaskByProjectId(Long projectId);
 
-    ScanTaskEntity findById(Integer id);
+    ScanTaskEntity findById(Long id);
 
     void delete(Long id);
 }

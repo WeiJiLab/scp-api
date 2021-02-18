@@ -56,42 +56,47 @@ flyway {
     schemas = ['scp']
 }
 dependencies {
+    // -------- springboot ------------
     implementation 'org.springframework.boot:spring-boot-starter-actuator'
     implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
     implementation 'org.springframework.boot:spring-boot-starter-validation'
     implementation 'org.springframework.boot:spring-boot-starter-web'
-    implementation 'org.flywaydb:flyway-core'
+    implementation 'org.springframework.boot:spring-boot-starter-security'
+    implementation 'org.springframework.boot:spring-boot-starter-data-redis'
 
-    implementation 'io.springfox:springfox-boot-starter:3.0.0'
+    // -------- db ------------
+    implementation 'org.flywaydb:flyway-core'
+    runtimeOnly 'mysql:mysql-connector-java'
+    runtimeOnly 'com.h2database:h2'
+
+    // -------- aws ------------
     implementation platform('com.amazonaws:aws-java-sdk-bom:1.11.939')
     implementation 'com.amazonaws:aws-java-sdk-s3'
-    compile group: 'org.flywaydb', name: 'flyway-core', version: '7.5.0'
 
+
+    // -------- lombok ------------
     compileOnly 'org.projectlombok:lombok'
     annotationProcessor 'org.projectlombok:lombok'
-    runtimeOnly 'com.h2database:h2'
-    runtimeOnly 'io.micrometer:micrometer-registry-prometheus'
-    runtimeOnly 'mysql:mysql-connector-java'
-    testImplementation 'org.springframework.boot:spring-boot-starter-test'
-
-    implementation 'org.springframework.boot:spring-boot-starter-security'
+    
+    // -------- auth ------------
     implementation 'io.jsonwebtoken:jjwt:0.9.1'
-    implementation 'org.springframework.boot:spring-boot-starter-data-redis'
     compile 'org.opensaml:opensaml-core:3.4.5'
     compile 'org.opensaml:opensaml-saml-api:3.4.5'
     compile 'org.opensaml:opensaml-saml-impl:3.4.5'
     compile 'org.opensaml:opensaml-xmlsec-impl:3.4.5'
     compile 'com.google.code.gson:gson:2.8.6'
 
-    implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
-    implementation 'org.springframework.boot:spring-boot-starter-web'
-    runtimeOnly 'mysql:mysql-connector-java'
+    // -------- test ------------
     testImplementation('org.springframework.boot:spring-boot-starter-test') {
         exclude group: 'org.junit.vintage', module: 'junit-vintage-engine'
     }
-
-    compile group: 'pl.project13.maven', name: 'git-commit-id-plugin', version: '4.0.3'
     testCompile 'org.jeasy:easy-random-core:4.2.0'
+
+
+    implementation 'io.springfox:springfox-boot-starter:3.0.0'
+    runtimeOnly 'io.micrometer:micrometer-registry-prometheus'
+    compile group: 'pl.project13.maven', name: 'git-commit-id-plugin', version: '4.0.3'
+
 }
 
 dependencyManagement {
@@ -102,8 +107,6 @@ dependencyManagement {
 
 test {
     useJUnitPlatform()
-    exclude "**/integration/**"
-
     testLogging {
         events "passed", "skipped", "failed"
     }
@@ -111,7 +114,6 @@ test {
 
 task integrationTest(type: Test) {
     useJUnitPlatform()
-    include "**/integration/**"
 
     testLogging {
         events "passed", "skipped", "failed"

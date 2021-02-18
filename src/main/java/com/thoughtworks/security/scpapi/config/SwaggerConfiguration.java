@@ -13,8 +13,6 @@ import springfox.documentation.service.Contact;
 import springfox.documentation.spi.DocumentationType;
 import springfox.documentation.spring.web.plugins.Docket;
 
-//import java.util.HashSet;
-
 @EnableOpenApi
 @Configuration
 
@@ -45,7 +43,7 @@ public class SwaggerConfiguration implements WebMvcConfigurer {
                 .paths(PathSelectors.any())
                 .build();
 
-                // 支持的通讯协议集合
+        // 支持的通讯协议集合
 //                .protocols(new HashSet("https","http"))；
 //
 //                // 授权信息设置，必要的header token等认证信息
