@@ -35,6 +35,14 @@ pipeline {
             }
         }
 
+        stage('Dependency check') {
+            steps {
+                container('jnlp') {
+                    sh 'auto/dependency-check'
+                }
+            }
+        }
+
 //        stage('Scan Docker Image') {
 //            steps {
 //                container('trivy') {
