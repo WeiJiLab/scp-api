@@ -6,3 +6,6 @@ spring:
   flyway:
     locations: classpath:db/migration
     table: flyway_schema_history
+  redis:
+    host: localhost
+    port: 6379

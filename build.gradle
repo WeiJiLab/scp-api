@@ -19,7 +19,7 @@ apply from: rootProject.file('gradle/config/timing.gradle')
 group = 'com.thoughtworks.security'
 version = '0.0.1-SNAPSHOT'
 sourceCompatibility = '11'
-
+apply plugin: 'org.flywaydb.flyway'
 configurations {
     compileOnly {
         extendsFrom annotationProcessor
@@ -61,6 +61,8 @@ dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
     implementation 'org.springframework.boot:spring-boot-starter-validation'
     implementation 'org.springframework.boot:spring-boot-starter-web'
+    implementation 'org.springframework.boot:spring-boot-starter-security'
+    implementation 'org.springframework.boot:spring-boot-starter-data-redis'
 
     // -------- db ------------
     implementation 'org.flywaydb:flyway-core'
@@ -75,6 +77,14 @@ dependencies {
     // -------- lombok ------------
     compileOnly 'org.projectlombok:lombok'
     annotationProcessor 'org.projectlombok:lombok'
+    
+    // -------- auth ------------
+    implementation 'io.jsonwebtoken:jjwt:0.9.1'
+    compile 'org.opensaml:opensaml-core:3.4.5'
+    compile 'org.opensaml:opensaml-saml-api:3.4.5'
+    compile 'org.opensaml:opensaml-saml-impl:3.4.5'
+    compile 'org.opensaml:opensaml-xmlsec-impl:3.4.5'
+    compile 'com.google.code.gson:gson:2.8.6'
 
     // -------- test ------------
     testImplementation('org.springframework.boot:spring-boot-starter-test') {
