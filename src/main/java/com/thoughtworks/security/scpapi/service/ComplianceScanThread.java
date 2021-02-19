@@ -1,6 +1,7 @@
 package com.thoughtworks.security.scpapi.service;
 
 import com.thoughtworks.security.scpapi.enums.ScanResultEnum;
+import com.thoughtworks.security.scpapi.exception.UseCaseInvalidException;
 import com.thoughtworks.security.scpapi.infrastructure.aws.s3.OperateObject;
 import com.thoughtworks.security.scpapi.entity.ScanResultEntity;
 import com.thoughtworks.security.scpapi.entity.ScanTaskEntity;
@@ -47,12 +48,18 @@ public class ComplianceScanThread extends Thread {
     }
 
     private String getUseCaseUrl(String keyName) throws IOException {
-
         String zipSrcName = OperateObject.downloadObject(S3_BUCKET_NAME, keyName, USE_CASE_PATH_TMP);
         String lastName = keyName.substring(0, keyName.lastIndexOf("."));
-        ZipUtil.unZip(zipSrcName, USE_CASE_PATH_TMP + "/" + lastName);
+        String objDir = USE_CASE_PATH_TMP + "/" + lastName;
+        ZipUtil.unZip(zipSrcName, objDir);
+        File fileObj = new File(objDir);
+        File[] files = fileObj.listFiles();
+        if (files.length != 1) {
+            throw new UseCaseInvalidException("Use case is invalid.");
+        }
 
         return USE_CASE_PATH_TMP + "/" + lastName;
+
     }
 
     // 做一次抽象
@@ -86,7 +93,7 @@ public class ComplianceScanThread extends Thread {
             String reportName = fileNamePre + currDate + ".html";
             String reportFullPath = REPORT_PATH_TMP + "/" + reportName;
             // todo 改一下inspec exec
-            String shellStr = "inspec exec " + useCaseUrl + "/my_puppet --reporter html:" + reportFullPath;
+            String shellStr = "inspec exec " + useCaseUrl + " --reporter html:" + reportFullPath;
             Process process = Runtime.getRuntime().exec(shellStr);
             int exitValue = process.waitFor();
             scanTaskEntity.setEndTime(Instant.now());
