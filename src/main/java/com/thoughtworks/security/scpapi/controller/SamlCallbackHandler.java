@@ -25,6 +25,7 @@ public class SamlCallbackHandler {
         return JwtUtil.generateToken(userService.save(samlResponse).orElse(null), null, this.jwtProperties.getSecret(), "Bearer").map(token -> {
             return ResponseEntity
                 .status(HttpStatus.FOUND)
+                .header("Authorization", token)
                 .header("Location", String.format("https://scp.security.thoughtworks.cn/?token=%s", token))
                 .body("");
         }).orElse(ResponseEntity
