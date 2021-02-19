@@ -86,7 +86,9 @@
         </module>
 
         <!-- Naming -->
-        <module name="ConstantName"/>
+        <module name="ConstantName">
+            <property name="format" value="^[A-Z][A-Z0-9_]*[A-Z]$"/>
+        </module>
         <module name="LocalFinalVariableName"/>
         <module name="LocalVariableName"/>
         <module name="MemberName">
