@@ -1,6 +1,7 @@
 package com.thoughtworks.security.scpapi.service;
 
 import com.thoughtworks.security.scpapi.enums.ScanResultEnum;
+import com.thoughtworks.security.scpapi.exception.UseCaseInvalidException;
 import com.thoughtworks.security.scpapi.infrastructure.aws.s3.OperateObject;
 import com.thoughtworks.security.scpapi.entity.ScanResultEntity;
 import com.thoughtworks.security.scpapi.entity.ScanTaskEntity;
@@ -16,7 +17,10 @@ import lombok.AllArgsConstructor;
 import java.io.*;
 import java.sql.Timestamp;
 import java.time.Instant;
+import java.util.Arrays;
 import java.util.Date;
+import java.util.List;
+import java.util.stream.Collectors;
 
 import static com.thoughtworks.security.scpapi.utils.ConstantsValue.*;
 
@@ -47,13 +51,19 @@ public class ComplianceScanThread extends Thread {
     }
 
     private String getUseCaseUrl(String keyName) throws IOException {
-
         String zipSrcName = OperateObject.downloadObject(S3_BUCKET_NAME, keyName, USE_CASE_PATH_TMP);
         String lastName = keyName.substring(0, keyName.lastIndexOf("."));
-        ZipUtil.unZip(zipSrcName, USE_CASE_PATH_TMP + "/" + lastName);
-
-        return USE_CASE_PATH_TMP + "/" + lastName;
+        String objDir = USE_CASE_PATH_TMP + "/" + lastName;
+        ZipUtil.unZip(zipSrcName, objDir);
+        File fileObj = new File(objDir);
+        File[] files = fileObj.listFiles();
+        List<File> validFiles = Arrays.stream(files).filter(f -> !f.isHidden()).collect(Collectors.toList());
+        if (validFiles.size() != 1) { // 要求上传zip包中只包含一个目录
+            throw new UseCaseInvalidException("Use case is invalid.");
+        }
+        return objDir + "/" + validFiles.get(0).getName();
     }
+
 
     // 做一次抽象
     public void run() {
@@ -85,8 +95,8 @@ public class ComplianceScanThread extends Thread {
             String fileNamePre = useCaseEntity.getName().replaceAll(" ", "");
             String reportName = fileNamePre + currDate + ".html";
             String reportFullPath = REPORT_PATH_TMP + "/" + reportName;
-            // todo 改一下inspec exec
-            String shellStr = "inspec exec " + useCaseUrl + "/my_puppet --reporter html:" + reportFullPath;
+
+            String shellStr = "inspec exec " + useCaseUrl + " --reporter html:" + reportFullPath;
             Process process = Runtime.getRuntime().exec(shellStr);
             int exitValue = process.waitFor();
             scanTaskEntity.setEndTime(Instant.now());

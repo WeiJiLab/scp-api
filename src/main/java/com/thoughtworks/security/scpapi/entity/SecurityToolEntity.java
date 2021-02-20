@@ -8,7 +8,7 @@ import javax.persistence.*;
 import java.util.List;
 import java.util.stream.Collectors;
 
-@Entity
+@Entity(name = "security_tool")
 @Builder
 @Getter
 @Setter

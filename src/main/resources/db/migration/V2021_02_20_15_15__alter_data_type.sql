@@ -1,0 +1,1 @@
+alter table `scan_result` modify column result varchar(60) comment '任务扫描结果'
