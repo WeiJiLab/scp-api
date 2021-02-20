@@ -81,8 +81,12 @@ public class ZipUtil {
         ZipFile zip = new ZipFile(zipFile);
         for (Enumeration entries = zip.entries(); entries.hasMoreElements();) {
             ZipEntry entry = (ZipEntry) entries.nextElement();
-            String zipEntryName = entry.getName();
 
+            String zipEntryName = entry.getName();
+            boolean hidden = new File(zipEntryName).isHidden();
+            if (hidden) {
+                continue;
+            }
             InputStream in = zip.getInputStream(entry);
             String outPath = (descDir + "/" + zipEntryName).replaceAll("\\\\", "/");
 

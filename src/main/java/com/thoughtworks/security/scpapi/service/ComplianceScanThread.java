@@ -17,7 +17,10 @@ import lombok.AllArgsConstructor;
 import java.io.*;
 import java.sql.Timestamp;
 import java.time.Instant;
+import java.util.Arrays;
 import java.util.Date;
+import java.util.List;
+import java.util.stream.Collectors;
 
 import static com.thoughtworks.security.scpapi.utils.ConstantsValue.*;
 
@@ -54,13 +57,13 @@ public class ComplianceScanThread extends Thread {
         ZipUtil.unZip(zipSrcName, objDir);
         File fileObj = new File(objDir);
         File[] files = fileObj.listFiles();
-        if (files.length != 1) {
+        List<File> validFiles = Arrays.stream(files).filter(f -> !f.isHidden()).collect(Collectors.toList());
+        if (validFiles.size() != 1) { // 要求上传zip包中只包含一个目录
             throw new UseCaseInvalidException("Use case is invalid.");
         }
-
-        return USE_CASE_PATH_TMP + "/" + lastName;
-
+        return objDir + "/" + validFiles.get(0).getName();
     }
+
 
     // 做一次抽象
     public void run() {
@@ -92,7 +95,7 @@ public class ComplianceScanThread extends Thread {
             String fileNamePre = useCaseEntity.getName().replaceAll(" ", "");
             String reportName = fileNamePre + currDate + ".html";
             String reportFullPath = REPORT_PATH_TMP + "/" + reportName;
-            // todo 改一下inspec exec
+
             String shellStr = "inspec exec " + useCaseUrl + " --reporter html:" + reportFullPath;
             Process process = Runtime.getRuntime().exec(shellStr);
             int exitValue = process.waitFor();
