@@ -31,21 +31,18 @@ public class ZipUtil {
             FileOutputStream fos = new FileOutputStream(zipFile);
             zos = new ZipOutputStream(fos);
             byte[] bufs = new byte[1024 * 10];
-            for (int i = 0; i < sourceFiles.length; i++) {
+            for (File file : sourceFiles) {
                 //创建ZIP实体，并添加进压缩包
-                ZipEntry zipEntry = new ZipEntry(sourceFiles[i].getName());
+                ZipEntry zipEntry = new ZipEntry(file.getName());
                 zos.putNextEntry(zipEntry);
                 //读取待压缩的文件并写进压缩包里
-                FileInputStream fis = new FileInputStream(sourceFiles[i]);
+                FileInputStream fis = new FileInputStream(file);
                 bis = new BufferedInputStream(fis, 1024 * 10);
                 int read = 0;
                 while ((read = bis.read(bufs, 0, 1024 * 10)) != -1) {
                     zos.write(bufs, 0, read);
                 }
             }
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-            throw new RuntimeException(e);
         } catch (IOException e) {
             e.printStackTrace();
             throw new RuntimeException(e);
@@ -65,7 +62,7 @@ public class ZipUtil {
                 throw new RuntimeException(e);
             }
         }
-        System.out.print(fileFullName);
+        log.info("fileFullName: " + fileFullName);
         return fileFullName;
     }
 
@@ -100,7 +97,6 @@ public class ZipUtil {
                 continue;
             }
             //输出文件路径信息
-            System.out.println(outPath);
             log.info("outPath : " + outPath);
 
             OutputStream out = new FileOutputStream(outPath);

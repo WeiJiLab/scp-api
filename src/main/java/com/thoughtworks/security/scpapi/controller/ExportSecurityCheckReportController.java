@@ -17,7 +17,7 @@ import java.io.IOException;
 public class ExportSecurityCheckReportController extends HttpServlet {
     @RequestMapping(value = "compliance/securityCheckExport", method = RequestMethod.GET)
     @Override
-    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
 
         String path = ZipUtil.createZip("reportPath", "currUser.getUsername()");
 
@@ -34,7 +34,7 @@ public class ExportSecurityCheckReportController extends HttpServlet {
         //执行输出操作
         int len = 1;
         byte[] b = new byte[1024]; //创建一个字节数组
-        while((len = fis.read(b)) != -1) {
+        while ((len = fis.read(b)) != -1) {
             sos.write(b, 0, len);
         }
         fis.close();
