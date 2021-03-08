@@ -1,4 +1,4 @@
-package com.thoughtworks.security.scpapi.util;
+package com.thoughtworks.security.scpapi.utils;
 
 import com.thoughtworks.security.scpapi.entity.User;
 import io.jsonwebtoken.Claims;

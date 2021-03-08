@@ -1,4 +1,4 @@
-package com.thoughtworks.security.scpapi.util;
+package com.thoughtworks.security.scpapi.utils;
 
 import lombok.extern.slf4j.Slf4j;
 import net.shibboleth.utilities.java.support.security.RandomIdentifierGenerationStrategy;
