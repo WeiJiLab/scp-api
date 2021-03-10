@@ -5,7 +5,7 @@ import com.google.gson.JsonParseException;
 import com.thoughtworks.security.scpapi.config.properties.SamlProperties;
 import com.thoughtworks.security.scpapi.entity.User;
 import com.thoughtworks.security.scpapi.service.UserService;
-import com.thoughtworks.security.scpapi.util.SamlUtil;
+import com.thoughtworks.security.scpapi.utils.SamlUtil;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.redis.core.RedisTemplate;

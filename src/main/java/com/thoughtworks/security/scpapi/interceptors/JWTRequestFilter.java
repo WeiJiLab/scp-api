@@ -3,7 +3,7 @@ package com.thoughtworks.security.scpapi.interceptors;
 import com.thoughtworks.security.scpapi.config.properties.JWTProperties;
 import com.thoughtworks.security.scpapi.entity.User;
 import com.thoughtworks.security.scpapi.service.impl.UserServiceImpl;
-import com.thoughtworks.security.scpapi.util.JwtUtil;
+import com.thoughtworks.security.scpapi.utils.JwtUtil;
 
 import lombok.RequiredArgsConstructor;
 
