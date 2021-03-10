@@ -105,6 +105,7 @@ public class ComplianceScanThread extends Thread {
             String shellStr = "inspec exec " + useCaseUrl + environmentCmdStr + " --reporter html:" + reportFullPath;
             Process process = Runtime.getRuntime().exec(shellStr);
             int exitValue = process.waitFor();
+            printStream(process);
             scanTaskEntity.setEndTime(Instant.now());
             if ((exitValue == 100) || (exitValue == 101) || (exitValue == 0)) {
                 // success
