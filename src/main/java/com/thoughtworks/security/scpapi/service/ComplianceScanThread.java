@@ -1,5 +1,6 @@
 package com.thoughtworks.security.scpapi.service;
 
+import com.thoughtworks.security.scpapi.domain.EnvironmentTypePara;
 import com.thoughtworks.security.scpapi.enums.ScanResultEnum;
 import com.thoughtworks.security.scpapi.exception.UseCaseInvalidException;
 import com.thoughtworks.security.scpapi.infrastructure.aws.s3.OperateObject;
@@ -31,7 +32,7 @@ public class ComplianceScanThread extends Thread {
     private final ScanResultRepository scanResultRepository;
     private final ScanTaskRepository scanTaskRepository;
     private final UseCaseRepository useCaseRepository;
-
+    private final EnvironmentTypePara environmentTypePara;
     private void printStream(Process process) {
         // 以下为调试代码
         InputStream fis = process.getInputStream();
@@ -63,7 +64,12 @@ public class ComplianceScanThread extends Thread {
         }
         return objDir + "/" + validFiles.get(0).getName();
     }
-
+    public EnvironmentTypePara getEnvironmentPara() {
+        return environmentTypePara;
+    }
+    public String getScanEnvironmentCmd() {
+        return "";
+    }
 
     // 做一次抽象
     public void run() {
@@ -95,8 +101,8 @@ public class ComplianceScanThread extends Thread {
             String fileNamePre = useCaseEntity.getName().replaceAll(" ", "");
             String reportName = fileNamePre + currDate + ".html";
             String reportFullPath = REPORT_PATH_TMP + "/" + reportName;
-
-            String shellStr = "inspec exec " + useCaseUrl + " --reporter html:" + reportFullPath;
+            String environmentCmdStr = getScanEnvironmentCmd();
+            String shellStr = "inspec exec " + useCaseUrl + environmentCmdStr + " --reporter html:" + reportFullPath;
             Process process = Runtime.getRuntime().exec(shellStr);
             int exitValue = process.waitFor();
             scanTaskEntity.setEndTime(Instant.now());
@@ -116,7 +122,6 @@ public class ComplianceScanThread extends Thread {
                 return;
             }
 
-            // error
             scanTaskEntity.setStatus(ScanTaskEnum.FAILED);
             scanTaskRepository.saveAndFlush(scanTaskEntity);
 
