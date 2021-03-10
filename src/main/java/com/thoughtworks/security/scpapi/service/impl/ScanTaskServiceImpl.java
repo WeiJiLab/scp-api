@@ -2,16 +2,16 @@ package com.thoughtworks.security.scpapi.service.impl;
 
 import com.thoughtworks.security.scpapi.controller.request.ScanTaskRequest;
 import com.thoughtworks.security.scpapi.controller.request.TaskSearchRequest;
+import com.thoughtworks.security.scpapi.domain.EnvironmentTypePara;
 import com.thoughtworks.security.scpapi.entity.Application;
 import com.thoughtworks.security.scpapi.entity.ScanTaskEntity;
+import com.thoughtworks.security.scpapi.enums.EnvironmentType;
 import com.thoughtworks.security.scpapi.enums.ScanTaskEnum;
 import com.thoughtworks.security.scpapi.exception.ScanTaskNotFoundException;
 import com.thoughtworks.security.scpapi.repository.ScanResultRepository;
 import com.thoughtworks.security.scpapi.repository.ScanTaskRepository;
 import com.thoughtworks.security.scpapi.repository.UseCaseRepository;
-import com.thoughtworks.security.scpapi.service.ComplianceScanThread;
-import com.thoughtworks.security.scpapi.service.ProjectService;
-import com.thoughtworks.security.scpapi.service.ScanTaskService;
+import com.thoughtworks.security.scpapi.service.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
@@ -36,6 +36,13 @@ public class ScanTaskServiceImpl implements ScanTaskService {
     public List<ScanTaskEntity> create(ScanTaskRequest scanTaskRequest) {
 
         List<Long> useCaseIds = scanTaskRequest.getUseCaseIds();
+        EnvironmentType environmentType = scanTaskRequest.getEnvironmentType();
+        EnvironmentTypePara environmentTypePara = EnvironmentTypePara.builder()
+                .dockerContainerId(scanTaskRequest.getDockerContainerId())
+                .userName(scanTaskRequest.getUserName())
+                .password(scanTaskRequest.getPassword())
+                .addr(scanTaskRequest.getAddr())
+                .build();
 
         var scanTaskEntities = useCaseRepository
                 .findAllByIdIn(useCaseIds).stream()
@@ -49,23 +56,29 @@ public class ScanTaskServiceImpl implements ScanTaskService {
 
         List<ScanTaskEntity> scanTaskEntityList = scanTaskRepository.saveAll(scanTaskEntities);
 
-        startScan(scanTaskEntityList);
+        startScan(scanTaskEntityList, environmentTypePara, environmentType);
 
         return scanTaskEntityList;
 
     }
+    private ComplianceScanThread createScanThread(ScanTaskEntity scanTaskEntity, EnvironmentTypePara environmentPara, EnvironmentType environmentType) {
+        if (environmentType == EnvironmentType.DOCKER) {
+            return new DockerComplianceScanThread(scanTaskEntity, scanResultRepository, scanTaskRepository,
+                    useCaseRepository, environmentPara);
+        } else if (environmentType == EnvironmentType.LINUX) {
+            return new SshComplianceScanThread(scanTaskEntity, scanResultRepository, scanTaskRepository,
+                    useCaseRepository, environmentPara);
+        } else if (environmentType == EnvironmentType.WINDOWS) {
+            return new WinRMComplianceScanThread(scanTaskEntity, scanResultRepository, scanTaskRepository,
+                    useCaseRepository, environmentPara);
+        }
+        return new ComplianceScanThread(scanTaskEntity, scanResultRepository, scanTaskRepository,
+                    useCaseRepository, environmentPara);
 
-    private void startScan(List<ScanTaskEntity> scanTaskEntityList) {
-
-        // TODO : start scan
+    }
+    private void startScan(List<ScanTaskEntity> scanTaskEntityList, EnvironmentTypePara environmentPara, EnvironmentType environmentType) {
         scanTaskEntityList
-                .forEach(it ->
-                        new ComplianceScanThread(it,
-                                scanResultRepository,
-                                scanTaskRepository,
-                                useCaseRepository
-                        ).start()
-                );
+                .forEach(it -> createScanThread(it, environmentPara, environmentType).start());
     }
 
     @Override
@@ -136,6 +149,4 @@ public class ScanTaskServiceImpl implements ScanTaskService {
             throw new ScanTaskNotFoundException();
         }
     }
-
-
 }

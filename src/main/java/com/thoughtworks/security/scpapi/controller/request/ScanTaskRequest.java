@@ -1,5 +1,6 @@
 package com.thoughtworks.security.scpapi.controller.request;
 
+import com.thoughtworks.security.scpapi.enums.EnvironmentType;
 import io.swagger.annotations.ApiModel;
 import lombok.Data;
 
@@ -13,4 +14,14 @@ public class ScanTaskRequest {
     private Long appId;
 
     private List<Long> useCaseIds;
+
+    private EnvironmentType environmentType;
+
+    private String userName;
+
+    private String password;
+
+    private String dockerContainerId;
+
+    private String addr;
 }
