@@ -2,7 +2,7 @@ package com.thoughtworks.security.scpapi.controller;
 
 import com.thoughtworks.security.scpapi.config.properties.JWTProperties;
 import com.thoughtworks.security.scpapi.service.UserService;
-import com.thoughtworks.security.scpapi.util.JwtUtil;
+import com.thoughtworks.security.scpapi.utils.JwtUtil;
 import lombok.RequiredArgsConstructor;
 
 import org.springframework.http.HttpStatus;
