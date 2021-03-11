@@ -1,4 +1,5 @@
 FROM adoptopenjdk/openjdk11:debian-slim AS builder
+ENV CHEF_LICENSE="accept"
 WORKDIR /home
 ADD . /home
 RUN ./gradlew clean bootJar
