@@ -1,5 +1,4 @@
 FROM adoptopenjdk/openjdk11:debian-slim AS builder
-ENV CHEF_LICENSE="accept"
 WORKDIR /home
 ADD . /home
 RUN ./gradlew clean bootJar
@@ -26,8 +25,8 @@ RUN ln -fs /usr/share/zoneinfo/Asia/Shanghai /etc/localtime \
 
 RUN curl https://omnitruck.chef.io/install.sh | bash -s -- -P inspec
 
-COPY --from=builder /home/build/libs/*.jar app.jar
-
+COPY --from=builder  /home/build/libs/*.jar app.jar
+ENV CHEF_LICENSE="accept"
 USER ${user}
 
 EXPOSE 8080
