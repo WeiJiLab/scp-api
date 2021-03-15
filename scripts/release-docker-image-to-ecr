@@ -1,0 +1,14 @@
+#!/bin/bash -e
+
+cd $(dirname $0)/..
+source ./scripts/set-env-vars
+
+# Build the image
+DOCKER_IMAGE=${ECR_URL}/${APP_NAME}
+docker build -t ${DOCKER_IMAGE} .
+
+# Release
+echo "Release to registry"
+docker tag ${DOCKER_IMAGE} ${DOCKER_IMAGE}:${GIT_HASH}
+docker push ${DOCKER_IMAGE}:${GIT_HASH}
+echo "Pushed docker image ${DOCKER_IMAGE}} with tags ${GIT_HASH}"

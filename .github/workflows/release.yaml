@@ -1,0 +1,45 @@
+name: release
+
+on:
+  push:
+    branches:
+      - master
+
+jobs:
+  release:
+    runs-on: ubuntu-20.04
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: ap-northeast-1
+
+      - name: Check and create ECR repo
+        run: |
+          ./scripts/create-ecr-repo
+      - name: Login to Amazon ECR
+        uses: aws-actions/amazon-ecr-login@v1
+
+      - name: Build and push image to Amazon ECR
+        run: |
+          ./scripts/release-docker-image-to-ecr
+      - name: Generate helm values file
+        run: |
+          ./scripts/generate-helm-values-file
+      - name: Pushes values file to manifest repo
+        uses: dmnemec/copy_file_to_another_repo_action@v1.0.4
+        env:
+          API_TOKEN_GITHUB: ${{ secrets.API_TOKEN_GITHUB }}
+        with:
+          source_file: 'helm/values-image.yaml'
+          destination_repo: 'WeiJiLab/argocd-deployment'
+          destination_folder: 'helm/chart/scp-api'
+          user_email: 'action@github.com'
+          user_name: 'actions'
+          destination_branch: master
