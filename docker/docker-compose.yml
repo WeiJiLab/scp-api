@@ -1,0 +1,17 @@
+version: '3'
+services:
+  mysql:
+    image: mysql:5.7.27
+    container_name: scp_mysql_5.7.27
+    volumes:
+    - ./mysql/init.db.db.migration:/docker-entrypoint-initdb.d/init.db.db.migration
+    command: --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci --lower_case_table_names=1
+    ports:
+    - "3306:3306"
+    restart: always
+    environment:
+    - TZ=Asia/Shanghai
+    - MYSQL_ROOT_PASSWORD=12345678
+    - MYSQL_DATABASE=scp
+
+# docker-compose --file docker/docker-compose.yml up -d

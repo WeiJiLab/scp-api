@@ -1,11 +1,11 @@
 package com.thoughtworks.security.scpapi.service.impl;
 
 import com.amazonaws.AmazonServiceException;
+import com.thoughtworks.security.scpapi.exception.core.NotFoundException;
 import com.thoughtworks.security.scpapi.infrastructure.aws.s3.OperateObject;
 import com.thoughtworks.security.scpapi.controller.request.ComplianceUseCaseInputDto;
 import com.thoughtworks.security.scpapi.entity.UseCaseEntity;
 import com.thoughtworks.security.scpapi.exception.UploadFileException;
-import com.thoughtworks.security.scpapi.exception.UseCaseNotFoundException;
 import com.thoughtworks.security.scpapi.repository.UseCaseRepository;
 import com.thoughtworks.security.scpapi.service.UseCaseService;
 import lombok.RequiredArgsConstructor;
@@ -23,6 +23,7 @@ import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
 
+import static com.thoughtworks.security.scpapi.exception.core.NotFoundError.NOT_FOUND_USE_CASE;
 import static com.thoughtworks.security.scpapi.utils.ConstantsValue.S3_BUCKET_NAME;
 
 @Service
@@ -99,21 +100,21 @@ public class UseCaseServiceImpl implements UseCaseService {
         try {
             useCaseRepository.deleteById(id);
         } catch (EmptyResultDataAccessException emptyResultDataAccessException) {
-            throw new UseCaseNotFoundException();
+            throw new NotFoundException(NOT_FOUND_USE_CASE);
         }
     }
 
     @Override
     public UseCaseEntity findById(Long id) {
         return useCaseRepository.findById(id)
-                .orElseThrow(UseCaseNotFoundException::new);
+                .orElseThrow(() -> new NotFoundException(NOT_FOUND_USE_CASE));
     }
 
     @Override
     public UseCaseEntity update(Long id, MultipartFile file, String description, String name, Long toolId) {
 
         UseCaseEntity useCaseEntity = useCaseRepository.findById(id)
-                .orElseThrow(UseCaseNotFoundException::new);
+                .orElseThrow(() -> new NotFoundException(NOT_FOUND_USE_CASE));
 
         String filePath = uploadFile(file);
 

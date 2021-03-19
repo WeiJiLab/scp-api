@@ -2,14 +2,17 @@ package com.thoughtworks.security.scpapi.service.impl;
 
 import com.thoughtworks.security.scpapi.domain.SecurityTool;
 import com.thoughtworks.security.scpapi.entity.SecurityToolEntity;
-import com.thoughtworks.security.scpapi.exception.DuplicatedSecurityToolException;
-import com.thoughtworks.security.scpapi.exception.SecurityToolNotFoundException;
+import com.thoughtworks.security.scpapi.exception.core.DuplicatedException;
+import com.thoughtworks.security.scpapi.exception.core.NotFoundException;
 import com.thoughtworks.security.scpapi.repository.SecurityToolRepository;
 import com.thoughtworks.security.scpapi.service.SecurityToolService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+
+import static com.thoughtworks.security.scpapi.exception.core.DuplicatedError.EXISTED_SECURITY_TOOL;
+import static com.thoughtworks.security.scpapi.exception.core.NotFoundError.NOT_FOUND_SECURITY_TOOL;
 
 @Service
 @RequiredArgsConstructor
@@ -21,7 +24,7 @@ public class SecurityToolServiceImpl implements SecurityToolService {
     public SecurityTool create(SecurityTool securityTool) {
 
         if (securityToolRepository.existsByName(securityTool.getName())) {
-            throw new DuplicatedSecurityToolException();
+            throw new DuplicatedException(EXISTED_SECURITY_TOOL);
         }
 
         SecurityToolEntity securityToolEntity = SecurityToolEntity.builder()
@@ -39,7 +42,7 @@ public class SecurityToolServiceImpl implements SecurityToolService {
     @Override
     public SecurityTool findById(Long id) {
         SecurityToolEntity securityToolEntity = securityToolRepository.findById(id)
-                .orElseThrow(SecurityToolNotFoundException::new);
+                .orElseThrow(() -> new NotFoundException(NOT_FOUND_SECURITY_TOOL));
 
         return SecurityToolEntity.toSecurityTool(securityToolEntity);
     }

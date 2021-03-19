@@ -3,8 +3,8 @@ package com.thoughtworks.security.scpapi.service.impl;
 import com.thoughtworks.security.scpapi.controller.request.AddUseCaseRequest;
 import com.thoughtworks.security.scpapi.controller.request.UseCaseGroupCreateRequest;
 import com.thoughtworks.security.scpapi.entity.UseCaseGroupEntity;
-import com.thoughtworks.security.scpapi.exception.DuplicatedUseCaseGroupException;
-import com.thoughtworks.security.scpapi.exception.UseCaseGroupNotFoundException;
+import com.thoughtworks.security.scpapi.exception.core.DuplicatedException;
+import com.thoughtworks.security.scpapi.exception.core.NotFoundException;
 import com.thoughtworks.security.scpapi.repository.UseCaseGroupRepository;
 import com.thoughtworks.security.scpapi.repository.UseCaseRepository;
 import com.thoughtworks.security.scpapi.service.UseCaseGroupService;
@@ -13,6 +13,9 @@ import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+
+import static com.thoughtworks.security.scpapi.exception.core.DuplicatedError.EXISTED_USE_CASE_GROUP;
+import static com.thoughtworks.security.scpapi.exception.core.NotFoundError.NOT_FOUND_USE_CASE_GROUP;
 
 @Service
 @RequiredArgsConstructor
@@ -37,7 +40,7 @@ public class UseCaseGroupServiceImpl implements UseCaseGroupService {
     @Override
     public UseCaseGroupEntity findById(Long id) {
         return useCaseGroupRepository.findById(id)
-                .orElseThrow(UseCaseGroupNotFoundException::new);
+                .orElseThrow(() -> new NotFoundException(NOT_FOUND_USE_CASE_GROUP));
     }
 
     @Override
@@ -50,7 +53,7 @@ public class UseCaseGroupServiceImpl implements UseCaseGroupService {
         try {
             useCaseGroupRepository.deleteById(id);
         } catch (EmptyResultDataAccessException emptyResultDataAccessException) {
-            throw new UseCaseGroupNotFoundException();
+            throw new NotFoundException(NOT_FOUND_USE_CASE_GROUP);
         }
     }
 
@@ -58,7 +61,7 @@ public class UseCaseGroupServiceImpl implements UseCaseGroupService {
     public UseCaseGroupEntity update(Long id, UseCaseGroupCreateRequest request) {
 
         UseCaseGroupEntity useCaseGroupEntity = useCaseGroupRepository.findById(id)
-                .orElseThrow(UseCaseGroupNotFoundException::new);
+                .orElseThrow(() -> new NotFoundException(NOT_FOUND_USE_CASE_GROUP));
 
         checkUseCaseByName(request);
 
@@ -72,7 +75,7 @@ public class UseCaseGroupServiceImpl implements UseCaseGroupService {
     public UseCaseGroupEntity addUseCase(Long useGroupId, AddUseCaseRequest request) {
 
         if (!useCaseGroupRepository.existsById(useGroupId)) {
-            throw new UseCaseGroupNotFoundException();
+            throw new NotFoundException(NOT_FOUND_USE_CASE_GROUP);
         }
 
 //        List<UseCaseEntity> useCaseEntities = useCaseRepository
@@ -84,13 +87,13 @@ public class UseCaseGroupServiceImpl implements UseCaseGroupService {
 //        useCaseRepository.saveAll(useCaseEntities);
 
         return useCaseGroupRepository.findById(useGroupId)
-                .orElseThrow(UseCaseGroupNotFoundException::new);
+                .orElseThrow(() -> new NotFoundException(NOT_FOUND_USE_CASE_GROUP));
     }
 
     private void checkUseCaseByName(UseCaseGroupCreateRequest request) {
 
         if (useCaseGroupRepository.existsByName(request.getName())) {
-            throw new DuplicatedUseCaseGroupException();
+            throw new DuplicatedException(EXISTED_USE_CASE_GROUP);
         }
     }
 }

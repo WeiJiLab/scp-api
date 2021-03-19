@@ -2,13 +2,13 @@ package com.thoughtworks.security.scpapi.service;
 
 import com.thoughtworks.security.scpapi.domain.EnvironmentTypePara;
 import com.thoughtworks.security.scpapi.enums.ScanResultEnum;
+import com.thoughtworks.security.scpapi.exception.core.NotFoundException;
 import com.thoughtworks.security.scpapi.exception.UseCaseInvalidException;
 import com.thoughtworks.security.scpapi.infrastructure.aws.s3.OperateObject;
 import com.thoughtworks.security.scpapi.entity.ScanResultEntity;
 import com.thoughtworks.security.scpapi.entity.ScanTaskEntity;
 import com.thoughtworks.security.scpapi.entity.UseCaseEntity;
 import com.thoughtworks.security.scpapi.enums.ScanTaskEnum;
-import com.thoughtworks.security.scpapi.exception.UseCaseNotFoundException;
 import com.thoughtworks.security.scpapi.repository.ScanResultRepository;
 import com.thoughtworks.security.scpapi.repository.ScanTaskRepository;
 import com.thoughtworks.security.scpapi.repository.UseCaseRepository;
@@ -23,6 +23,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import static com.thoughtworks.security.scpapi.exception.core.NotFoundError.NOT_FOUND_USE_CASE;
 import static com.thoughtworks.security.scpapi.utils.ConstantsValue.*;
 
 
@@ -77,7 +78,7 @@ public class ComplianceScanThread extends Thread {
 
             // useCase
             UseCaseEntity useCaseEntity = useCaseRepository.findById(scanTaskEntity.getUseCaseId())
-                    .orElseThrow(UseCaseNotFoundException::new);
+                    .orElseThrow(() -> new NotFoundException(NOT_FOUND_USE_CASE));
 
             // task
             scanTaskEntity.setStatus(ScanTaskEnum.RUNNING);

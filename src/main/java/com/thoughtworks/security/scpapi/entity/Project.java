@@ -1,13 +1,16 @@
 package com.thoughtworks.security.scpapi.entity;
 
 import com.thoughtworks.security.scpapi.controller.request.CreateProjectRequest;
-import com.thoughtworks.security.scpapi.exception.ApplicationNotFoundException;
-import com.thoughtworks.security.scpapi.exception.DuplicatedApplicationException;
+import com.thoughtworks.security.scpapi.exception.core.DuplicatedException;
+import com.thoughtworks.security.scpapi.exception.core.NotFoundException;
 import lombok.*;
 
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
+
+import static com.thoughtworks.security.scpapi.exception.core.DuplicatedError.EXISTED_APPLICATION;
+import static com.thoughtworks.security.scpapi.exception.core.NotFoundError.NOT_FOUND_APPLICATION;
 
 @Entity
 @Builder
@@ -46,7 +49,7 @@ public class Project extends AuditModel {
         var isApplicationNameExisted = applications.stream()
                 .anyMatch(app -> app.getName().equals(application.getName()));
         if (isApplicationNameExisted) {
-            throw new DuplicatedApplicationException();
+            throw new DuplicatedException(EXISTED_APPLICATION);
         }
         applications.add(application);
     }
@@ -54,7 +57,7 @@ public class Project extends AuditModel {
     public void removeApplicationById(Long applicationId) {
         var application = applications.stream()
                 .filter(app -> app.getId().equals(applicationId))
-                .findFirst().orElseThrow(ApplicationNotFoundException::new);
+                .findFirst().orElseThrow(() -> new NotFoundException(NOT_FOUND_APPLICATION));
         applications.remove(application);
     }
 }

@@ -4,8 +4,7 @@ import com.thoughtworks.security.scpapi.domain.ScanResult;
 import com.thoughtworks.security.scpapi.entity.ScanResultEntity;
 import com.thoughtworks.security.scpapi.entity.ScanTaskEntity;
 import com.thoughtworks.security.scpapi.entity.UseCaseEntity;
-import com.thoughtworks.security.scpapi.exception.ScanResultNotFoundException;
-import com.thoughtworks.security.scpapi.exception.UseCaseNotFoundException;
+import com.thoughtworks.security.scpapi.exception.core.NotFoundException;
 import com.thoughtworks.security.scpapi.repository.ScanResultRepository;
 import com.thoughtworks.security.scpapi.repository.ScanTaskRepository;
 import com.thoughtworks.security.scpapi.repository.UseCaseRepository;
@@ -15,6 +14,9 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.stream.Collectors;
+
+import static com.thoughtworks.security.scpapi.exception.core.NotFoundError.NOT_FOUND_SCAN_RESULT;
+import static com.thoughtworks.security.scpapi.exception.core.NotFoundError.NOT_FOUND_USE_CASE;
 
 @Service
 @RequiredArgsConstructor
@@ -44,7 +46,7 @@ public class ScanResultServiceImpl implements ScanResultService {
     @Override
     public ScanResult findByTaskId(Long taskIn) {
         ScanResultEntity scanResultEntity = scanResultRepository.findByScanTaskId(taskIn)
-                .orElseThrow(ScanResultNotFoundException::new);
+                .orElseThrow(() -> new NotFoundException(NOT_FOUND_SCAN_RESULT));
 
         return generateScanResult(scanResultEntity);
 
@@ -53,13 +55,13 @@ public class ScanResultServiceImpl implements ScanResultService {
     @Override
     public ScanResult findById(Long resultId) {
         ScanResultEntity scanResultEntity = scanResultRepository.findById(resultId)
-                .orElseThrow(ScanResultNotFoundException::new);
+                .orElseThrow(() -> new NotFoundException(NOT_FOUND_SCAN_RESULT));
         return generateScanResult(scanResultEntity);
     }
 
     private ScanResult generateScanResult(ScanResultEntity scanResultEntity) {
         UseCaseEntity useCaseEntity = useCaseRepository.findById(scanResultEntity.getUseCaseId())
-                .orElseThrow(UseCaseNotFoundException::new);
+                .orElseThrow(() -> new NotFoundException(NOT_FOUND_USE_CASE));
 
         return ScanResult.builder()
                 .id(scanResultEntity.getId())

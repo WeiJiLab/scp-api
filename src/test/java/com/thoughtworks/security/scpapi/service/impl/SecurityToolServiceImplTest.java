@@ -3,8 +3,8 @@ package com.thoughtworks.security.scpapi.service.impl;
 import com.thoughtworks.security.scpapi.domain.SecurityTool;
 import com.thoughtworks.security.scpapi.entity.SecurityToolEntity;
 import com.thoughtworks.security.scpapi.enums.SecurityToolCategory;
-import com.thoughtworks.security.scpapi.exception.DuplicatedSecurityToolException;
-import com.thoughtworks.security.scpapi.exception.SecurityToolNotFoundException;
+import com.thoughtworks.security.scpapi.exception.core.DuplicatedException;
+import com.thoughtworks.security.scpapi.exception.core.NotFoundException;
 import com.thoughtworks.security.scpapi.repository.SecurityToolRepository;
 import com.thoughtworks.security.scpapi.service.SecurityToolService;
 import org.junit.jupiter.api.Nested;
@@ -99,7 +99,7 @@ public class SecurityToolServiceImplTest {
             when(securityToolRepository.existsByName(anyString())).thenReturn(true);
 
             // then
-            assertThrows(DuplicatedSecurityToolException.class,
+            assertThrows(DuplicatedException.class,
                     () -> securityToolService.create(createSecurityTool));
         }
     }
@@ -134,7 +134,7 @@ public class SecurityToolServiceImplTest {
             when(securityToolRepository.findById(anyLong())).thenReturn(Optional.empty());
 
             // then
-            assertThrows(SecurityToolNotFoundException.class,
+            assertThrows(NotFoundException.class,
                     () -> securityToolService.findById(1L));
         }
     }

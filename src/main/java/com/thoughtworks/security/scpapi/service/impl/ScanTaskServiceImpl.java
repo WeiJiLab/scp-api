@@ -7,7 +7,7 @@ import com.thoughtworks.security.scpapi.entity.Application;
 import com.thoughtworks.security.scpapi.entity.ScanTaskEntity;
 import com.thoughtworks.security.scpapi.enums.EnvironmentType;
 import com.thoughtworks.security.scpapi.enums.ScanTaskEnum;
-import com.thoughtworks.security.scpapi.exception.ScanTaskNotFoundException;
+import com.thoughtworks.security.scpapi.exception.core.NotFoundException;
 import com.thoughtworks.security.scpapi.repository.ScanResultRepository;
 import com.thoughtworks.security.scpapi.repository.ScanTaskRepository;
 import com.thoughtworks.security.scpapi.repository.UseCaseRepository;
@@ -19,6 +19,8 @@ import org.springframework.stereotype.Service;
 import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
+
+import static com.thoughtworks.security.scpapi.exception.core.NotFoundError.NOT_FOUND_SCAN_TASK;
 
 @Service
 @RequiredArgsConstructor
@@ -61,6 +63,7 @@ public class ScanTaskServiceImpl implements ScanTaskService {
         return scanTaskEntityList;
 
     }
+
     private ComplianceScanThread createScanThread(ScanTaskEntity scanTaskEntity, EnvironmentTypePara environmentPara, EnvironmentType environmentType) {
         if (environmentType == EnvironmentType.DOCKER) {
             return new DockerComplianceScanThread(scanTaskEntity, scanResultRepository, scanTaskRepository,
@@ -73,9 +76,10 @@ public class ScanTaskServiceImpl implements ScanTaskService {
                     useCaseRepository, environmentPara);
         }
         return new ComplianceScanThread(scanTaskEntity, scanResultRepository, scanTaskRepository,
-                    useCaseRepository, environmentPara);
+                useCaseRepository, environmentPara);
 
     }
+
     private void startScan(List<ScanTaskEntity> scanTaskEntityList, EnvironmentTypePara environmentPara, EnvironmentType environmentType) {
         scanTaskEntityList
                 .forEach(it -> createScanThread(it, environmentPara, environmentType).start());
@@ -138,7 +142,7 @@ public class ScanTaskServiceImpl implements ScanTaskService {
     @Override
     public ScanTaskEntity findById(Long id) {
         return scanTaskRepository.findById(id)
-                .orElseThrow(ScanTaskNotFoundException::new);
+                .orElseThrow(() -> new NotFoundException(NOT_FOUND_SCAN_TASK));
     }
 
     @Override
@@ -146,7 +150,7 @@ public class ScanTaskServiceImpl implements ScanTaskService {
         try {
             useCaseRepository.deleteById(id);
         } catch (EmptyResultDataAccessException emptyResultDataAccessException) {
-            throw new ScanTaskNotFoundException();
+            throw new NotFoundException(NOT_FOUND_SCAN_TASK);
         }
     }
 }

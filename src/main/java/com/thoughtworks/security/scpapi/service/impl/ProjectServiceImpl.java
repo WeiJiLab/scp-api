@@ -2,9 +2,8 @@ package com.thoughtworks.security.scpapi.service.impl;
 
 import com.thoughtworks.security.scpapi.entity.Application;
 import com.thoughtworks.security.scpapi.entity.Project;
-import com.thoughtworks.security.scpapi.exception.ApplicationNotFoundException;
-import com.thoughtworks.security.scpapi.exception.DuplicatedProjectException;
-import com.thoughtworks.security.scpapi.exception.ProjectNotFoundException;
+import com.thoughtworks.security.scpapi.exception.core.DuplicatedException;
+import com.thoughtworks.security.scpapi.exception.core.NotFoundException;
 import com.thoughtworks.security.scpapi.repository.ProjectRepository;
 import com.thoughtworks.security.scpapi.service.ProjectService;
 import lombok.RequiredArgsConstructor;
@@ -12,6 +11,10 @@ import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+
+import static com.thoughtworks.security.scpapi.exception.core.DuplicatedError.EXISTED_PROJECT;
+import static com.thoughtworks.security.scpapi.exception.core.NotFoundError.NOT_FOUND_APPLICATION;
+import static com.thoughtworks.security.scpapi.exception.core.NotFoundError.NOT_FOUND_PROJECT;
 
 @Service
 @RequiredArgsConstructor
@@ -22,7 +25,7 @@ public class ProjectServiceImpl implements ProjectService {
     @Override
     public Project create(Project project) {
         projectRepository.findByName(project.getName()).ifPresent(existedProject -> {
-            throw new DuplicatedProjectException();
+            throw new DuplicatedException(EXISTED_PROJECT);
         });
 
         return projectRepository.saveAndFlush(project);
@@ -48,7 +51,7 @@ public class ProjectServiceImpl implements ProjectService {
         try {
             projectRepository.deleteById(id);
         } catch (EmptyResultDataAccessException emptyResultDataAccessException) {
-            throw new ProjectNotFoundException();
+            throw new NotFoundException(NOT_FOUND_PROJECT);
         }
     }
 
@@ -64,7 +67,7 @@ public class ProjectServiceImpl implements ProjectService {
                 .stream()
                 .filter(application -> application.getId().equals(applicationId))
                 .findFirst()
-                .orElseThrow(ApplicationNotFoundException::new);
+                .orElseThrow(() -> new NotFoundException(NOT_FOUND_APPLICATION));
     }
 
     @Override
@@ -75,6 +78,7 @@ public class ProjectServiceImpl implements ProjectService {
     }
 
     private Project getProject(Long id) {
-        return projectRepository.findById(id).orElseThrow(ProjectNotFoundException::new);
+        return projectRepository.findById(id)
+                .orElseThrow(() -> new NotFoundException(NOT_FOUND_PROJECT));
     }
 }
