@@ -1,21 +1,10 @@
 plugins {
-    id 'org.springframework.boot' version '2.4.1'
-    id 'io.spring.dependency-management' version '1.0.10.RELEASE'
+    id 'org.springframework.boot' version '2.7.4'
+    id 'io.spring.dependency-management' version '1.0.13.RELEASE'
     id 'java'
-    id 'checkstyle'
-    id 'jacoco'
-    id "com.gorylenko.gradle-git-properties" version "2.2.4"
 }
 
-apply plugin: 'idea'
-apply plugin: 'java'
-apply plugin: 'jacoco'
-apply plugin: "com.gorylenko.gradle-git-properties"
-apply from: rootProject.file('gradle/config/jacoco-config.gradle')
-apply from: rootProject.file('gradle/config/git-hooks.gradle')
-apply from: rootProject.file('gradle/config/timing.gradle')
-
-group = 'com.thoughtworks.security'
+group = 'com.thoughtworks.ssr'
 version = '0.0.1-SNAPSHOT'
 sourceCompatibility = '11'
 
@@ -31,71 +20,59 @@ repositories {
 }
 
 
-dependencies {
-    // -------- springboot ------------
-    implementation 'org.springframework.boot:spring-boot-starter-actuator'
-    implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
-    implementation 'org.springframework.boot:spring-boot-starter-validation'
-    implementation 'org.springframework.boot:spring-boot-starter-web'
-    implementation 'org.springframework.boot:spring-boot-starter-security'
-    implementation 'org.springframework.boot:spring-boot-starter-data-redis'
+subprojects {
+    apply plugin: 'org.springframework.boot'
+    apply plugin: 'io.spring.dependency-management'
+    apply plugin: 'java'
 
-    // -------- db ------------
-    implementation 'org.flywaydb:flyway-core'
-    runtimeOnly 'mysql:mysql-connector-java'
-    runtimeOnly 'com.h2database:h2'
-
-    // -------- aws ------------
-    implementation platform('com.amazonaws:aws-java-sdk-bom:1.11.939')
-    implementation 'com.amazonaws:aws-java-sdk-s3'
-
-
-    // -------- lombok ------------
-    compileOnly 'org.projectlombok:lombok'
-    annotationProcessor 'org.projectlombok:lombok'
-
-    // -------- auth ------------
-    implementation 'io.jsonwebtoken:jjwt:0.9.1'
-    compile 'org.opensaml:opensaml-core:3.4.5'
-    compile 'org.opensaml:opensaml-saml-api:3.4.5'
-    compile 'org.opensaml:opensaml-saml-impl:3.4.5'
-    compile 'org.opensaml:opensaml-xmlsec-impl:3.4.5'
-    compile 'com.google.code.gson:gson:2.8.6'
-
-    // -------- test ------------
-    testImplementation('org.springframework.boot:spring-boot-starter-test') {
-        exclude group: 'org.junit.vintage', module: 'junit-vintage-engine'
+    bootJar {
+        enabled = false
     }
-    testCompile 'org.jeasy:easy-random-core:4.2.0'
 
-
-    implementation 'io.springfox:springfox-boot-starter:3.0.0'
-    runtimeOnly 'io.micrometer:micrometer-registry-prometheus'
-    compile group: 'pl.project13.maven', name: 'git-commit-id-plugin', version: '4.0.3'
-
-}
-
-task integrationTest(type: Test) {
-    useJUnitPlatform()
-
-    testLogging {
-        events "passed", "skipped", "failed"
+    jar {
+        enabled = true
     }
-    mustRunAfter test
+
+    dependencies {
+        // -------- springboot ------------
+        implementation 'org.springframework.boot:spring-boot-starter-actuator'
+        implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+        implementation 'org.springframework.boot:spring-boot-starter-validation'
+        implementation 'org.springframework.boot:spring-boot-starter-web'
+        implementation 'org.springframework.boot:spring-boot-starter-security'
+        implementation 'org.springframework.boot:spring-boot-starter-data-redis'
+
+        // -------- db ------------
+        implementation 'org.flywaydb:flyway-mysql'
+        implementation 'mysql:mysql-connector-java'
+
+        // -------- aws ------------
+        implementation platform('com.amazonaws:aws-java-sdk-bom:1.12.300')
+        implementation 'com.amazonaws:aws-java-sdk-s3'
+
+        // -------- lombok ------------
+        compileOnly 'org.projectlombok:lombok'
+        annotationProcessor 'org.projectlombok:lombok'
+
+        // -------- auth ------------
+        implementation 'io.jsonwebtoken:jjwt:0.9.1'
+        implementation 'org.opensaml:opensaml-core:4.0.1'
+        implementation 'org.opensaml:opensaml-saml-api:4.0.1'
+        implementation 'org.opensaml:opensaml-saml-impl:4.0.1'
+        implementation 'org.opensaml:opensaml-xmlsec-impl:3.4.5'
+        implementation 'com.google.code.gson:gson:2.8.6'
+
+        // mapstruct
+        implementation 'org.mapstruct:mapstruct:1.5.0.Final'
+        annotationProcessor 'org.mapstruct:mapstruct-processor:1.5.0.Final'
+
+        runtimeOnly 'io.micrometer:micrometer-registry-prometheus'
+        implementation 'pl.project13.maven:git-commit-id-plugin:4.0.3'
+
+        // dev
+        developmentOnly 'org.springframework.boot:spring-boot-devtools'
+        annotationProcessor 'org.springframework.boot:spring-boot-configuration-processor'
+    }
 }
 
-test.finalizedBy jacocoTestReport
-check.dependsOn jacocoTestCoverageVerification
-check.dependsOn integrationTest
-
-bootRun {
-    jvmArgs = ["-agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=*:5005"]
-}
-
-gitProperties {
-    dotGitDirectory = "${project.rootDir}/.git"
-    dateFormat = "yyyy-MM-dd'T'HH:mm Z"
-    dateFormatTimeZone = "GMT+8"
-    keys = ['git.branch', 'git.commit.id', 'git.commit.time', 'git.commit.user.name', 'git.build.version']
-}
 

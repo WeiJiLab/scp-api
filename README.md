@@ -2,10 +2,19 @@
 Security Check Platform Backend APIs
 
 ## 数据库配置
-* 版本 5.7.27
+* 版本 8.0
 * docker 本地安装 默认 -local.yml
-```docker
-docker run --name mysql -e MYSQL_ROOT_PASSWORD=12345678 -d -i -p 3306:3306 --restart=always  mysql:5.7.27
+```shell
+docker run --name mysql -e MYSQL_ROOT_PASSWORD=12345678 -d -i -p 3306:3306 --restart=always  mysql:8.0
+```
+
+## 本地环境搭建
+```shell
+# 启动mysql、Redis等服务
+docker-compose --file local/docker/docker-compose.yml up -d
+
+# 关闭mysql、Redis等服务
+docker-compose --file local/docker/docker-compose.yml down -v
 ```
 
 ## Developing with VSCode

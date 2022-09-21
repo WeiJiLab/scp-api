@@ -1,0 +1,22 @@
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    implementation project(':bootstrap')
+    implementation project(':infrastructure')
+    implementation project(':business')
+    implementation project(':domain')
+    implementation project(':common')
+
+    implementation 'org.springframework.boot:spring-boot-starter-test'
+
+    testImplementation 'org.jeasy:easy-random-core:5.0.0'
+
+    //   h2
+    runtimeOnly 'com.h2database:h2'
+
+    test {
+        useJUnitPlatform()
+    }
+}

@@ -1,1 +1,12 @@
 rootProject.name = 'scp-api'
+
+include 'bootstrap'
+include 'infrastructure'
+include 'business'
+include 'domain'
+include 'common'
+include 'iam'
+
+include 'scp-test'
+
+

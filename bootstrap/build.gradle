@@ -1,0 +1,12 @@
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    implementation project(':business')
+    implementation project(':iam')
+}
+
+bootJar {
+    enabled = true
+}

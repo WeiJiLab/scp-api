@@ -1,0 +1,36 @@
+version: '3.1'
+services:
+  mysql:
+    image: mysql:8.0
+    container_name: scp_mysql_8.0
+    command: |
+      --character-set-server=utf8mb4 
+      --collation-server=utf8mb4_unicode_ci 
+      --lower_case_table_names=1 
+      --default-authentication-plugin=mysql_native_password
+    ports:
+      - "3306:3306"
+    restart: always
+    environment:
+      - TZ=Asia/Shanghai
+      - MYSQL_ROOT_PASSWORD=QyTAbRwWyVZtGDBp4Hoq
+      - MYSQL_USER=RAAxFWVjeEz
+      - MYSQL_PASSWORD=QyTAbRwWyVZtGDBp4Hoq
+      - MYSQL_DATABASE=scp
+    networks:
+      - scp_network
+  redis-server:
+    image: "redis:7.0"
+    restart: always
+    container_name: 'scp-redis-server'
+    command: redis-server --requirepass scp@redis?pass
+    ports:
+      - "6379:6379"
+    networks:
+      - scp_network
+
+networks:
+  scp_network:
+
+# docker-compose --file local/docker/docker-compose.yml up -d
+# docker-compose --file local/docker/docker-compose.yml down -v
