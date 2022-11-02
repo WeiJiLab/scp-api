@@ -1,5 +1,6 @@
 package com.thoughtworks.ssr.domain.project.repository;
 
+import com.querydsl.core.types.Predicate;
 import com.thoughtworks.ssr.domain.project.model.Project;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -13,7 +14,7 @@ public interface ProjectRepository {
 
     Optional<Project> findById(Long id);
 
-    Page<Project> pageProjects(Pageable pageable);
+    Page<Project> pageProjects(Pageable pageable, Predicate predicate);
 
     void deleteById(Long id);
 }

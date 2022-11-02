@@ -1,5 +1,7 @@
 package com.thoughtworks.ssr.business.project.service;
 
+import com.querydsl.core.BooleanBuilder;
+import com.querydsl.core.types.Predicate;
 import com.thoughtworks.ssr.business.project.usecases.CreateProjectCase;
 import com.thoughtworks.ssr.business.project.usecases.UpdateProjectCase;
 import com.thoughtworks.ssr.domain.project.model.Project;
@@ -10,6 +12,8 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.util.ObjectUtils;
+
+import static com.thoughtworks.ssr.infrastructure.persistence.project.entity.QProjectEntity.projectEntity;
 
 @Service
 @RequiredArgsConstructor
@@ -29,8 +33,26 @@ public class ProjectBusinessService {
         return projectService.findById(id);
     }
 
-    public Page<Project> pageProjects(Pageable pageable) {
-        return projectService.pageProjects(pageable);
+    public Page<Project> pageProjects(Pageable pageable, String name, Long ownerId) {
+
+        Predicate predicate = buildPredicate(name, ownerId);
+
+        return projectService.pageProjects(pageable, predicate);
+    }
+
+    public Predicate buildPredicate(String name, Long ownerId) {
+
+        Predicate pestsPredicate = new BooleanBuilder(null);
+
+        if (!ObjectUtils.isEmpty(name)) {
+            pestsPredicate = new BooleanBuilder(pestsPredicate).and(projectEntity.name.containsIgnoreCase(name));
+        }
+
+        if (!ObjectUtils.isEmpty(ownerId)) {
+            pestsPredicate = new BooleanBuilder(pestsPredicate).and(projectEntity.ownerId.eq(ownerId));
+        }
+
+        return pestsPredicate;
     }
 
     public void deleteById(Long id) {

@@ -35,7 +35,7 @@ public class UpdateProjectCase {
             return Response.builder()
                     .id(project.getId())
                     .name(project.getName())
-                    .description(project.getName())
+                    .description(project.getDescription())
                     .ownerId(project.getOwnerId())
                     .createdAt(project.getCreatedAt())
                     .updatedAt(project.getUpdatedAt())

@@ -1,5 +1,6 @@
 package com.thoughtworks.ssr.infrastructure.persistence.project.adapter;
 
+import com.querydsl.core.types.Predicate;
 import com.thoughtworks.ssr.domain.project.model.Project;
 import com.thoughtworks.ssr.domain.project.repository.ProjectRepository;
 import com.thoughtworks.ssr.infrastructure.persistence.project.converter.ProjectEntityConverter;
@@ -36,8 +37,8 @@ public class ProjectRepositoryAdapter implements ProjectRepository {
     }
 
     @Override
-    public Page<Project> pageProjects(Pageable pageable) {
-        return projectJpaRepository.findAll(pageable)
+    public Page<Project> pageProjects(Pageable pageable, Predicate predicate) {
+        return projectJpaRepository.findAll(predicate, pageable)
                 .map(entityConverter::toDomain);
     }
 

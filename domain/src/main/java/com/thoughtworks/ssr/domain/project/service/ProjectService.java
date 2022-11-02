@@ -1,5 +1,6 @@
 package com.thoughtworks.ssr.domain.project.service;
 
+import com.querydsl.core.types.Predicate;
 import com.thoughtworks.ssr.domain.project.exception.ProjectException;
 import com.thoughtworks.ssr.domain.project.model.Project;
 import com.thoughtworks.ssr.domain.project.repository.ProjectRepository;
@@ -26,8 +27,8 @@ public class ProjectService {
         return projectRepository.findById(id).orElseThrow(ProjectException::notFound);
     }
 
-    public Page<Project> pageProjects(Pageable pageable) {
-        return projectRepository.pageProjects(pageable);
+    public Page<Project> pageProjects(Pageable pageable, Predicate predicate) {
+        return projectRepository.pageProjects(pageable, predicate);
     }
 
     public void deleteById(Long id) {
