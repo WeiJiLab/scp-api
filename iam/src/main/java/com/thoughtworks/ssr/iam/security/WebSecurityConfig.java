@@ -75,22 +75,22 @@ public class WebSecurityConfig {
                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and()
                 .authorizeRequests()
-                .mvcMatchers("/api/business/auth").permitAll()
+                .mvcMatchers("/api/business/auth/**").permitAll()
                 .antMatchers("/api/test/**").permitAll()
                 .anyRequest()
                 .authenticated();
 
-//        http.authenticationProvider(authenticationProvider());
         http.addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
 
         return http.build();
     }
 
-    @Bean
-    public WebSecurityCustomizer webSecurityCustomizer() {
-        return (web) -> web.ignoring()
-                .antMatchers(HttpMethod.GET, StaticConstant.STATIC_RESOURCES)
-                .antMatchers("/**");
-    }
+//
+//    @Bean
+//    public WebSecurityCustomizer webSecurityCustomizer() {
+//        return (web) -> web.ignoring()
+//                .antMatchers(HttpMethod.GET, StaticConstant.STATIC_RESOURCES)
+//                .antMatchers("/**");
+//    }
 
 }

@@ -35,24 +35,24 @@ public class ProjectBusinessService {
 
     public Page<Project> pageProjects(Pageable pageable, String name, Long ownerId) {
 
-        Predicate predicate = buildPredicate(name, ownerId);
+        var predicate = buildPredicate(name, ownerId);
 
         return projectService.pageProjects(pageable, predicate);
     }
 
     public Predicate buildPredicate(String name, Long ownerId) {
 
-        Predicate pestsPredicate = new BooleanBuilder(null);
+        var predicate = new BooleanBuilder(null);
 
         if (!ObjectUtils.isEmpty(name)) {
-            pestsPredicate = new BooleanBuilder(pestsPredicate).and(projectEntity.name.containsIgnoreCase(name));
+            predicate = new BooleanBuilder(predicate).and(projectEntity.name.containsIgnoreCase(name));
         }
 
         if (!ObjectUtils.isEmpty(ownerId)) {
-            pestsPredicate = new BooleanBuilder(pestsPredicate).and(projectEntity.ownerId.eq(ownerId));
+            predicate = new BooleanBuilder(predicate).and(projectEntity.ownerId.eq(ownerId));
         }
 
-        return pestsPredicate;
+        return predicate;
     }
 
     public void deleteById(Long id) {

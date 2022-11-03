@@ -12,9 +12,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
-import javax.persistence.UniqueConstraint;
 
-@Table( name = "project")
+@Table(name = "project")
 @Entity
 @Builder
 @Getter

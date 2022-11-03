@@ -51,6 +51,8 @@ public class UserEntity extends AuditModel {
      */
     private String email;
 
+    private String avatar;
+
     /**
      * 密码
      */
