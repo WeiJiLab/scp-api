@@ -5,6 +5,7 @@ import com.querydsl.core.types.Predicate;
 import com.thoughtworks.ssr.business.project.usecases.CreateAppInfoCase;
 import com.thoughtworks.ssr.business.project.usecases.UpdateAppInfoCase;
 import com.thoughtworks.ssr.common.serviceity.AESCrypt;
+import com.thoughtworks.ssr.domain.core.enums.RepoType;
 import com.thoughtworks.ssr.domain.project.model.AppInfo;
 import com.thoughtworks.ssr.domain.project.service.AppInfoService;
 import com.thoughtworks.ssr.domain.user.model.CustomUserDetails;
@@ -40,14 +41,14 @@ public class AppInfoBusinessService {
         return appInfoService.findById(id);
     }
 
-    public Page<AppInfo> pageAppInfo(Pageable pageable, String name, String username) {
+    public Page<AppInfo> pageAppInfo(Pageable pageable, String name, String username, RepoType repoType) {
 
-        var predicate = buildPredicate(name, username);
+        var predicate = buildPredicate(name, username, repoType);
 
         return appInfoService.pageAppInfo(pageable, predicate);
     }
 
-    public Predicate buildPredicate(String name,  String username) {
+    public Predicate buildPredicate(String name, String username, RepoType repoType) {
 
         var predicate = new BooleanBuilder(null);
 
@@ -57,6 +58,10 @@ public class AppInfoBusinessService {
 
         if (!ObjectUtils.isEmpty(username)) {
             predicate = new BooleanBuilder(predicate).and(appInfoEntity.username.containsIgnoreCase(username));
+        }
+
+        if (!ObjectUtils.isEmpty(repoType)) {
+            predicate = new BooleanBuilder(predicate).and(appInfoEntity.repoType.eq(repoType));
         }
 
         return predicate;

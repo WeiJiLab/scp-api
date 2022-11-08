@@ -6,6 +6,7 @@ import com.thoughtworks.ssr.business.project.usecases.CreateAppInfoCase;
 import com.thoughtworks.ssr.business.project.usecases.GetAppInfoCase;
 import com.thoughtworks.ssr.business.project.usecases.UpdateAppInfoCase;
 import com.thoughtworks.ssr.common.annotation.CurrentUser;
+import com.thoughtworks.ssr.domain.core.enums.RepoType;
 import com.thoughtworks.ssr.domain.user.model.CustomUserDetails;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -50,9 +51,10 @@ public class AppInfoController {
     public Page<GetAppInfoCase.Response> pageProjects(
             @PageableDefault(size = QueryConstants.DEFAULT_PAGE_SIZE) Pageable pageable,
             @RequestParam(value = "name", required = false) String name,
-            @RequestParam(value = "username", required = false) String username
+            @RequestParam(value = "username", required = false) String username,
+            @RequestParam(value = "repoType", required = false) RepoType repoType
     ) {
-        var appInfos = appInfoBusinessService.pageAppInfo(pageable, name, username);
+        var appInfos = appInfoBusinessService.pageAppInfo(pageable, name, username, repoType);
         return appInfos.map(GetAppInfoCase.Response::from);
     }
 

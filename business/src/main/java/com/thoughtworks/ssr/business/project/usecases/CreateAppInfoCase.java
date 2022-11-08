@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 
 public class CreateAppInfoCase {
 
@@ -15,7 +16,7 @@ public class CreateAppInfoCase {
     @NoArgsConstructor
     @AllArgsConstructor
     public static class Request {
-        @NotBlank(message = "project_id_required")
+        @NotNull(message = "project_id_required")
         private Long projectId;
 
         @NotBlank(message = "project_name_required")
@@ -23,22 +24,18 @@ public class CreateAppInfoCase {
 
         private String description;
 
-        @NotBlank(message = "repo_name_required")
+//        @NotBlank(message = "repo_name_required")
         private String repo;
 
-        @NotBlank(message = "repo_name_required")
-        private String branch;
+        private String branch = "master";
 
-        @NotBlank(message = "username_required")
         private String username;
 
-        @NotBlank(message = "password_required")
         private String password;
 
-        @NotBlank(message = "repo_type_required")
-        private RepoType repoType;
+        private RepoType repoType = RepoType.GIT;
 
-        private String codePath;
+        private String codePath = "/";
     }
 
 }

@@ -80,9 +80,14 @@ subprojects {
         runtimeOnly 'io.micrometer:micrometer-registry-prometheus'
         implementation 'pl.project13.maven:git-commit-id-plugin:4.0.3'
 
+        implementation 'org.springframework.boot:spring-boot-starter-test'
         // dev
         developmentOnly 'org.springframework.boot:spring-boot-devtools'
         annotationProcessor 'org.springframework.boot:spring-boot-configuration-processor'
+    }
+
+    test {
+        useJUnitPlatform()
     }
 }
 
