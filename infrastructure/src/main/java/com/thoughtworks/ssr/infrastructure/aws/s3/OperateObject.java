@@ -18,7 +18,7 @@ import java.util.List;
 //TODO 可以放到util或者
 @Slf4j
 public class OperateObject {
-    private static String regionName = "ap-northeast-1";
+    private static final String regionName = "ap-northeast-1";
 
     public static PutObjectResult putObject(String filePath, String bucketName) throws AmazonServiceException {
         System.out.format("Uploading %s to S3 bucket %s...\n", filePath, bucketName);
@@ -26,8 +26,7 @@ public class OperateObject {
         System.out.format("Uploading %s to S3 bucket %s...\n", filePath, bucketName);
         final AmazonS3 s3 = AmazonS3ClientBuilder.standard().withRegion(regionName).build();
         try {
-            PutObjectResult putObjectResult = s3.putObject(bucketName, keyName, new File(filePath));
-            return putObjectResult;
+            return s3.putObject(bucketName, keyName, new File(filePath));
         } catch (AmazonServiceException e) {
             System.err.println(e.getErrorMessage());
             log.info("upload to s3 failed");
@@ -70,9 +69,6 @@ public class OperateObject {
             return useCasePath + "/" + keyName;
         } catch (AmazonServiceException e) {
             System.err.println(e.getErrorMessage());
-            System.exit(1);
-        } catch (FileNotFoundException e) {
-            System.err.println(e.getMessage());
             System.exit(1);
         } catch (IOException e) {
             System.err.println(e.getMessage());

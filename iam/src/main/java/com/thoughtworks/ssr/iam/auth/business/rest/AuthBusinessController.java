@@ -47,7 +47,7 @@ public class AuthBusinessController {
     public ApiResponse checkUsernameInUse(@RequestParam(
             "username") String username
     ) {
-        Boolean usernameExists = authBusinessService.usernameAlreadyExists(username);
+        var usernameExists = authBusinessService.usernameAlreadyExists(username);
         return ApiResponse.success(usernameExists.toString());
     }
 
@@ -75,7 +75,7 @@ public class AuthBusinessController {
                 .map(GrantedAuthority::getAuthority)
                 .collect(Collectors.toList());
 
-        String jwtToken = authBusinessService.generateToken(customUserDetails);
+        var jwtToken = authBusinessService.generateToken(customUserDetails);
 
         return JwtAuthenticationResponse.builder()
                 .username(customUserDetails.getUsername())

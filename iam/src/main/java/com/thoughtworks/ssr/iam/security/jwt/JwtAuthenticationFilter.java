@@ -3,7 +3,6 @@ package com.thoughtworks.ssr.iam.security.jwt;
 import com.thoughtworks.ssr.iam.auth.admin.service.CustomAdminDetailsService;
 import com.thoughtworks.ssr.iam.auth.business.service.CustomUserDetailsService;
 import com.thoughtworks.ssr.iam.config.AppJwtProperties;
-import com.thoughtworks.ssr.iam.security.model.AccountType;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -18,6 +17,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.Optional;
 
 @Component
 @Slf4j
@@ -43,32 +43,31 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
             String jwt = getJwtFromRequest(request);
 
             if (StringUtils.hasText(jwt) && jwtTokenValidator.validateToken(jwt)) {
-
-                var accountType = jwtTokenProvider.getAccountTypeWithJWT(jwt);
-
-                if (accountType.equals(AccountType.ADMIN)) {
-                    var userId = jwtTokenProvider.getUserIdFromJWT(jwt);
-                    var userDetails = customAdminDetailsService.loadAdminById(userId);
-                    var authorities = jwtTokenProvider.getAuthoritiesFromJWT(jwt);
-                    var authentication = new UsernamePasswordAuthenticationToken(userDetails, jwt, authorities);
-                    authentication.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
-                    SecurityContextHolder.getContext().setAuthentication(authentication);
-                } else if (accountType.equals(AccountType.USER)) {
-                    var userId = jwtTokenProvider.getUserIdFromJWT(jwt);
-                    var userDetails = customUserDetailsService.loadUserById(userId);
-                    var authorities = jwtTokenProvider.getAuthoritiesFromJWT(jwt);
-                    var authentication = new UsernamePasswordAuthenticationToken(userDetails, jwt, authorities);
-                    authentication.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
-                    SecurityContextHolder.getContext().setAuthentication(authentication);
-                } else {
-                    log.error("User error");
-                }
+                setAuthentication(request, jwt);
             }
         } catch (Exception ex) {
             log.error("Failed to set user authentication in security context: ", ex);
         }
 
         filterChain.doFilter(request, response);
+    }
+
+    private void setAuthentication(HttpServletRequest request, String jwt) {
+        var accountType = jwtTokenProvider.getAccountTypeWithJWT(jwt);
+        var userId = jwtTokenProvider.getUserIdFromJWT(jwt);
+
+        var optionalUserDetails = switch (accountType) {
+            case ADMIN -> Optional.ofNullable(customAdminDetailsService.loadAdminById(userId));
+            case USER -> Optional.ofNullable(customUserDetailsService.loadUserById(userId));
+            default -> Optional.empty();
+        };
+
+        optionalUserDetails.ifPresent(userDetails -> {
+            var authorities = jwtTokenProvider.getAuthoritiesFromJWT(jwt);
+            var authentication = new UsernamePasswordAuthenticationToken(userDetails, jwt, authorities);
+            authentication.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
+            SecurityContextHolder.getContext().setAuthentication(authentication);
+        });
     }
 
     /**

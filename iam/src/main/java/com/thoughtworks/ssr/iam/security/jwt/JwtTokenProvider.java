@@ -44,7 +44,7 @@ public class JwtTokenProvider {
     }
 
     public Long getUserIdFromJWT(String token) {
-        Claims claims = Jwts.parser()
+        var claims = Jwts.parser()
                 .setSigningKey(appJwtProperties.getSecret())
                 .parseClaimsJws(token)
                 .getBody();
@@ -53,7 +53,7 @@ public class JwtTokenProvider {
     }
 
     public Date getTokenExpiryFromJWT(String token) {
-        Claims claims = Jwts.parser()
+        var claims = Jwts.parser()
                 .setSigningKey(appJwtProperties.getSecret())
                 .parseClaimsJws(token)
                 .getBody();
@@ -74,7 +74,7 @@ public class JwtTokenProvider {
                 .parseClaimsJws(token)
                 .getBody();
 
-        String authorities = claims.get(AUTHORITIES_CLAIM).toString();
+        var authorities = claims.get(AUTHORITIES_CLAIM).toString();
 
         if (ObjectUtils.isEmpty(authorities)) {
             return new ArrayList<>();
