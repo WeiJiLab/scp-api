@@ -10,10 +10,10 @@ import org.springframework.context.annotation.Configuration;
 public class RedisConfig extends CachingConfigurerSupport {
     public KeyGenerator keyGenerator() {
         return (target, method, params) -> {
-            StringBuilder sb = new StringBuilder();
+            var sb = new StringBuilder();
             sb.append(target.getClass().getName());
             sb.append(method.getName());
-            for (Object obj : params) {
+            for (var obj : params) {
                 sb.append(obj.toString());
             }
             return sb.toString();

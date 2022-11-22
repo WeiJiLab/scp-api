@@ -63,7 +63,7 @@ public class ComplianceScanThread extends Thread {
         File fileObj = new File(objDir);
         File[] files = fileObj.listFiles();
         assert files != null;
-        List<File> validFiles = Arrays.stream(files).filter(f -> !f.isHidden()).collect(Collectors.toList());
+        List<File> validFiles = Arrays.stream(files).filter(f -> !f.isHidden()).toList();
         if (validFiles.size() != 1) { // 要求上传zip包中只包含一个目录
             throw new RuntimeException("Use case is invalid.");
         }

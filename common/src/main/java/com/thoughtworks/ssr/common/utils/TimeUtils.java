@@ -11,6 +11,7 @@ import java.time.ZoneId;
 import java.time.ZoneOffset;
 import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.Date;
 
 @Slf4j
 public class TimeUtils {
@@ -59,6 +60,11 @@ public class TimeUtils {
 
     public static String getSimpleDate(OffsetDateTime offsetDateTime) {
         return offsetDateTime == null ? "" : DATE_TIME_FORMATTER_COLON_SEPARATE_TIME.format(offsetDateTime);
+    }
+
+    public static String currentDataStr() {
+        var formatter = new SimpleDateFormat("yyyyMMddHHmmss");
+        return formatter.format(new Date());
     }
 }
 

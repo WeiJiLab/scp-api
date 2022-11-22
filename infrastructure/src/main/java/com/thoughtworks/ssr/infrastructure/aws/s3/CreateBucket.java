@@ -13,7 +13,7 @@ public class CreateBucket {
         final AmazonS3 s3 = AmazonS3ClientBuilder.standard().withRegion(Regions.DEFAULT_REGION).build();
         Bucket namedBucket = null;
         List<Bucket> buckets = s3.listBuckets();
-        for (Bucket b : buckets) {
+        for (var b : buckets) {
             if (b.getName().equals(bucketName)) {
                 namedBucket = b;
             }

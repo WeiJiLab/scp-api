@@ -53,21 +53,24 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
     }
 
     private void setAuthentication(HttpServletRequest request, String jwt) {
-        var accountType = jwtTokenProvider.getAccountTypeWithJWT(jwt);
-        var userId = jwtTokenProvider.getUserIdFromJWT(jwt);
-
-        var optionalUserDetails = switch (accountType) {
-            case ADMIN -> Optional.ofNullable(customAdminDetailsService.loadAdminById(userId));
-            case USER -> Optional.ofNullable(customUserDetailsService.loadUserById(userId));
-            default -> Optional.empty();
-        };
-
-        optionalUserDetails.ifPresent(userDetails -> {
+        getUserDetails(jwt).ifPresent(userDetails -> {
             var authorities = jwtTokenProvider.getAuthoritiesFromJWT(jwt);
             var authentication = new UsernamePasswordAuthenticationToken(userDetails, jwt, authorities);
             authentication.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
             SecurityContextHolder.getContext().setAuthentication(authentication);
         });
+    }
+
+    private Optional<?> getUserDetails(String jwt) {
+
+        var accountType = jwtTokenProvider.getAccountTypeWithJWT(jwt);
+        var userId = jwtTokenProvider.getUserIdFromJWT(jwt);
+
+        return switch (accountType) {
+            case ADMIN -> Optional.ofNullable(customAdminDetailsService.loadAdminById(userId));
+            case USER -> Optional.ofNullable(customUserDetailsService.loadUserById(userId));
+            default -> Optional.empty();
+        };
     }
 
     /**

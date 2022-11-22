@@ -24,7 +24,6 @@ public class AESCrypt {
     // 16位口令
     private static final String key = "thoughtworks.com";
 
-
     public static String encrypt(String str) {
         if (ObjectUtils.isEmpty(str)) {
             return str;

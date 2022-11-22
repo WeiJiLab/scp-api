@@ -38,12 +38,12 @@ public class OperateObject {
         System.out.format("Objects in S3 bucket %s:\n", bucketName);
 //        AWSCredentials credentials = new BasicAWSCredentials("","");
 
-        final AmazonS3 s3 = AmazonS3ClientBuilder.standard().withRegion(regionName)
+        final var s3 = AmazonS3ClientBuilder.standard().withRegion(regionName)
 //                .withCredentials(new AWSStaticCredentialsProvider(credentials))
                 .build();
-        ListObjectsV2Result result = s3.listObjectsV2(bucketName);
-        List<S3ObjectSummary> objects = result.getObjectSummaries();
-        for (S3ObjectSummary os : objects) {
+        var result = s3.listObjectsV2(bucketName);
+        var objects = result.getObjectSummaries();
+        for (var os : objects) {
             System.out.println("* " + os.getKey());
         }
         return objects;
@@ -51,7 +51,7 @@ public class OperateObject {
 
     public static String downloadObject(String bucketName, String keyName, String useCasePath) {
         System.out.format("Downloading %s from S3 bucket %s...\n", keyName, bucketName);
-        final AmazonS3 s3 = AmazonS3ClientBuilder.standard().withRegion(regionName).build();
+        final var s3 = AmazonS3ClientBuilder.standard().withRegion(regionName).build();
         try {
             S3Object o = s3.getObject(bucketName, keyName);
             S3ObjectInputStream s3is = o.getObjectContent();

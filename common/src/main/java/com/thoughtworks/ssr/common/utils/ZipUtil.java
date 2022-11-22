@@ -3,8 +3,6 @@ package com.thoughtworks.ssr.common.utils;
 import lombok.extern.slf4j.Slf4j;
 
 import java.io.*;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.Enumeration;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipFile;
@@ -12,13 +10,11 @@ import java.util.zip.ZipOutputStream;
 
 @Slf4j
 public class ZipUtil {
-    public static String createZip(String filePath, String filePre) {
-        String path = "/tmp/";
+    public static String createZip(String filePath, String filePre) throws RuntimeException {
+        var path = "/tmp/";
         // 压缩包名
-        Date currentTime = new Date();
-        SimpleDateFormat formatter = new SimpleDateFormat("yyyyMMddHHmmss");
-        String dateString = formatter.format(currentTime);
-        String fileFullName = path + filePre + dateString + ".zip";
+        var dateString = TimeUtils.currentDataStr();
+        var fileFullName = path + filePre + dateString + ".zip";
         File zipFile = new File(fileFullName);
         File sourceFile = new File(filePath);
         BufferedInputStream bis = null;
@@ -31,7 +27,7 @@ public class ZipUtil {
             FileOutputStream fos = new FileOutputStream(zipFile);
             zos = new ZipOutputStream(fos);
             byte[] bufs = new byte[1024 * 10];
-            for (File file : sourceFiles) {
+            for (var file : sourceFiles) {
                 //创建ZIP实体，并添加进压缩包
                 ZipEntry zipEntry = new ZipEntry(file.getName());
                 zos.putNextEntry(zipEntry);
@@ -76,7 +72,7 @@ public class ZipUtil {
             pathFile.mkdirs();
         }
         ZipFile zip = new ZipFile(zipFile);
-        for (Enumeration entries = zip.entries(); entries.hasMoreElements();) {
+        for (var entries = zip.entries(); entries.hasMoreElements();) {
             ZipEntry entry = (ZipEntry) entries.nextElement();
 
             String zipEntryName = entry.getName();

@@ -16,7 +16,7 @@ public class DeleteBucket {
             System.out.println(" - removing objects from bucket");
             ObjectListing objectListing = s3.listObjects(bucketName);
             while (true) {
-                for (S3ObjectSummary summary : objectListing.getObjectSummaries()) {
+                for (var summary : objectListing.getObjectSummaries()) {
                     s3.deleteObject(bucketName, summary.getKey());
                 }
 
@@ -32,7 +32,7 @@ public class DeleteBucket {
             VersionListing versionListing = s3.listVersions(
                     new ListVersionsRequest().withBucketName(bucketName));
             while (true) {
-                for (S3VersionSummary vs : versionListing.getVersionSummaries()) {
+                for (var vs : versionListing.getVersionSummaries()) {
                     s3.deleteVersion(
                             bucketName, vs.getKey(), vs.getVersionId());
                 }
