@@ -1,8 +1,8 @@
 package com.thoughtworks.ssr.domain.project.service;
 
-import com.querydsl.core.types.Predicate;
 import com.thoughtworks.ssr.domain.project.exception.AppInfoException;
 import com.thoughtworks.ssr.domain.project.model.AppInfo;
+import com.thoughtworks.ssr.domain.project.query.AppInfoQuery;
 import com.thoughtworks.ssr.domain.project.repository.AppInfoRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.dao.EmptyResultDataAccessException;
@@ -30,8 +30,8 @@ public class AppInfoService {
         return applicationRepository.findById(id).orElseThrow(AppInfoException::notFound);
     }
 
-    public Page<AppInfo> pageAppInfo(Pageable pageable, Predicate predicate) {
-        return applicationRepository.pageAppInfo(pageable, predicate);
+    public Page<AppInfo> pageAppInfo(AppInfoQuery appInfoQuery, Pageable pageable) {
+        return applicationRepository.pageAppInfo(appInfoQuery, pageable);
     }
 
     public void deleteById(Long id) {

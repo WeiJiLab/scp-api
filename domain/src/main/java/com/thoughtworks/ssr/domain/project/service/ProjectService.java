@@ -1,8 +1,8 @@
 package com.thoughtworks.ssr.domain.project.service;
 
-import com.querydsl.core.types.Predicate;
 import com.thoughtworks.ssr.domain.project.exception.ProjectException;
 import com.thoughtworks.ssr.domain.project.model.Project;
+import com.thoughtworks.ssr.domain.project.query.ProjectQuery;
 import com.thoughtworks.ssr.domain.project.repository.ProjectRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.dao.EmptyResultDataAccessException;
@@ -27,8 +27,8 @@ public class ProjectService {
         return projectRepository.findById(id).orElseThrow(ProjectException::notFound);
     }
 
-    public Page<Project> pageProjects(Pageable pageable, Predicate predicate) {
-        return projectRepository.pageProjects(pageable, predicate);
+    public Page<Project> pageProjects(ProjectQuery projectQuery, Pageable pageable) {
+        return projectRepository.pageProjects(projectQuery, pageable);
     }
 
     public void deleteById(Long id) {

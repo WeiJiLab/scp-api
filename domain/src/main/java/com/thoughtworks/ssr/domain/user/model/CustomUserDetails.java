@@ -6,6 +6,7 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.util.ObjectUtils;
 
+import java.io.Serial;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Objects;
@@ -14,9 +15,9 @@ import java.util.stream.Collectors;
 
 import static com.thoughtworks.ssr.domain.role.model.ERole.ROLE_ADMIN;
 
-
 public class CustomUserDetails extends User implements UserDetails {
 
+    @Serial
     private static final long serialVersionUID = 5177998329242287838L;
 
     public CustomUserDetails(final User user) {

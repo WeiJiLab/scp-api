@@ -74,6 +74,6 @@ public class AuthBusinessService {
      * Generates a JWT token for the validated client
      */
     public String generateToken(CustomUserDetails customUserDetails) {
-        return tokenProvider.generateToken(customUserDetails);
+        return tokenProvider.generateUserToken(customUserDetails);
     }
 }

@@ -1,7 +1,7 @@
 package com.thoughtworks.ssr.domain.project.repository;
 
-import com.querydsl.core.types.Predicate;
 import com.thoughtworks.ssr.domain.project.model.AppInfo;
+import com.thoughtworks.ssr.domain.project.query.AppInfoQuery;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
@@ -14,7 +14,7 @@ public interface AppInfoRepository {
 
     Optional<AppInfo> findById(Long id);
 
-    Page<AppInfo> pageAppInfo(Pageable pageable, Predicate predicate);
+    Page<AppInfo> pageAppInfo(AppInfoQuery appInfoQuery,Pageable pageable );
 
     void deleteById(Long id);
 }

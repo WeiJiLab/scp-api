@@ -20,15 +20,6 @@ public class AdminRepositoryAdapter implements AdminRepository {
         return Optional.empty();
     }
 
-    @Override
-    public Optional<Admin> findByPhoneNumber(String phoneNumber) {
-        return Optional.empty();
-    }
-
-    @Override
-    public Boolean existsByPhoneNumber(String phoneNumber) {
-        return null;
-    }
 
     @Override
     public Boolean existsByUsername(String username) {

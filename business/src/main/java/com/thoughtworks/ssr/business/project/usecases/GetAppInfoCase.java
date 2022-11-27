@@ -21,8 +21,7 @@ public class GetAppInfoCase {
         private String repo;
         private String branch;
         private String username;
-        private String password;
-        private RepoType repoType ;
+        private RepoType repoType;
         private String codePath;
         private String workdir;
 
@@ -38,7 +37,6 @@ public class GetAppInfoCase {
                     .repo(appInfo.getRepo())
                     .branch(appInfo.getBranch())
                     .username(appInfo.getUsername())
-                    .password(appInfo.getDeCryptPassword())
                     .repoType(appInfo.getRepoType())
                     .codePath(appInfo.getCodePath())
                     .createdAt(appInfo.getCreatedAt())

@@ -1,12 +1,10 @@
 package com.thoughtworks.ssr.business.project.service;
 
-import com.querydsl.core.BooleanBuilder;
-import com.querydsl.core.types.Predicate;
 import com.thoughtworks.ssr.business.project.usecases.CreateAppInfoCase;
 import com.thoughtworks.ssr.business.project.usecases.UpdateAppInfoCase;
 import com.thoughtworks.ssr.common.serviceity.AESCrypt;
-import com.thoughtworks.ssr.domain.core.enums.RepoType;
 import com.thoughtworks.ssr.domain.project.model.AppInfo;
+import com.thoughtworks.ssr.domain.project.query.AppInfoQuery;
 import com.thoughtworks.ssr.domain.project.service.AppInfoService;
 import com.thoughtworks.ssr.domain.user.model.CustomUserDetails;
 import lombok.RequiredArgsConstructor;
@@ -14,8 +12,6 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.util.ObjectUtils;
-
-import static com.thoughtworks.ssr.infrastructure.persistence.project.entity.QAppInfoEntity.appInfoEntity;
 
 @Service
 @RequiredArgsConstructor
@@ -41,31 +37,10 @@ public class AppInfoBusinessService {
         return appInfoService.findById(id);
     }
 
-    public Page<AppInfo> pageAppInfo(Pageable pageable, String name, String username, RepoType repoType) {
-
-        var predicate = buildPredicate(name, username, repoType);
-
-        return appInfoService.pageAppInfo(pageable, predicate);
+    public Page<AppInfo> pageAppInfo(AppInfoQuery appInfoQuery, Pageable pageable) {
+        return appInfoService.pageAppInfo(appInfoQuery, pageable);
     }
 
-    public Predicate buildPredicate(String name, String username, RepoType repoType) {
-
-        var predicate = new BooleanBuilder(null);
-
-        if (!ObjectUtils.isEmpty(name)) {
-            predicate = new BooleanBuilder(predicate).and(appInfoEntity.name.containsIgnoreCase(name));
-        }
-
-        if (!ObjectUtils.isEmpty(username)) {
-            predicate = new BooleanBuilder(predicate).and(appInfoEntity.username.containsIgnoreCase(username));
-        }
-
-        if (!ObjectUtils.isEmpty(repoType)) {
-            predicate = new BooleanBuilder(predicate).and(appInfoEntity.repoType.eq(repoType));
-        }
-
-        return predicate;
-    }
 
     public void deleteById(Long id) {
         appInfoService.deleteById(id);

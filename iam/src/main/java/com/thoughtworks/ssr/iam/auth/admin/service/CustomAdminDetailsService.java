@@ -31,18 +31,4 @@ public class CustomAdminDetailsService implements UserDetailsService {
                 .orElseThrow(() -> new UsernameNotFoundException("该用户不存在"));
     }
 
-    public UserDetails loadUserByPhoneNumber(String phoneNumber) {
-        var dbUser = adminService.findByPhoneNumber(phoneNumber);
-        log.info("Fetched user : " + dbUser + " by phoneNumber" + phoneNumber);
-        return dbUser.map(CustomAdminDetails::new)
-                .orElseThrow(() -> new UsernameNotFoundException("该用户不存在"));
-    }
-
-    public CustomAdminDetails getUserByPhoneNumber(String phoneNumber) {
-        var dbUser = adminService.findByPhoneNumber(phoneNumber);
-        log.info("Fetched user : " + dbUser + " by phoneNumber" + phoneNumber);
-        return dbUser.map(CustomAdminDetails::new)
-                .orElseThrow(() -> new UsernameNotFoundException("该用户不存在"));
-    }
-
 }

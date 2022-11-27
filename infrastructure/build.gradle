@@ -5,4 +5,13 @@ repositories {
 dependencies {
     implementation project(':domain')
     implementation project(':common')
+
+    implementation 'org.springframework.boot:spring-boot-starter-data-redis-reactive'
+
+    // -------- flyway ------------
+    implementation 'org.flywaydb:flyway-core'
+    implementation 'org.flywaydb:flyway-mysql'
+
+    // -------- mysql ------------
+    runtimeOnly 'com.mysql:mysql-connector-j'
 }

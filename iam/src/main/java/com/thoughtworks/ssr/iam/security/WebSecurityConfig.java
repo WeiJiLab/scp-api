@@ -3,21 +3,18 @@ package com.thoughtworks.ssr.iam.security;
 import com.thoughtworks.ssr.iam.auth.admin.service.CustomAdminDetailsService;
 import com.thoughtworks.ssr.iam.auth.business.authentication.UserEmailAuthenticationProvider;
 import com.thoughtworks.ssr.iam.auth.business.service.CustomUserDetailsService;
-import com.thoughtworks.ssr.iam.security.constants.StaticConstant;
 import com.thoughtworks.ssr.iam.security.jwt.JwtAuthenticationEntryPoint;
 import com.thoughtworks.ssr.iam.security.jwt.JwtAuthenticationFilter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
-import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
-import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
+import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
-import org.springframework.security.config.annotation.web.configuration.WebSecurityCustomizer;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
@@ -26,7 +23,7 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 @Profile("!test")
 @Configuration
 @EnableWebSecurity
-@EnableGlobalMethodSecurity(
+@EnableMethodSecurity(
         securedEnabled = true,
         jsr250Enabled = true,
         prePostEnabled = true
@@ -74,9 +71,11 @@ public class WebSecurityConfig {
                 .sessionManagement()
                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and()
-                .authorizeRequests()
-                .mvcMatchers("/api/business/auth/**").permitAll()
-                .antMatchers("/api/test/**").permitAll()
+                .authorizeHttpRequests()
+                .requestMatchers("/api/business/auth/**")
+                .permitAll()
+                .requestMatchers("/api/test/**")
+                .permitAll()
                 .anyRequest()
                 .authenticated();
 
@@ -85,12 +84,11 @@ public class WebSecurityConfig {
         return http.build();
     }
 
-//
 //    @Bean
 //    public WebSecurityCustomizer webSecurityCustomizer() {
 //        return (web) -> web.ignoring()
-//                .antMatchers(HttpMethod.GET, StaticConstant.STATIC_RESOURCES)
-//                .antMatchers("/**");
+//                .requestMatchers(HttpMethod.GET, StaticConstant.STATIC_RESOURCES)
+//                .requestMatchers("/**");
 //    }
 
 }

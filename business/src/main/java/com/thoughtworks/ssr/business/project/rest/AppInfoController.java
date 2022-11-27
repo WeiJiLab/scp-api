@@ -7,6 +7,7 @@ import com.thoughtworks.ssr.business.project.usecases.GetAppInfoCase;
 import com.thoughtworks.ssr.business.project.usecases.UpdateAppInfoCase;
 import com.thoughtworks.ssr.common.annotation.CurrentUser;
 import com.thoughtworks.ssr.domain.core.enums.RepoType;
+import com.thoughtworks.ssr.domain.project.query.AppInfoQuery;
 import com.thoughtworks.ssr.domain.user.model.CustomUserDetails;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -24,7 +25,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
-import javax.validation.Valid;
+import jakarta.validation.Valid;
 
 import static org.springframework.http.HttpStatus.CREATED;
 import static org.springframework.http.HttpStatus.OK;
@@ -54,7 +55,8 @@ public class AppInfoController {
             @RequestParam(value = "username", required = false) String username,
             @RequestParam(value = "repoType", required = false) RepoType repoType
     ) {
-        var appInfos = appInfoBusinessService.pageAppInfo(pageable, name, username, repoType);
+        var appInfoQuery = new AppInfoQuery(name, username, repoType);
+        var appInfos = appInfoBusinessService.pageAppInfo(appInfoQuery, pageable);
         return appInfos.map(GetAppInfoCase.Response::from);
     }
 

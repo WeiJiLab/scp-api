@@ -1,6 +1,5 @@
 package com.thoughtworks.ssr.iam.security.jwt;
 
-import com.thoughtworks.ssr.iam.config.AppJwtProperties;
 import com.thoughtworks.ssr.iam.exception.InvalidTokenRequestException;
 import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.Jwts;
@@ -11,11 +10,13 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 
+import java.security.Key;
+
 @Component
 @Slf4j
 @RequiredArgsConstructor
 public class JwtTokenValidator {
-    private final AppJwtProperties appJwtProperties;
+    private final Key key;
 
     /**
      * Validates if a token satisfies the following properties
@@ -26,7 +27,12 @@ public class JwtTokenValidator {
      */
     public boolean validateToken(String authToken) {
         try {
-            Jwts.parser().setSigningKey(appJwtProperties.getSecret()).parseClaimsJws(authToken);
+
+            Jwts.parserBuilder()
+                    .setSigningKey(key)
+                    .build()
+                    .parseClaimsJws(authToken);
+
         } catch (SignatureException ex) {
             log.error("Invalid JWT signature");
             throw new InvalidTokenRequestException("JWT", authToken, "Incorrect signature");

@@ -20,14 +20,6 @@ public class AdminService {
         return adminRepository.findByIdAndActiveIsTrue(id);
     }
 
-    public Optional<Admin> findByPhoneNumber(String phoneNumber) {
-        return adminRepository.findByPhoneNumber(phoneNumber);
-    }
-
-    public Boolean existsByPhoneNumber(String phoneNumber) {
-        return adminRepository.existsByPhoneNumber(phoneNumber);
-    }
-
     public Boolean existsByUsername(String username) {
         return adminRepository.existsByUsername(username);
     }

@@ -9,10 +9,6 @@ public interface AdminRepository {
 
     Optional<Admin> findByIdAndActiveIsTrue(Long id);
 
-    Optional<Admin> findByPhoneNumber(String phoneNumber);
-
-    Boolean existsByPhoneNumber(String phoneNumber);
-
     Boolean existsByUsername(String username);
 
     Admin save(Admin admin);

@@ -48,9 +48,9 @@ public class User {
     private OffsetDateTime createdAt;
     private OffsetDateTime updatedAt;
 
-    public User(String username, String phoneNumber, String password) {
+    public User(String username, String email, String password) {
         this.username = username;
-        this.email = phoneNumber;
+        this.email = email;
         this.password = password;
     }
 

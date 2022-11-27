@@ -1,7 +1,7 @@
 spring:
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://20.89.230.105:3306/scp
+    url: jdbc:mysql://127.0.0.1:3306/scp
     username: RAAxFWVjeEz
     password: QyTAbRwWyVZtGDBp4Hoq
   jpa:
@@ -19,7 +19,11 @@ spring:
     init:
       mode: always
 
-  redis:
-    host: 20.89.230.105
-    port: 6379
-    password: scp@redis?pass
+  data:
+    redis:
+      jedis:
+        pool:
+          enabled: false
+      host: 127.0.0.1
+      port: 6379
+      password: scp@redis?pass

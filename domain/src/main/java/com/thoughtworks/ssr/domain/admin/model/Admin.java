@@ -30,7 +30,7 @@ public class Admin implements Serializable {
     /**
      * 手机号
      */
-    private String phoneNumber;
+    private String email;
 
     /**
      * 密码
@@ -49,9 +49,9 @@ public class Admin implements Serializable {
     private OffsetDateTime createdTime;
     private OffsetDateTime updatedTime;
 
-    public Admin(String username, String phoneNumber, String password) {
+    public Admin(String username, String email, String password) {
         this.username = username;
-        this.phoneNumber = phoneNumber;
+        this.email = email;
         this.password = password;
     }
 
@@ -59,7 +59,7 @@ public class Admin implements Serializable {
         this.id = user.getId();
         this.username = user.getUsername();
         this.password = user.getPassword();
-        this.phoneNumber = user.getPhoneNumber();
+        this.email = user.getEmail();
         this.avatar = user.getAvatar();
         this.active = user.getActive();
         this.roles = user.getRoles();
