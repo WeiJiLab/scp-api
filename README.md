@@ -9,12 +9,27 @@ docker run --name mysql -e MYSQL_ROOT_PASSWORD=12345678 -d -i -p 3306:3306 --res
 ```
 
 ## 本地环境搭建
+
+### 安装mysql、Redis服务
 ```shell
 # 启动mysql、Redis等服务
 docker-compose --file local/docker/docker-compose.yml up -d
 
 # 关闭mysql、Redis等服务
 docker-compose --file local/docker/docker-compose.yml down -v
+```
+
+### 本地启动服务
+* 需要安装Java17
+
+* 构建
+```shell
+./gradlew clean :bootstrap:bootjar
+```
+
+* 项目启动
+```shell
+java -jar ./bootstrap/build/libs/bootstrap.jar
 ```
 
 ## Developing with VSCode
@@ -186,3 +201,6 @@ show.executions.view=true
   "java.configuration.updateBuildConfiguration": "automatic"
 }
 ```
+
+### 参考
+* https://gobysec.net/features
