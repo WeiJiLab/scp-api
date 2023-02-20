@@ -1,8 +1,9 @@
 package com.thoughtworks.ssr.business.imagescan.rest;
 
+import com.thoughtworks.ssr.business.imagescan.service.ImageScanBusinessService;
 import com.thoughtworks.ssr.infrastructure.persistence.imagescan.entity.ImageScanRequestEntity;
 import com.thoughtworks.ssr.infrastructure.persistence.imagescan.entity.ImageScanResultEntity;
-import com.thoughtworks.ssr.business.imagescan.service.ImageScanBusinessService;
+import com.thoughtworks.ssr.infrastructure.persistence.imagescan.entity.ImageScanStageEntity;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -25,8 +26,14 @@ public class ImageScanBusinessController {
         return imageScanBusinessService.imageScanService(request);
     }
 
-    @GetMapping
+    @GetMapping("/result")
+    @ResponseStatus(OK)
     public ImageScanResultEntity getStepResult(@RequestBody String pj_id) {
         return imageScanBusinessService.getStepResult(pj_id);
+    }
+    @GetMapping("/steps")
+    @ResponseStatus(OK)
+    public ImageScanStageEntity getScanResult(@RequestBody String pj_id) {
+        return imageScanBusinessService.getScanResult(pj_id);
     }
 }

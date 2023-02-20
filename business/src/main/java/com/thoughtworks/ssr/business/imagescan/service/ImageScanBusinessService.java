@@ -2,7 +2,9 @@ package com.thoughtworks.ssr.business.imagescan.service;
 
 import com.thoughtworks.ssr.infrastructure.persistence.imagescan.entity.ImageScanRequestEntity;
 import com.thoughtworks.ssr.infrastructure.persistence.imagescan.entity.ImageScanResultEntity;
+import com.thoughtworks.ssr.infrastructure.persistence.imagescan.entity.ImageScanStageEntity;
 import com.thoughtworks.ssr.infrastructure.persistence.imagescan.repository.ImageScanBusinessRepository;
+import com.thoughtworks.ssr.infrastructure.persistence.imagescan.repository.ImageScanStageRepository;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
@@ -18,6 +20,7 @@ import org.springframework.web.client.RestTemplate;
 public class ImageScanBusinessService {
 
     private final ImageScanBusinessRepository imageScanBusinessRepository;
+    private final ImageScanStageRepository imageScanStageRepository;
     private RestTemplate restTemplate = new RestTemplate();
 
     public String imageScanService(ImageScanRequestEntity request) {
@@ -35,6 +38,10 @@ public class ImageScanBusinessService {
     }
 
     public ImageScanResultEntity getStepResult(String pj_id) {
-        return imageScanBusinessRepository.findStepsById(pj_id);
+        return imageScanBusinessRepository.findResultById(pj_id);
+    }
+
+    public ImageScanStageEntity getScanResult(String pj_id) {
+        return imageScanStageRepository.findStageById(pj_id);
     }
 }

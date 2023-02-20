@@ -11,23 +11,28 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-@Table(name = "image_scan_result")
+@Table(name = "image_scan_steps")
 @Entity
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
 @EqualsAndHashCode
-public class ImageScanResultEntity {
+public class ImageScanStageEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private String pj_id;
     private enum type_option {
         SOURCE, BINARY, OTHER
     }
-    private String sdlc;
-    private int res_count;
-    private int detail_status;
-    private String result;
-
+    private enum status {
+        START, PROCESSING, END, ERROR
+    }
+    private enum step {
+        PREPARE, COLLECTION, CHECK, REINFORCE, TEST
+    }
+    private enum stage {
+        CHECK, REINFORCE, TEST
+    }
+    private String logs;
 }
