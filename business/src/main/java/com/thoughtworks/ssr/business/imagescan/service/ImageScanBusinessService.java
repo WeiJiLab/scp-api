@@ -1,5 +1,6 @@
 package com.thoughtworks.ssr.business.imagescan.service;
 
+import com.thoughtworks.ssr.infrastructure.persistence.imagescan.entity.ImageScanRequest;
 import com.thoughtworks.ssr.infrastructure.persistence.imagescan.entity.ImageScanRequestEntity;
 import com.thoughtworks.ssr.infrastructure.persistence.imagescan.entity.ImageScanResultEntity;
 import com.thoughtworks.ssr.infrastructure.persistence.imagescan.entity.ImageScanStageEntity;
@@ -33,14 +34,14 @@ public class ImageScanBusinessService {
     private final ImageScanJobRepository imageScanJobRepository;
     private RestTemplate restTemplate = new RestTemplate();
 
-    public Long imageScanService(ImageScanRequestEntity request) {
-//        HttpStatus responseStatus = imageScanRequestService(request);
-//        if (responseStatus == OK) {
-//            //save
-//            imageScanJobRepository.save(request);
-//        }
-        imageScanJobRepository.save(request);
-        return request.getPj_id();
+    public Long imageScanService(ImageScanRequest request) {
+        ImageScanRequestEntity imageScanRequestEntity = new ImageScanRequestEntity();
+        imageScanRequestEntity.setPj_id(System.currentTimeMillis()/1000L);
+        imageScanRequestEntity.setPj_name(request.getPj_name());
+        imageScanRequestEntity.setType_option(request.getType_option());
+        imageScanRequestEntity.setCreate_time(getCreateTime());
+        imageScanJobRepository.save(imageScanRequestEntity);
+        return imageScanRequestEntity.getPj_id();
     }
 
     public HttpStatus imageScanRequestService(ImageScanRequestEntity request) {

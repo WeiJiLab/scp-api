@@ -1,7 +1,7 @@
 package com.thoughtworks.ssr.business.imagescan.rest;
 
 import com.thoughtworks.ssr.business.imagescan.service.ImageScanBusinessService;
-import com.thoughtworks.ssr.infrastructure.persistence.imagescan.entity.ImageScanRequestEntity;
+import com.thoughtworks.ssr.infrastructure.persistence.imagescan.entity.ImageScanRequest;
 import com.thoughtworks.ssr.infrastructure.persistence.imagescan.entity.ImageScanResultEntity;
 import com.thoughtworks.ssr.infrastructure.persistence.imagescan.entity.ImageScanStageEntity;
 import lombok.RequiredArgsConstructor;
@@ -16,9 +16,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.text.SimpleDateFormat;
-import java.util.Date;
-
 import static org.springframework.http.HttpStatus.OK;
 
 @RestController
@@ -30,11 +27,7 @@ public class ImageScanBusinessController {
 
     @PostMapping("/start")
     @ResponseStatus(OK)
-    public Long imageScan(@RequestBody ImageScanRequestEntity request) {
-        Long currentTimestamp = System.currentTimeMillis();
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-        String sd = sdf.format(new Date(Long.parseLong(String.valueOf(currentTimestamp))));
-        request.setCreate_time(sd);
+    public Long imageScan(@RequestBody ImageScanRequest request) {
         return imageScanBusinessService.imageScanService(request);
     }
 
