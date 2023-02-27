@@ -1,0 +1,8 @@
+#!/bin/sh -e
+
+TAG="latest"
+
+REPOSITORY="thoughtworks/ssr/scp-api"
+
+# shellcheck disable=SC2034
+DOCKER_IMAGE="${REPOSITORY}:${TAG}"

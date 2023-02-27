@@ -1,8 +1,8 @@
 version: '3.1'
 services:
-  mysql:
+  scp-mysql:
     image: mysql:8.0
-    container_name: scp_mysql_8.0
+    container_name: 'scp-mysql'
     command: |
       --character-set-server=utf8mb4 
       --collation-server=utf8mb4_unicode_ci 
@@ -19,7 +19,7 @@ services:
       - MYSQL_DATABASE=scp
     networks:
       - scp_network
-  redis-server:
+  scp-redis-server:
     image: "redis:7.0"
     restart: always
     container_name: 'scp-redis-server'
@@ -28,9 +28,29 @@ services:
       - "6379:6379"
     networks:
       - scp_network
+  scp-api:
+    container_name: 'scp-api'
+    #    build:
+    #      context: ../../
+    #      dockerfile: Dockerfile
+    image: 'thoughtworks/ssr/scp-api:latest'
+    restart: always
+    environment:
+      - "REDIS_HOST=scp-redis-server"
+      - "MYSQL_HOST=scp-mysql"
+      - "SPRING_PROFILES_ACTIVE=dev, persistence-dev"
+    ports:
+      - "8081:8081"
+      - "8080:8080"
+    networks:
+      - scp_network
+    depends_on:
+      - scp-mysql
+      - scp-redis-server
 
 networks:
   scp_network:
+    driver: bridge
 
 # docker-compose --file local/docker/docker-compose.yml up -d
 # docker-compose --file local/docker/docker-compose.yml down -v

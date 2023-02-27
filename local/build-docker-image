@@ -1,0 +1,16 @@
+#!/bin/sh -e
+
+cd "$(dirname "$0")/.."
+
+docker-compose --file local/docker/docker-compose.yml down -v
+
+. ./local/set-env-vars
+
+OLD_IMAGE_ID=$(docker images -q "${REPOSITORY}" | uniq)
+
+if [ "$OLD_IMAGE_ID" != "" ]; then
+    echo "$OLD_IMAGE_ID" | xargs docker rmi
+fi
+
+
+docker build -t "${DOCKER_IMAGE}" .
