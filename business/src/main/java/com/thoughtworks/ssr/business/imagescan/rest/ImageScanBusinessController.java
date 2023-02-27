@@ -16,6 +16,9 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 import static org.springframework.http.HttpStatus.OK;
 
 @RestController
@@ -28,6 +31,10 @@ public class ImageScanBusinessController {
     @PostMapping("/start")
     @ResponseStatus(OK)
     public Long imageScan(@RequestBody ImageScanRequestEntity request) {
+        Long currentTimestamp = System.currentTimeMillis();
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        String sd = sdf.format(new Date(Long.parseLong(String.valueOf(currentTimestamp))));
+        request.setCreate_time(sd);
         return imageScanBusinessService.imageScanService(request);
     }
 
@@ -49,7 +56,7 @@ public class ImageScanBusinessController {
         return imageScanBusinessService.getScanResult(pj_id);
     }
 
-    @PostMapping(value = "/steps")
+    @PostMapping(value = "/detail-result")
     public ResponseEntity<String> saveScanResult(@RequestBody ImageScanResultEntity scanStageEntity) {
         return imageScanBusinessService.saveScanResult(scanStageEntity);
     }

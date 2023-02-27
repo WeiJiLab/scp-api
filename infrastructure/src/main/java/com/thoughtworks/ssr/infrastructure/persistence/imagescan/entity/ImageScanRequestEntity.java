@@ -24,13 +24,15 @@ public class ImageScanRequestEntity {
     private Long pj_id;
     private String pj_name;
     private int type_option;
+    private String create_time;
 
     @Override
     public String toString() {
         return "ImageScanRequestEntity{" +
-                "pj_id='" + pj_id + '\'' +
+                "pj_id=" + pj_id +
                 ", pj_name='" + pj_name + '\'' +
                 ", type_option=" + type_option +
+                ", create_time=" + create_time +
                 '}';
     }
 }
