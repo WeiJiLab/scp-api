@@ -44,20 +44,20 @@ public class ImageScanBusinessService {
         return responseEntity.getBody();
     }
 
-    public ImageScanResultEntity getStepResult(Long pj_id) {
+    public ImageScanStageEntity getStepResult(Long pj_id) {
         return imageScanBusinessRepository.findResultById(pj_id);
     }
 
-    public ImageScanStageEntity getScanResult(Long pj_id) {
+    public ImageScanResultEntity getScanResult(Long pj_id) {
         return imageScanStageRepository.findStageById(pj_id);
     }
 
-    public ResponseEntity<String> saveStageResult(ImageScanResultEntity resultEntity) {
+    public ResponseEntity<String> saveStageResult(ImageScanStageEntity resultEntity) {
         imageScanBusinessRepository.save(resultEntity);
         return new ResponseEntity<>(OK);
     }
 
-    public ResponseEntity<String> saveScanResult(ImageScanStageEntity scanStageEntity) {
+    public ResponseEntity<String> saveScanResult(ImageScanResultEntity scanStageEntity) {
         imageScanStageRepository.save(scanStageEntity);
         return new ResponseEntity<>(OK);
     }

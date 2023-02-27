@@ -33,24 +33,24 @@ public class ImageScanBusinessController {
 
     @GetMapping("/stage-status/{pj_id}")
     @ResponseStatus(OK)
-    public ImageScanResultEntity getStepResult(@PathVariable(value = "pj_id") Long pj_id) {
+    public ImageScanStageEntity getStepResult(@PathVariable(value = "pj_id") Long pj_id) {
         return imageScanBusinessService.getStepResult(pj_id);
     }
 
     @PostMapping(value = "/stage-status")
     @ResponseBody
-    public ResponseEntity<String> saveStageResult(@RequestBody ImageScanResultEntity resultEntity) {
+    public ResponseEntity<String> saveStageResult(@RequestBody ImageScanStageEntity resultEntity) {
         return imageScanBusinessService.saveStageResult(resultEntity);
     }
 
     @GetMapping("/steps/{pj_id}")
     @ResponseStatus(OK)
-    public ImageScanStageEntity getScanResult(@PathVariable(value = "pj_id") Long pj_id) {
+    public ImageScanResultEntity getScanResult(@PathVariable(value = "pj_id") Long pj_id) {
         return imageScanBusinessService.getScanResult(pj_id);
     }
 
     @PostMapping(value = "/steps")
-    public ResponseEntity<String> saveScanResult(@RequestBody ImageScanStageEntity scanStageEntity) {
+    public ResponseEntity<String> saveScanResult(@RequestBody ImageScanResultEntity scanStageEntity) {
         return imageScanBusinessService.saveScanResult(scanStageEntity);
     }
 }
