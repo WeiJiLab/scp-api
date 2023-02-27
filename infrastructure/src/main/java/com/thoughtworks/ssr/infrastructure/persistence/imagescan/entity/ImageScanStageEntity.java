@@ -21,18 +21,11 @@ import lombok.Setter;
 public class ImageScanStageEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private String pj_id;
-    private enum type_option {
-        SOURCE, BINARY, OTHER
-    }
-    private enum status {
-        START, PROCESSING, END, ERROR
-    }
-    private enum step {
-        PREPARE, COLLECTION, CHECK, REINFORCE, TEST
-    }
-    private enum stage {
-        CHECK, REINFORCE, TEST
-    }
+    private Long id;
+    private Long pj_id;
+    private int type_option;
+    private int status;
+    private int step;
+    private String stage;
     private String logs;
 }

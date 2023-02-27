@@ -21,7 +21,7 @@ import lombok.Setter;
 public class ImageScanRequestEntity {
 
     @Id
-    private String pj_id;
+    private Long pj_id;
     private String pj_name;
     private int type_option;
 

@@ -5,35 +5,52 @@ import com.thoughtworks.ssr.infrastructure.persistence.imagescan.entity.ImageSca
 import com.thoughtworks.ssr.infrastructure.persistence.imagescan.entity.ImageScanResultEntity;
 import com.thoughtworks.ssr.infrastructure.persistence.imagescan.entity.ImageScanStageEntity;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 import static org.springframework.http.HttpStatus.OK;
 
 @RestController
-@RequestMapping("/no-source-scan")
+@RequestMapping("/image-scan")
 @RequiredArgsConstructor
 public class ImageScanBusinessController {
+    @Autowired
     private final ImageScanBusinessService imageScanBusinessService;
 
-    @PostMapping
+    @PostMapping("/start")
     @ResponseStatus(OK)
-    public String imageScan(@RequestBody ImageScanRequestEntity request) {
+    public Long imageScan(@RequestBody ImageScanRequestEntity request) {
         return imageScanBusinessService.imageScanService(request);
     }
 
-    @GetMapping("/result")
+    @GetMapping("/stage-status/{pj_id}")
     @ResponseStatus(OK)
-    public ImageScanResultEntity getStepResult(@RequestBody String pj_id) {
+    public ImageScanResultEntity getStepResult(@PathVariable(value = "pj_id") Long pj_id) {
         return imageScanBusinessService.getStepResult(pj_id);
     }
-    @GetMapping("/steps")
+
+    @PostMapping(value = "/stage-status")
+    @ResponseBody
+    public ResponseEntity<String> saveStageResult(@RequestBody ImageScanResultEntity resultEntity) {
+        return imageScanBusinessService.saveStageResult(resultEntity);
+    }
+
+    @GetMapping("/steps/{pj_id}")
     @ResponseStatus(OK)
-    public ImageScanStageEntity getScanResult(@RequestBody String pj_id) {
+    public ImageScanStageEntity getScanResult(@PathVariable(value = "pj_id") Long pj_id) {
         return imageScanBusinessService.getScanResult(pj_id);
+    }
+
+    @PostMapping(value = "/steps")
+    public ResponseEntity<String> saveScanResult(@RequestBody ImageScanStageEntity scanStageEntity) {
+        return imageScanBusinessService.saveScanResult(scanStageEntity);
     }
 }

@@ -21,13 +21,11 @@ import lombok.Setter;
 public class ImageScanResultEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private String pj_id;
-    private enum type_option {
-        SOURCE, BINARY, OTHER
-    }
+    private Long id;
+    private Long pj_id;
+    private int type_option;
     private String sdlc;
     private int res_count;
     private int detail_status;
     private String result;
-
 }

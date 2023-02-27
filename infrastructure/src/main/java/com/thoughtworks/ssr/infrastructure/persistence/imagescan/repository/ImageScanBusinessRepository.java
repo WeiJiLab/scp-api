@@ -6,7 +6,10 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface ImageScanBusinessRepository extends JpaRepository<ImageScanResultEntity, String> {
-    @Query(value = "select * from image_scan_result where pj_id = ?", nativeQuery = true)
-    ImageScanResultEntity findResultById(String pj_id);
+public interface ImageScanBusinessRepository extends JpaRepository<ImageScanResultEntity, Long> {
+    @Query(value = "select * from image_scan_result where pj_id=?", nativeQuery = true)
+    ImageScanResultEntity findResultById(Long pj_id);
+
+    @Override
+    <S extends ImageScanResultEntity> S save(S entity);
 }
