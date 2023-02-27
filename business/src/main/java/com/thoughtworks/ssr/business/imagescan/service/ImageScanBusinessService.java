@@ -15,6 +15,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 import static org.springframework.http.HttpStatus.OK;
 
 @Service
@@ -54,12 +57,20 @@ public class ImageScanBusinessService {
     }
 
     public ResponseEntity<String> saveStageResult(ImageScanStageEntity resultEntity) {
+        resultEntity.setTime_stamp(getCreateTime());
         imageScanBusinessRepository.save(resultEntity);
         return new ResponseEntity<>(OK);
     }
 
     public ResponseEntity<String> saveScanResult(ImageScanResultEntity scanStageEntity) {
+        scanStageEntity.setTime_stamp(getCreateTime());
         imageScanStageRepository.save(scanStageEntity);
         return new ResponseEntity<>(OK);
+    }
+
+    private static String getCreateTime() {
+        Long currentTimestamp = System.currentTimeMillis();
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        return sdf.format(new Date(Long.parseLong(String.valueOf(currentTimestamp))));
     }
 }

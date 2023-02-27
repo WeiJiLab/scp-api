@@ -28,4 +28,5 @@ public class ImageScanStageEntity {
     private int step;
     private String stage;
     private String logs;
+    private String time_stamp;
 }

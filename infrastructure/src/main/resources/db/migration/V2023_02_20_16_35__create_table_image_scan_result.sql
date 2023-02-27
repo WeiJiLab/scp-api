@@ -7,6 +7,7 @@ create table `image_scan_result`
     res_count           int           DEFAULT 0 NOT NULL comment 'count',
     detail_status       int           DEFAULT 0 NOT NULL comment '0, 1',
     result            varchar(1024) DEFAULT 'nothing' NOT NULL comment 'result',
+    time_stamp         TIMESTAMP DEFAULT CURRENT_TIMESTAMP comment '创建时间',
     FOREIGN KEY (pj_id) REFERENCES image_scan_job (pj_id)
 );
 

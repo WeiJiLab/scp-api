@@ -28,4 +28,5 @@ public class ImageScanResultEntity {
     private int res_count;
     private int detail_status;
     private String result;
+    private String time_stamp;
 }
