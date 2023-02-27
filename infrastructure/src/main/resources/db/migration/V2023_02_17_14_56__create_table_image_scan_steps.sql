@@ -6,7 +6,7 @@ create table `image_scan_steps`
     status            int           DEFAULT 0 NOT NULL comment 'step status',
     step              int           DEFAULT 0 NOT NULL comment 'current step',
     stage             varchar(128)  DEFAULT 'check' NOT NULL comment 'define stage',
-    logs              varchar(1024) DEFAULT NULL comment 'log',
+    logs              MEDIUMTEXT comment 'log',
     time_stamp         TIMESTAMP DEFAULT CURRENT_TIMESTAMP comment '创建时间',
     FOREIGN KEY(pj_id) REFERENCES image_scan_job(pj_id)
 );
