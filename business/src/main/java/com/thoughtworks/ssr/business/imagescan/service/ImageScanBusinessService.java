@@ -31,16 +31,12 @@ public class ImageScanBusinessService {
     private RestTemplate restTemplate = new RestTemplate();
 
     public Long imageScanService(ImageScanRequestEntity request) {
-        imageScanJobRepository.save(request);
+        HttpStatus responseStatus = imageScanRequestService(request);
+        if (responseStatus == OK) {
+            //save
+            imageScanJobRepository.save(request);
+        }
         return request.getPj_id();
-//        HttpStatus responseStatus = imageScanRequestService(request);
-//        if (responseStatus == OK) {
-//            //save
-//            imageScanJobRepository.save(request);
-//            return request.getPj_id().toString();
-//        } else {
-//            return responseStatus.toString();
-//        }
     }
 
     public HttpStatus imageScanRequestService(ImageScanRequestEntity request) {
