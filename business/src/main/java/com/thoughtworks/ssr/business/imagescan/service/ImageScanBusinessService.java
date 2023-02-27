@@ -12,6 +12,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
@@ -41,12 +42,16 @@ public class ImageScanBusinessService {
         imageScanRequestEntity.setType_option(request.getType_option());
         imageScanRequestEntity.setCreate_time(getCreateTime());
         imageScanJobRepository.save(imageScanRequestEntity);
+        HttpStatusCode responseStatus = imageScanRequestService(imageScanRequestEntity);
+        if (responseStatus == OK) {
+            imageScanJobRepository.save(imageScanRequestEntity);
+        }
         return imageScanRequestEntity.getPj_id();
     }
 
-    public HttpStatus imageScanRequestService(ImageScanRequestEntity request) {
+    public HttpStatusCode imageScanRequestService(ImageScanRequestEntity request) {
         ResponseEntity<HttpStatus> responseEntity = restTemplate.postForEntity("http://localhost:8090/start", request, HttpStatus.class);
-        return responseEntity.getBody();
+        return responseEntity.getStatusCode();
     }
 
     public ImageScanStageEntity[] getStepResult(Long pj_id) {
