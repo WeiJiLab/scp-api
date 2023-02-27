@@ -8,7 +8,7 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface ImageScanStageRepository extends JpaRepository<ImageScanResultEntity, Long> {
     @Query(value = "select * from image_scan_result where pj_id=?", nativeQuery = true)
-    ImageScanResultEntity findStageById(Long pj_id);
+    ImageScanResultEntity[] findStageById(Long pj_id);
 
     @Override
     <S extends ImageScanResultEntity> S save(S entity);

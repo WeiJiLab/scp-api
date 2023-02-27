@@ -33,7 +33,7 @@ public class ImageScanBusinessController {
 
     @GetMapping("/stage-status/{pj_id}")
     @ResponseStatus(OK)
-    public ImageScanStageEntity getStepResult(@PathVariable(value = "pj_id") Long pj_id) {
+    public ImageScanStageEntity[] getStepResult(@PathVariable(value = "pj_id") Long pj_id) {
         return imageScanBusinessService.getStepResult(pj_id);
     }
 
@@ -45,7 +45,7 @@ public class ImageScanBusinessController {
 
     @GetMapping("/steps/{pj_id}")
     @ResponseStatus(OK)
-    public ImageScanResultEntity getScanResult(@PathVariable(value = "pj_id") Long pj_id) {
+    public ImageScanResultEntity[] getScanResult(@PathVariable(value = "pj_id") Long pj_id) {
         return imageScanBusinessService.getScanResult(pj_id);
     }
 

@@ -49,11 +49,11 @@ public class ImageScanBusinessService {
         return responseEntity.getBody();
     }
 
-    public ImageScanStageEntity getStepResult(Long pj_id) {
+    public ImageScanStageEntity[] getStepResult(Long pj_id) {
         return imageScanBusinessRepository.findResultById(pj_id);
     }
 
-    public ImageScanResultEntity getScanResult(Long pj_id) {
+    public ImageScanResultEntity[] getScanResult(Long pj_id) {
         return imageScanStageRepository.findStageById(pj_id);
     }
 
