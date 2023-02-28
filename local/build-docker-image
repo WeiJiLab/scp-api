@@ -2,7 +2,7 @@
 
 cd "$(dirname "$0")/.."
 
-docker-compose --file local/docker/docker-compose.yml down -v
+docker-compose --file local/docker/docker-compose-dev.yml down -v
 
 . ./local/set-env-vars
 
