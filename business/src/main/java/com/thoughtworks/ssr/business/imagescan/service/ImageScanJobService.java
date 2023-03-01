@@ -29,14 +29,14 @@ public class ImageScanJobService {
         imageScanCommand.setTypeOption(imageScanRequest.getTypeOption());
         imageScanCommand.setCreateTime(getCreateTime());
 
-        imageScanService.saveJob(imageScanCommand);
+        return imageScanService.saveJob(imageScanCommand).getPjId();
 
 //        HttpStatusCode responseStatus = imageScanRequestService(imageScanCommand);
 //        if (responseStatus == OK) {
 //            imageScanService.saveJob(imageScanCommand);
 //        }
 
-        return imageScanCommand.getPjId();
+//        return imageScanCommand.getPjId();
     }
 
 
