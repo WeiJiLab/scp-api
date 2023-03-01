@@ -1,6 +1,6 @@
 create table `image_scan_steps`
 (
-    id                bigint auto_increment PRIMARY KEY comment '主键',
+    id                bigint AUTO_INCREMENT PRIMARY KEY comment '主键',
     pj_id             bigint DEFAULT 123456 comment '项目id',
     type_option       int           DEFAULT 0 NOT NULL comment '项目类型',
     status            int           DEFAULT 0 NOT NULL comment 'step status',
