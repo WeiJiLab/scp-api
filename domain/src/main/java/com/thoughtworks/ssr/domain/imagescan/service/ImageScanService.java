@@ -10,7 +10,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -34,11 +33,11 @@ public class ImageScanService {
         return imageScanStageRepository.save(imageScanStage);
     }
 
-    public Optional<ImageScanStage> findAllStagesByPjId(Long pjId) {
+    public List<ImageScanStage> findAllStagesByPjId(Long pjId) {
         return imageScanStageRepository.findAllByPjId(pjId);
     }
 
-    public Optional<ImageScanResult> findAllResultsByPjId(Long pjId) {
+    public List<ImageScanResult> findAllResultsByPjId(Long pjId) {
         return imageScanResultRepository.findAllByPjId(pjId);
     }
 

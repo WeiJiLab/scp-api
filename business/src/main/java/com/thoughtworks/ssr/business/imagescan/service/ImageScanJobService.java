@@ -15,9 +15,6 @@ import org.springframework.web.client.RestTemplate;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
-import java.util.Optional;
-
-import static org.springframework.http.HttpStatus.OK;
 
 @Service
 @RequiredArgsConstructor
@@ -47,24 +44,22 @@ public class ImageScanJobService {
         return imageScanService.getAllImageScanJobs();
     }
 
-    public Optional<ImageScanResult> findResultsByPjId(Long pjId) {
+    public List<ImageScanResult> findResultsByPjId(Long pjId) {
         return imageScanService.findAllResultsByPjId(pjId);
     }
 
-    public Optional<ImageScanStage> findStagesByPjId(Long pjId) {
+    public List<ImageScanStage> findStagesByPjId(Long pjId) {
         return imageScanService.findAllStagesByPjId(pjId);
     }
 
-    public ResponseEntity<String> saveStage(ImageScanStage imageScanStage) {
+    public ImageScanStage saveStage(ImageScanStage imageScanStage) {
         imageScanStage.setTimeStamp(getCreateTime());
-        imageScanService.saveStage(imageScanStage);
-        return new ResponseEntity<>(OK);
+        return imageScanService.saveStage(imageScanStage);
     }
 
-    public ResponseEntity<String> saveResult(ImageScanResult imageScanResult) {
+    public ImageScanResult saveResult(ImageScanResult imageScanResult) {
         imageScanResult.setTimeStamp(getCreateTime());
-        imageScanService.saveResult(imageScanResult);
-        return new ResponseEntity<>(OK);
+        return imageScanService.saveResult(imageScanResult);
     }
 
     public HttpStatusCode imageScanRequestService(ImageScanCommand request) {

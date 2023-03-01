@@ -2,12 +2,12 @@ package com.thoughtworks.ssr.domain.imagescan.repository;
 
 import com.thoughtworks.ssr.domain.imagescan.model.ImageScanStage;
 
-import java.util.Optional;
+import java.util.List;
 
 public interface ImageScanStageRepository {
 
     ImageScanStage save(ImageScanStage imageScanStage);
 
-    Optional<ImageScanStage> findAllByPjId(Long pjId);
+    List<ImageScanStage> findAllByPjId(Long pjId);
 
 }

@@ -4,10 +4,10 @@ import com.thoughtworks.ssr.infrastructure.persistence.imagescan.entity.ImageSca
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 
-import java.util.Optional;
+import java.util.List;
 
 public interface ImageScanResultJpaRepository extends
         JpaRepository<ImageScanResultEntity, Long>,
         JpaSpecificationExecutor<ImageScanResultEntity> {
-    Optional<ImageScanResultEntity> findAllByPjId(Long pjId);
+    List<ImageScanResultEntity> findAllByPjId(Long pjId);
 }

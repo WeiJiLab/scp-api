@@ -3,11 +3,13 @@ package com.thoughtworks.ssr.infrastructure.persistence.imagescan.adapter;
 import com.thoughtworks.ssr.domain.imagescan.model.ImageScanResult;
 import com.thoughtworks.ssr.domain.imagescan.repository.ImageScanResultRepository;
 import com.thoughtworks.ssr.infrastructure.persistence.imagescan.converter.ImageScanResultEntityConverter;
+import com.thoughtworks.ssr.infrastructure.persistence.imagescan.entity.ImageScanResultEntity;
 import com.thoughtworks.ssr.infrastructure.persistence.imagescan.repository.ImageScanResultJpaRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
-import java.util.Optional;
+import java.util.ArrayList;
+import java.util.List;
 
 @Component
 @RequiredArgsConstructor
@@ -24,7 +26,13 @@ public class ImageScanResultRepositoryAdapter implements ImageScanResultReposito
     }
 
     @Override
-    public Optional<ImageScanResult> findAllByPjId(Long pjId) {
-        return imageScanResultJpaRepository.findAllByPjId(pjId).map(converter::toDomain);
+    public List<ImageScanResult> findAllByPjId(Long pjId) {
+        List<ImageScanResultEntity> resultEntities = imageScanResultJpaRepository.findAllByPjId(pjId);
+        List<ImageScanResult> allResults = new ArrayList<>();
+        for (ImageScanResultEntity result : resultEntities) {
+            ImageScanResult imageScanResult = converter.toDomain(result);
+            allResults.add(imageScanResult);
+        }
+        return allResults;
     }
 }
