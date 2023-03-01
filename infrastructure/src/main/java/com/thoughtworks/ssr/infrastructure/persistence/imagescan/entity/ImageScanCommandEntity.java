@@ -2,6 +2,8 @@ package com.thoughtworks.ssr.infrastructure.persistence.imagescan.entity;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
@@ -21,6 +23,7 @@ public class ImageScanCommandEntity {
 
     @Id
     @Column(name = "pj_id")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long pjId;
 
     @Column(name = "pj_name")

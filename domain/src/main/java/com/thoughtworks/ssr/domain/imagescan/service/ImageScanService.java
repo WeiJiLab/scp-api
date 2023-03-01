@@ -9,6 +9,7 @@ import com.thoughtworks.ssr.domain.imagescan.repository.ImageScanStageRepository
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -39,5 +40,9 @@ public class ImageScanService {
 
     public Optional<ImageScanResult> findAllResultsByPjId(Long pjId) {
         return imageScanResultRepository.findAllByPjId(pjId);
+    }
+
+    public List<ImageScanCommand> getAllImageScanJobs() {
+        return imageScanJobRepository.findAll();
     }
 }

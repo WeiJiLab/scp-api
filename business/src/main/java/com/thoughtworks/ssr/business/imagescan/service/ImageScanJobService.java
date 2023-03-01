@@ -14,6 +14,7 @@ import org.springframework.web.client.RestTemplate;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.List;
 import java.util.Optional;
 
 import static org.springframework.http.HttpStatus.OK;
@@ -23,23 +24,27 @@ import static org.springframework.http.HttpStatus.OK;
 public class ImageScanJobService {
 
     private final ImageScanService imageScanService;
-    private RestTemplate restTemplate = new RestTemplate();
+    private final RestTemplate restTemplate = new RestTemplate();
 
     public Long saveImageScanJob(ImageScanRequest imageScanRequest) {
         ImageScanCommand imageScanCommand = new ImageScanCommand();
-        imageScanCommand.setPjId(System.currentTimeMillis()/1000L);
         imageScanCommand.setPjName(imageScanRequest.getPjName());
         imageScanCommand.setTypeOption(imageScanRequest.getTypeOption());
         imageScanCommand.setCreateTime(getCreateTime());
 
-//        imageScanService.saveJob(imageScanCommand);
+        imageScanService.saveJob(imageScanCommand);
 
-        HttpStatusCode responseStatus = imageScanRequestService(imageScanCommand);
-        if (responseStatus == OK) {
-            imageScanService.saveJob(imageScanCommand);
-        }
+//        HttpStatusCode responseStatus = imageScanRequestService(imageScanCommand);
+//        if (responseStatus == OK) {
+//            imageScanService.saveJob(imageScanCommand);
+//        }
 
         return imageScanCommand.getPjId();
+    }
+
+
+    public List<ImageScanCommand> getAllImageScanJobs() {
+        return imageScanService.getAllImageScanJobs();
     }
 
     public Optional<ImageScanResult> findResultsByPjId(Long pjId) {
@@ -72,4 +77,5 @@ public class ImageScanJobService {
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         return sdf.format(new Date(Long.parseLong(String.valueOf(currentTimestamp))));
     }
+
 }

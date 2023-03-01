@@ -1,6 +1,7 @@
 package com.thoughtworks.ssr.business.imagescan.rest;
 
 import com.thoughtworks.ssr.business.imagescan.service.ImageScanJobService;
+import com.thoughtworks.ssr.domain.imagescan.model.ImageScanCommand;
 import com.thoughtworks.ssr.domain.imagescan.model.ImageScanRequest;
 import com.thoughtworks.ssr.domain.imagescan.model.ImageScanResult;
 import com.thoughtworks.ssr.domain.imagescan.model.ImageScanStage;
@@ -15,6 +16,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.List;
 import java.util.Optional;
 
 import static org.springframework.http.HttpStatus.OK;
@@ -29,6 +31,12 @@ public class ImageScanJobController {
     @ResponseStatus(OK)
     public Long imageScan(@RequestBody ImageScanRequest request) {
         return imageScanJobService.saveImageScanJob(request);
+    }
+
+    @GetMapping("/jobs")
+    @ResponseStatus(OK)
+    public List<ImageScanCommand> getAllImageScanCommand() {
+        return imageScanJobService.getAllImageScanJobs();
     }
 
     @GetMapping("/stage-status/{pj_id}")
