@@ -1,15 +1,17 @@
-package com.thoughtworks.ssr.infrastructure.persistence.imagescan.entity;
+package com.thoughtworks.ssr.domain.imagescan.model;
 
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+@Builder
 @Getter
 @Setter
-@AllArgsConstructor
 @NoArgsConstructor
+@AllArgsConstructor
 public class ImageScanRequest {
-    private String pj_name;
-    private int type_option;
+    private String pjName;
+    private int typeOption;
 }

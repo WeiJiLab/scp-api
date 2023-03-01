@@ -1,5 +1,6 @@
 package com.thoughtworks.ssr.infrastructure.persistence.imagescan.entity;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -22,11 +23,21 @@ public class ImageScanStageEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private Long pj_id;
-    private int type_option;
+
+    @Column(name = "pj_id")
+    private Long pjId;
+
+    @Column(name = "type_option")
+    private int typeOption;
+
     private int status;
+
     private int step;
+
     private String stage;
+
     private String logs;
-    private String time_stamp;
+
+    @Column(name = "time_stamp")
+    private String timeStamp;
 }
