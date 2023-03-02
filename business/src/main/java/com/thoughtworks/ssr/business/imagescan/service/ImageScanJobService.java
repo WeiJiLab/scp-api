@@ -16,8 +16,6 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
-import static org.springframework.http.HttpStatus.OK;
-
 @Service
 @RequiredArgsConstructor
 public class ImageScanJobService {
@@ -27,16 +25,18 @@ public class ImageScanJobService {
 
     public Long saveImageScanJob(ImageScanRequest imageScanRequest) {
         ImageScanCommand imageScanCommand = new ImageScanCommand();
-        imageScanCommand.setPjName(imageScanRequest.getPjName());
+        imageScanCommand.setProjectName(imageScanRequest.getProjectName());
         imageScanCommand.setTypeOption(imageScanRequest.getTypeOption());
         imageScanCommand.setCreateTime(getCreateTime());
 
-        HttpStatusCode responseStatus = imageScanRequestService(imageScanCommand);
-        if (responseStatus == OK) {
-            return imageScanService.saveJob(imageScanCommand).getPjId();
-        } else {
-            return imageScanCommand.getPjId();
-        }
+//        ImageScanCommand savedCommand = imageScanService.saveJob(imageScanCommand);
+//        HttpStatusCode responseStatus = imageScanRequestService(savedCommand);
+//        if (responseStatus == OK) {
+//            return savedCommand.getProjectId();
+//        } else {
+//            return imageScanCommand.getProjectId();
+//        }
+        return imageScanService.saveJob(imageScanCommand).getProjectId();
     }
 
 
@@ -45,11 +45,11 @@ public class ImageScanJobService {
     }
 
     public List<ImageScanResult> findResultsByPjId(Long pjId) {
-        return imageScanService.findAllResultsByPjId(pjId);
+        return imageScanService.findAllResultsByProjectId(pjId);
     }
 
     public List<ImageScanStage> findStagesByPjId(Long pjId) {
-        return imageScanService.findAllStagesByPjId(pjId);
+        return imageScanService.findAllStagesByProjectId(pjId);
     }
 
     public ImageScanStage saveStage(ImageScanStage imageScanStage) {

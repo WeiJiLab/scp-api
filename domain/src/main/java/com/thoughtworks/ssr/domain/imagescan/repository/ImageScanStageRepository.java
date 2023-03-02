@@ -8,6 +8,6 @@ public interface ImageScanStageRepository {
 
     ImageScanStage save(ImageScanStage imageScanStage);
 
-    List<ImageScanStage> findAllByPjId(Long pjId);
+    List<ImageScanStage> findAllByProjectId(Long pjId);
 
 }

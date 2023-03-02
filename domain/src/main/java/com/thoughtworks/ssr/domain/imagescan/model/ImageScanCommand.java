@@ -12,9 +12,9 @@ import lombok.Setter;
 @NoArgsConstructor
 @AllArgsConstructor
 public class ImageScanCommand {
-    private Long pjId;
+    private Long projectId;
 
-    private String pjName;
+    private String projectName;
 
     private int typeOption;
 

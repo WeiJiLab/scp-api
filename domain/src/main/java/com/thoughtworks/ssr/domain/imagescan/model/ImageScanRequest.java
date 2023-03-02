@@ -12,6 +12,7 @@ import lombok.Setter;
 @NoArgsConstructor
 @AllArgsConstructor
 public class ImageScanRequest {
-    private String pjName;
+    private String projectName;
+
     private int typeOption;
 }

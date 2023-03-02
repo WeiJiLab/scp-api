@@ -26,8 +26,8 @@ public class ImageScanResultRepositoryAdapter implements ImageScanResultReposito
     }
 
     @Override
-    public List<ImageScanResult> findAllByPjId(Long pjId) {
-        List<ImageScanResultEntity> resultEntities = imageScanResultJpaRepository.findAllByPjId(pjId);
+    public List<ImageScanResult> findAllByProjectId(Long pjId) {
+        List<ImageScanResultEntity> resultEntities = imageScanResultJpaRepository.findAllByProjectId(pjId);
         List<ImageScanResult> allResults = new ArrayList<>();
         for (ImageScanResultEntity result : resultEntities) {
             ImageScanResult imageScanResult = converter.toDomain(result);

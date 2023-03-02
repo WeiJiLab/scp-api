@@ -26,8 +26,8 @@ public class ImageScanStageRepositoryAdapter implements ImageScanStageRepository
     }
 
     @Override
-    public List<ImageScanStage> findAllByPjId(Long pjId) {
-        List<ImageScanStageEntity> stageEntities = jpaRepository.findAllByPjId(pjId);
+    public List<ImageScanStage> findAllByProjectId(Long pjId) {
+        List<ImageScanStageEntity> stageEntities = jpaRepository.findAllByProjectId(pjId);
         List<ImageScanStage> allStages = new ArrayList<>();
         for (ImageScanStageEntity stage : stageEntities) {
             ImageScanStage imageScanStage = converter.toDomain(stage);
@@ -35,4 +35,6 @@ public class ImageScanStageRepositoryAdapter implements ImageScanStageRepository
         }
         return allStages;
     }
+
+
 }

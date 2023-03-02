@@ -25,7 +25,7 @@ public class ImageScanStageEntity {
     private Long id;
 
     @Column(name = "pj_id")
-    private Long pjId;
+    private Long projectId;
 
     @Column(name = "type_option")
     private int typeOption;

@@ -9,5 +9,5 @@ import java.util.List;
 public interface ImageScanResultJpaRepository extends
         JpaRepository<ImageScanResultEntity, Long>,
         JpaSpecificationExecutor<ImageScanResultEntity> {
-    List<ImageScanResultEntity> findAllByPjId(Long pjId);
+    List<ImageScanResultEntity> findAllByProjectId(Long pjId);
 }

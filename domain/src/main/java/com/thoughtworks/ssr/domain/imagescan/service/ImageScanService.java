@@ -21,6 +21,8 @@ public class ImageScanService {
 
     private final ImageScanStageRepository imageScanStageRepository;
 
+//    private final ImageScanReportRepository imageScanReportRepository;
+
     public ImageScanCommand saveJob(ImageScanCommand imageScanCommand){
         return imageScanJobRepository.save(imageScanCommand);
     }
@@ -33,15 +35,19 @@ public class ImageScanService {
         return imageScanStageRepository.save(imageScanStage);
     }
 
-    public List<ImageScanStage> findAllStagesByPjId(Long pjId) {
-        return imageScanStageRepository.findAllByPjId(pjId);
+    public List<ImageScanStage> findAllStagesByProjectId(Long pjId) {
+        return imageScanStageRepository.findAllByProjectId(pjId);
     }
 
-    public List<ImageScanResult> findAllResultsByPjId(Long pjId) {
-        return imageScanResultRepository.findAllByPjId(pjId);
+    public List<ImageScanResult> findAllResultsByProjectId(Long pjId) {
+        return imageScanResultRepository.findAllByProjectId(pjId);
     }
 
     public List<ImageScanCommand> getAllImageScanJobs() {
         return imageScanJobRepository.findAll();
     }
+
+//    public ImageScanReport saveReport(ImageScanReport imageScanReport) {
+//        return imageScanReportRepository.save(imageScanReport);
+//    }
 }

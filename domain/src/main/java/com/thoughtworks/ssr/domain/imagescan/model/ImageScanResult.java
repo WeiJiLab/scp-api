@@ -13,11 +13,18 @@ import lombok.Setter;
 @AllArgsConstructor
 public class ImageScanResult {
     private Long id;
-    private Long pjId;
+
+    private Long projectId;
+
     private int typeOption;
+
     private String sdlc;
-    private int resCount;
+
+    private int count;
+
     private int detailStatus;
+
     private String result;
+
     private String timeStamp;
 }

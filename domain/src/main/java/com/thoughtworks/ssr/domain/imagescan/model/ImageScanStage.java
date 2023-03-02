@@ -13,11 +13,18 @@ import lombok.Setter;
 @AllArgsConstructor
 public class ImageScanStage {
     private Long id;
-    private Long pjId;
+
+    private Long projectId;
+
     private int typeOption;
+
     private int status;
+
     private int step;
+
     private String stage;
+
     private String logs;
+
     private String timeStamp;
 }

@@ -7,5 +7,5 @@ import java.util.List;
 
 public interface ImageScanStageJpaRepository extends JpaRepository<ImageScanStageEntity, Long> {
 
-    List<ImageScanStageEntity> findAllByPjId(Long pjId);
+    List<ImageScanStageEntity> findAllByProjectId(Long pjId);
 }

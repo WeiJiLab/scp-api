@@ -28,7 +28,7 @@ public class ImageScanResultEntity {
     private Long id;
 
     @Column(name = "pj_id")
-    private Long pjId;
+    private Long projectId;
 
     @Column(name = "type_option")
     private int typeOption;
@@ -36,7 +36,7 @@ public class ImageScanResultEntity {
     private String sdlc;
 
     @Column(name = "res_count")
-    private int resCount;
+    private int count;
 
     @Column(name = "detail_status")
     private int detailStatus;

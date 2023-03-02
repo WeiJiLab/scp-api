@@ -10,6 +10,6 @@ import lombok.Setter;
 @AllArgsConstructor
 @NoArgsConstructor
 public class ImageScanRequestEntity {
-    private String pjName;
+    private String projectName;
     private int typeOption;
 }

@@ -8,5 +8,5 @@ public interface ImageScanResultRepository {
 
     ImageScanResult save(ImageScanResult imageScanResult);
 
-    List<ImageScanResult> findAllByPjId(Long id);
+    List<ImageScanResult> findAllByProjectId(Long id);
 }

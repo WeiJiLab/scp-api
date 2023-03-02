@@ -33,7 +33,7 @@ public class ImageScanJobController {
 
     @GetMapping("/jobs")
     @ResponseStatus(OK)
-    public List<ImageScanCommand> getAllImageScanCommand() {
+    public List<ImageScanCommand> getAllImageScanJobs() {
         return imageScanJobService.getAllImageScanJobs();
     }
 

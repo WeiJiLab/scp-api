@@ -24,10 +24,10 @@ public class ImageScanCommandEntity {
     @Id
     @Column(name = "pj_id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long pjId;
+    private Long projectId;
 
     @Column(name = "pj_name")
-    private String pjName;
+    private String projectName;
 
     @Column(name = "type_option")
     private int typeOption;
@@ -35,20 +35,20 @@ public class ImageScanCommandEntity {
     @Column(name = "create_time")
     private String createTime;
 
-    public Long getPjId() {
-        return pjId;
+    public Long getProjectId() {
+        return projectId;
     }
 
-    public void setPjId(Long pjId) {
-        this.pjId = pjId;
+    public void setProjectId(Long projectId) {
+        this.projectId = projectId;
     }
 
-    public String getPjName() {
-        return pjName;
+    public String getProjectName() {
+        return projectName;
     }
 
-    public void setPjName(String pjName) {
-        this.pjName = pjName;
+    public void setProjectName(String projectName) {
+        this.projectName = projectName;
     }
 
     public int getTypeOption() {
