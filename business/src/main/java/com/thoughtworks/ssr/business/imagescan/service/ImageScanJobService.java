@@ -16,6 +16,8 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
+import static org.springframework.http.HttpStatus.OK;
+
 @Service
 @RequiredArgsConstructor
 public class ImageScanJobService {
@@ -29,14 +31,12 @@ public class ImageScanJobService {
         imageScanCommand.setTypeOption(imageScanRequest.getTypeOption());
         imageScanCommand.setCreateTime(getCreateTime());
 
-        return imageScanService.saveJob(imageScanCommand).getPjId();
-
-//        HttpStatusCode responseStatus = imageScanRequestService(imageScanCommand);
-//        if (responseStatus == OK) {
-//            imageScanService.saveJob(imageScanCommand);
-//        }
-
-//        return imageScanCommand.getPjId();
+        HttpStatusCode responseStatus = imageScanRequestService(imageScanCommand);
+        if (responseStatus == OK) {
+            return imageScanService.saveJob(imageScanCommand).getPjId();
+        } else {
+            return imageScanCommand.getPjId();
+        }
     }
 
 
