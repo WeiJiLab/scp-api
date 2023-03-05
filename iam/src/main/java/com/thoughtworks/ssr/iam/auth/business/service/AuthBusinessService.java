@@ -1,9 +1,9 @@
 package com.thoughtworks.ssr.iam.auth.business.service;
 
-import com.thoughtworks.ssr.domain.role.service.RoleService;
-import com.thoughtworks.ssr.domain.user.model.CustomUserDetails;
-import com.thoughtworks.ssr.domain.user.model.User;
-import com.thoughtworks.ssr.domain.user.service.UserService;
+import com.thoughtworks.ssr.domain.iam.service.RoleService;
+import com.thoughtworks.ssr.domain.iam.model.CustomUserDetails;
+import com.thoughtworks.ssr.domain.iam.model.User;
+import com.thoughtworks.ssr.domain.iam.service.UserService;
 import com.thoughtworks.ssr.iam.auth.business.authentication.UserEmailAuthenticationToken;
 import com.thoughtworks.ssr.iam.auth.business.exception.AuthBusinessException;
 import com.thoughtworks.ssr.iam.auth.business.usecases.UserLoginCase;

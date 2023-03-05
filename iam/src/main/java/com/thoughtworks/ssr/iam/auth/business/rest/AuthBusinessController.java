@@ -1,6 +1,6 @@
 package com.thoughtworks.ssr.iam.auth.business.rest;
 
-import com.thoughtworks.ssr.domain.user.model.CustomUserDetails;
+import com.thoughtworks.ssr.domain.iam.model.CustomUserDetails;
 import com.thoughtworks.ssr.iam.auth.business.exception.AuthBusinessException;
 import com.thoughtworks.ssr.iam.auth.business.service.AuthBusinessService;
 import com.thoughtworks.ssr.iam.auth.business.usecases.UserLoginCase;

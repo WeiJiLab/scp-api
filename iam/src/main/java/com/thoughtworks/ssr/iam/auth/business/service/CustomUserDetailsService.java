@@ -1,7 +1,7 @@
 package com.thoughtworks.ssr.iam.auth.business.service;
 
-import com.thoughtworks.ssr.domain.user.model.CustomUserDetails;
-import com.thoughtworks.ssr.domain.user.service.UserService;
+import com.thoughtworks.ssr.domain.iam.model.CustomUserDetails;
+import com.thoughtworks.ssr.domain.iam.service.UserService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.userdetails.UserDetails;

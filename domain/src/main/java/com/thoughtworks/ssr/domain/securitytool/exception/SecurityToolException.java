@@ -1,7 +1,7 @@
 package com.thoughtworks.ssr.domain.securitytool.exception;
 
 import com.thoughtworks.ssr.common.exception.BaseException;
-import com.thoughtworks.ssr.domain.user.exception.UserException;
+import com.thoughtworks.ssr.domain.iam.exception.UserException;
 
 public class SecurityToolException extends BaseException {
     public SecurityToolException(Type type, String message) {

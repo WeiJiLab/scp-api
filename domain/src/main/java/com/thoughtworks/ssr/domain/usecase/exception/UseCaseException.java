@@ -1,7 +1,7 @@
 package com.thoughtworks.ssr.domain.usecase.exception;
 
 import com.thoughtworks.ssr.common.exception.BaseException;
-import com.thoughtworks.ssr.domain.user.exception.UserException;
+import com.thoughtworks.ssr.domain.iam.exception.UserException;
 
 public class UseCaseException extends BaseException {
     public UseCaseException(Type type, String message) {

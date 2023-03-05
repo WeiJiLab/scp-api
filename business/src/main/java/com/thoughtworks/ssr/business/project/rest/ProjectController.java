@@ -7,7 +7,7 @@ import com.thoughtworks.ssr.business.project.usecases.GetProjectCase;
 import com.thoughtworks.ssr.business.project.usecases.UpdateProjectCase;
 import com.thoughtworks.ssr.common.annotation.CurrentUser;
 import com.thoughtworks.ssr.domain.project.query.ProjectQuery;
-import com.thoughtworks.ssr.domain.user.model.CustomUserDetails;
+import com.thoughtworks.ssr.domain.iam.model.CustomUserDetails;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;

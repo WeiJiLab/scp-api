@@ -1,7 +1,7 @@
 package com.thoughtworks.ssr.iam.security.jwt;
 
-import com.thoughtworks.ssr.domain.admin.model.CustomAdminDetails;
-import com.thoughtworks.ssr.domain.user.model.CustomUserDetails;
+import com.thoughtworks.ssr.domain.iam.model.CustomAdminDetails;
+import com.thoughtworks.ssr.domain.iam.model.CustomUserDetails;
 import com.thoughtworks.ssr.iam.config.AppJwtProperties;
 import com.thoughtworks.ssr.iam.security.model.AccountType;
 import io.jsonwebtoken.Claims;

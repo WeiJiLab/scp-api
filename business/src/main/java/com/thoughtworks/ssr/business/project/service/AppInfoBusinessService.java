@@ -6,7 +6,7 @@ import com.thoughtworks.ssr.common.serviceity.AESCrypt;
 import com.thoughtworks.ssr.domain.project.model.AppInfo;
 import com.thoughtworks.ssr.domain.project.query.AppInfoQuery;
 import com.thoughtworks.ssr.domain.project.service.AppInfoService;
-import com.thoughtworks.ssr.domain.user.model.CustomUserDetails;
+import com.thoughtworks.ssr.domain.iam.model.CustomUserDetails;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
