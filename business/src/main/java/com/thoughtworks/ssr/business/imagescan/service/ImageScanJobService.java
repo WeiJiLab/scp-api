@@ -26,6 +26,8 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
+import static org.springframework.http.HttpStatus.OK;
+
 @Service
 @RequiredArgsConstructor
 public class ImageScanJobService {
@@ -95,12 +97,11 @@ public class ImageScanJobService {
 
     public String stopScan(StopCommand stopCommand) {
         HttpStatusCode statusCode = stopScanByProjectId(stopCommand);
-//        if (statusCode == OK) {
-//            return "Job " + stopCommand.getProjectId() + " has stopped";
-//        } else {
-//            return "Job " + stopCommand.getProjectId() + " stop failed...";
-//        }
-        return "stopped";
+        if (statusCode == OK) {
+            return "Job " + stopCommand.getProjectId() + " has stopped";
+        } else {
+            return "Job " + stopCommand.getProjectId() + " stop failed...";
+        }
     }
 
     private HttpStatusCode stopScanByProjectId(StopCommand stopCommand) {

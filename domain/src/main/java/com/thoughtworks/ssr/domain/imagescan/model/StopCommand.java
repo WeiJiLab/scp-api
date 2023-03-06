@@ -14,5 +14,5 @@ import lombok.Setter;
 public class StopCommand {
     private Long projectId;
 
-    private Boolean option;
+    private String option;
 }
