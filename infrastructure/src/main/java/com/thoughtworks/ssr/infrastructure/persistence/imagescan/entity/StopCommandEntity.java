@@ -1,5 +1,6 @@
 package com.thoughtworks.ssr.infrastructure.persistence.imagescan.entity;
 
+import com.thoughtworks.ssr.domain.core.enums.ScanType;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -12,5 +13,5 @@ import lombok.Setter;
 public class StopCommandEntity {
     private Long projectId;
 
-    private String option;
+    private ScanType typeOption;
 }
