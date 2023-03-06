@@ -17,6 +17,8 @@ public class ImageScanReport {
 
     private Long projectId;
 
+    private String uuid;
+
     private String fileName;
 
     private String scanReportUrl;

@@ -66,12 +66,12 @@ public class ImageScanJobController {
         return imageScanJobService.saveResult(scanStageEntity);
     }
 
-    @PostMapping(value = "/reports")
-    public ImageScanReport saveScanReport(@RequestParam Long projectId, MultipartFile file) {
+    @PostMapping(value = "/report/{projectId}")
+    public ImageScanReport saveScanReport(@RequestParam MultipartFile file, @PathVariable Long projectId) {
         return imageScanJobService.saveScanReport(projectId, file);
     }
 
-    @GetMapping(value = "/reports/{pj_id}")
+    @GetMapping(value = "/report/{pj_id}")
     public String downloadScanReport(@PathVariable("pj_id") Long projectId) throws IOException {
         return imageScanJobService.getScanReport(projectId);
     }

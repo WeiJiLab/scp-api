@@ -34,6 +34,10 @@ public class ImageScanReportEntity {
     @Column(name = "pj_id")
     private Long projectId;
 
+    @NotNull
+    @Column(name = "uuid")
+    private String uuid;
+
     @Column(name = "file_name")
     private String fileName;
 

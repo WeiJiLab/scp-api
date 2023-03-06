@@ -17,15 +17,14 @@ import org.springframework.web.client.RestTemplate;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
-import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.InputStream;
 import java.net.URL;
 import java.net.URLConnection;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.List;
 
+import static com.thoughtworks.ssr.common.utils.ImageScanUtils.generateUUID;
+import static com.thoughtworks.ssr.common.utils.ImageScanUtils.getCreateTime;
+import static com.thoughtworks.ssr.common.utils.ImageScanUtils.getScanFile;
 import static org.springframework.http.HttpStatus.OK;
 
 @Service
@@ -77,8 +76,9 @@ public class ImageScanJobService {
     public ImageScanReport saveScanReport(Long projectId, MultipartFile file) {
         ImageScanReport imageScanReport = new ImageScanReport();
         String url = upLoadReport(file, projectId);
-        String reportName = file.getName();
+        String reportName = file.getOriginalFilename();
         imageScanReport.setProjectId(projectId);
+        imageScanReport.setUuid(generateUUID());
         imageScanReport.setFileName(reportName);
         imageScanReport.setScanReportUrl(url);
         imageScanReport.setCreateAt(getCreateTime());
@@ -114,14 +114,10 @@ public class ImageScanJobService {
         return responseEntity.getStatusCode();
     }
 
-    private static String getCreateTime() {
-        Long currentTimestamp = System.currentTimeMillis();
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-        return sdf.format(new Date(Long.parseLong(String.valueOf(currentTimestamp))));
-    }
-
     public String upLoadReport(MultipartFile file, Long projectId) {
-        String uploadPath = "/Users/zhengyuan.wang/projects/shangqi/scp-api/tmp";
+        String uploadPath = System.getProperty("user.home")
+                + File.separator + "Desktop"
+                + File.separator + "tmp";
         File uploadDir = new File(uploadPath);
         if(!uploadDir.exists()) {
             uploadDir.mkdir();
@@ -134,19 +130,4 @@ public class ImageScanJobService {
         }
         return localFile.getAbsolutePath();
     }
-    private static File getScanFile(URLConnection connection) throws IOException {
-        InputStream is = connection.getInputStream();
-        String downloadFilePath = System.getProperty("user.home");
-        File file = new File(downloadFilePath + File.separator + "Desktop" + File.separator + "scan_report.docx");
-        FileOutputStream os = new FileOutputStream(file);
-        byte[] buffer = new byte[1024];
-        int len;
-        while ((len = is.read(buffer)) != -1) {
-            os.write(buffer, 0, len);
-        }
-        is.close();
-        os.close();
-        return file;
-    }
-
 }
