@@ -1,5 +1,6 @@
 package com.thoughtworks.ssr.domain.imagescan.model;
 
+import com.thoughtworks.ssr.domain.core.enums.ScanType;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -14,5 +15,5 @@ import lombok.Setter;
 public class ImageScanRequest {
     private String projectName;
 
-    private int typeOption;
+    private ScanType typeOption;
 }

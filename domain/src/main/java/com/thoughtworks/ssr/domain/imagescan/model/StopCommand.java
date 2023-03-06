@@ -11,15 +11,8 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class ImageScanReport {
-
-    private Long id;
-
+public class StopCommand {
     private Long projectId;
 
-    private String fileName;
-
-    private String scanReportUrl;
-
-    private String createAt;
+    private Boolean option;
 }

@@ -1,15 +1,19 @@
 package com.thoughtworks.ssr.infrastructure.persistence.imagescan.entity;
 
+import com.thoughtworks.ssr.domain.core.enums.ScanType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
+import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.EqualsAndHashCode;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 import lombok.experimental.FieldNameConstants;
 
 @Table(name = "image_scan_job")
@@ -17,6 +21,8 @@ import lombok.experimental.FieldNameConstants;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
+@Getter
+@Setter
 @EqualsAndHashCode
 @FieldNameConstants
 public class ImageScanCommandEntity {
@@ -27,45 +33,15 @@ public class ImageScanCommandEntity {
     private Long projectId;
 
     @Column(name = "pj_name")
+    @NotNull(message = "project name cannot be null")
     private String projectName;
 
     @Column(name = "type_option")
-    private int typeOption;
+    @NotNull(message = "type option must be provided")
+    private ScanType typeOption;
 
     @Column(name = "create_time")
     private String createTime;
-
-    public Long getProjectId() {
-        return projectId;
-    }
-
-    public void setProjectId(Long projectId) {
-        this.projectId = projectId;
-    }
-
-    public String getProjectName() {
-        return projectName;
-    }
-
-    public void setProjectName(String projectName) {
-        this.projectName = projectName;
-    }
-
-    public int getTypeOption() {
-        return typeOption;
-    }
-
-    public void setTypeOption(int typeOption) {
-        this.typeOption = typeOption;
-    }
-
-    public String getCreateTime() {
-        return createTime;
-    }
-
-    public void setCreateTime(String createTime) {
-        this.createTime = createTime;
-    }
 }
 
 

@@ -1,9 +1,11 @@
 package com.thoughtworks.ssr.domain.imagescan.service;
 
 import com.thoughtworks.ssr.domain.imagescan.model.ImageScanCommand;
+import com.thoughtworks.ssr.domain.imagescan.model.ImageScanReport;
 import com.thoughtworks.ssr.domain.imagescan.model.ImageScanResult;
 import com.thoughtworks.ssr.domain.imagescan.model.ImageScanStage;
 import com.thoughtworks.ssr.domain.imagescan.repository.ImageScanJobRepository;
+import com.thoughtworks.ssr.domain.imagescan.repository.ImageScanReportRepository;
 import com.thoughtworks.ssr.domain.imagescan.repository.ImageScanResultRepository;
 import com.thoughtworks.ssr.domain.imagescan.repository.ImageScanStageRepository;
 import lombok.RequiredArgsConstructor;
@@ -21,7 +23,7 @@ public class ImageScanService {
 
     private final ImageScanStageRepository imageScanStageRepository;
 
-//    private final ImageScanReportRepository imageScanReportRepository;
+    private final ImageScanReportRepository imageScanReportRepository;
 
     public ImageScanCommand saveJob(ImageScanCommand imageScanCommand){
         return imageScanJobRepository.save(imageScanCommand);
@@ -35,7 +37,7 @@ public class ImageScanService {
         return imageScanStageRepository.save(imageScanStage);
     }
 
-    public List<ImageScanStage> findAllStagesByProjectId(Long pjId) {
+    public List<ImageScanStage> findAllStagesByProjectId(Long pjId)  {
         return imageScanStageRepository.findAllByProjectId(pjId);
     }
 
@@ -47,7 +49,11 @@ public class ImageScanService {
         return imageScanJobRepository.findAll();
     }
 
-//    public ImageScanReport saveReport(ImageScanReport imageScanReport) {
-//        return imageScanReportRepository.save(imageScanReport);
-//    }
+    public ImageScanReport saveReport(ImageScanReport imageScanReport) {
+        return imageScanReportRepository.save(imageScanReport);
+    }
+
+    public ImageScanReport findByProjectId(Long projectId) {
+        return imageScanReportRepository.findByProjectId(projectId);
+    }
 }

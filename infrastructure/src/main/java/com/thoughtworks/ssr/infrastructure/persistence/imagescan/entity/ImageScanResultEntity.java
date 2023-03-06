@@ -1,11 +1,13 @@
 package com.thoughtworks.ssr.infrastructure.persistence.imagescan.entity;
 
+import com.thoughtworks.ssr.domain.core.enums.ScanType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
+import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -28,10 +30,11 @@ public class ImageScanResultEntity {
     private Long id;
 
     @Column(name = "pj_id")
+    @NotNull
     private Long projectId;
 
     @Column(name = "type_option")
-    private int typeOption;
+    private ScanType typeOption;
 
     private String sdlc;
 
