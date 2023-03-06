@@ -115,8 +115,7 @@ public class ImageScanJobService {
     }
 
     public String upLoadReport(MultipartFile file, Long projectId) {
-        String uploadPath = System.getProperty("user.home")
-                + File.separator + "Desktop"
+        String uploadPath = System.getProperty("user.dir")
                 + File.separator + "tmp";
         File uploadDir = new File(uploadPath);
         if(!uploadDir.exists()) {
