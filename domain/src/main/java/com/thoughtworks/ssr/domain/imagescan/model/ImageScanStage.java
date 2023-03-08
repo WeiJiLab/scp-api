@@ -1,5 +1,7 @@
 package com.thoughtworks.ssr.domain.imagescan.model;
 
+import com.thoughtworks.ssr.domain.core.enums.ScanStatusType;
+import com.thoughtworks.ssr.domain.core.enums.ScanStepType;
 import com.thoughtworks.ssr.domain.core.enums.ScanType;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -19,9 +21,9 @@ public class ImageScanStage {
 
     private ScanType typeOption;
 
-    private int status;
+    private ScanStatusType status;
 
-    private int step;
+    private ScanStepType step;
 
     private String stage;
 

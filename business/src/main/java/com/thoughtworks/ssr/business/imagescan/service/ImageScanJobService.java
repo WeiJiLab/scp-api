@@ -40,14 +40,14 @@ public class ImageScanJobService {
         imageScanCommand.setTypeOption(imageScanRequest.getTypeOption());
         imageScanCommand.setCreateTime(getCreateTime());
 
-//        ImageScanCommand savedCommand = imageScanService.saveJob(imageScanCommand);
-//        HttpStatusCode responseStatus = imageScanRequestService(savedCommand);
-//        if (responseStatus == OK) {
-//            return savedCommand.getProjectId();
-//        } else {
-//            return imageScanCommand.getProjectId();
-//        }
-        return imageScanService.saveJob(imageScanCommand).getProjectId();
+        ImageScanCommand savedCommand = imageScanService.saveJob(imageScanCommand);
+        HttpStatusCode responseStatus = imageScanRequestService(savedCommand);
+        if (responseStatus == OK) {
+            return savedCommand.getProjectId();
+        } else {
+            return imageScanCommand.getProjectId();
+        }
+//        return imageScanService.saveJob(imageScanCommand).getProjectId();
     }
 
 

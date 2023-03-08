@@ -33,7 +33,7 @@ public class ImageScanCommandEntity {
     private Long projectId;
 
     @Column(name = "pj_name")
-    @NotNull(message = "project name cannot be null")
+//    @NotNull(message = "project name cannot be null")
     private String projectName;
 
     @Column(name = "type_option")

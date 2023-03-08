@@ -1,5 +1,7 @@
 package com.thoughtworks.ssr.infrastructure.persistence.imagescan.entity;
 
+import com.thoughtworks.ssr.domain.core.enums.ScanStatusType;
+import com.thoughtworks.ssr.domain.core.enums.ScanStepType;
 import com.thoughtworks.ssr.domain.core.enums.ScanType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -33,9 +35,9 @@ public class ImageScanStageEntity {
     @Column(name = "type_option")
     private ScanType typeOption;
 
-    private int status;
+    private ScanStatusType status;
 
-    private int step;
+    private ScanStepType step;
 
     private String stage;
 

@@ -16,7 +16,7 @@ import lombok.Setter;
 public class ImageScanCommand {
     private Long projectId;
 
-    @NotNull(message = "project name cannot be null")
+//    @NotNull(message = "project name cannot be null")
     private String projectName;
 
     @NotNull(message = "type option must be provided")
