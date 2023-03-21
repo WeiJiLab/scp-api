@@ -1,12 +1,7 @@
 package com.thoughtworks.ssr.business.imagescan.rest;
 
 import com.thoughtworks.ssr.business.imagescan.service.ImageScanJobService;
-import com.thoughtworks.ssr.domain.imagescan.model.ImageScanCommand;
-import com.thoughtworks.ssr.domain.imagescan.model.ImageScanReport;
-import com.thoughtworks.ssr.domain.imagescan.model.ImageScanRequest;
-import com.thoughtworks.ssr.domain.imagescan.model.ImageScanResult;
-import com.thoughtworks.ssr.domain.imagescan.model.ImageScanStage;
-import com.thoughtworks.ssr.domain.imagescan.model.StopCommand;
+import com.thoughtworks.ssr.domain.imagescan.model.*;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -19,6 +14,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.io.IOException;
 import java.util.List;
@@ -31,6 +27,11 @@ import static org.springframework.http.HttpStatus.OK;
 public class ImageScanJobController {
     private final ImageScanJobService imageScanJobService;
 
+    @PostMapping(value = "/upload/{type}")
+    public String upload(@PathVariable String type, @RequestParam("file") MultipartFile file) {
+        imageScanJobService.store(type,file);
+        return "You successfully uploaded " + file.getOriginalFilename() + "!";
+    }
     @PostMapping("/start")
     @ResponseStatus(OK)
     public Long imageScan(@Valid @RequestBody ImageScanRequest request) {

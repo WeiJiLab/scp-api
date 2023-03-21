@@ -1,5 +1,6 @@
 package com.thoughtworks.ssr.business.imagescan.service;
 
+import com.thoughtworks.ssr.common.exception.BaseException;
 import com.thoughtworks.ssr.domain.imagescan.exception.ImageScanException;
 import com.thoughtworks.ssr.domain.imagescan.model.ImageScanCommand;
 import com.thoughtworks.ssr.domain.imagescan.model.ImageScanReport;
@@ -128,5 +129,22 @@ public class ImageScanJobService {
             throw new RuntimeException(e);
         }
         return localFile.getAbsolutePath();
+    }
+
+    public void store(String type, MultipartFile file) {
+        String typeFile = switch (type) {
+            case "image" -> "Image_target";
+            case "map" -> "System_target.map";
+            case "defconfig" -> "defconfig";
+            case "new" -> "test";
+            default -> throw new BaseException(BaseException.Type.BAD_REQUEST, "wrong file type");
+        };
+        File dest = new File("/opt/input_firmware/target/"+typeFile);
+        dest.setWritable(true);
+        try {
+            file.transferTo(dest);
+        } catch (IOException e) {
+            throw new BaseException(BaseException.Type.CONFLICT,"write to file failed:"+e.getMessage());
+        }
     }
 }
