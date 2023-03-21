@@ -71,7 +71,7 @@ public class ImageScanJobController {
         return imageScanJobService.saveScanReport(projectId, file);
     }
 
-    @GetMapping(value = "/reports/{pj_id}")
+    @GetMapping(value = "/report/{pj_id}")
     public String downloadScanReport(@PathVariable("pj_id") Long projectId) throws IOException {
         return imageScanJobService.getScanReport(projectId);
     }
