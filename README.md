@@ -4,6 +4,13 @@ SCP(Security Check Platform) Backend APIs
 
 ## 本地环境搭建
 
+### 上传功能
+以下为固件上传功能所需配置的目标目录，暂时使用与input_firmware统一目录
+```shell
+sudo mkdir -p /opt/input_firmware/
+sudo ln -s {INPUT_FIRMWARE_REPO_PATH}/target /opt/input_firmware/target
+```
+
 ### 第一种方案 安装mysql、Redis服务
 
 * 1、需要安装Java17

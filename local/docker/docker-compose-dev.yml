@@ -39,6 +39,8 @@ services:
       - "REDIS_HOST=scp-redis-server"
       - "MYSQL_HOST=scp-mysql"
       - "SPRING_PROFILES_ACTIVE=dev, persistence-dev"
+    volumes:
+      - /opt/input_firmware/target:/opt/input_firmware/target
     ports:
       - "8081:8081"
       - "8080:8080"
