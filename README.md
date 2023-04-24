@@ -1,6 +1,6 @@
-# scp-api
+# tsp-api
 
-SCP(Security Check Platform) Backend APIs
+TSP(Security System Service Platform) Backend APIs
 
 ## 本地环境搭建
 
