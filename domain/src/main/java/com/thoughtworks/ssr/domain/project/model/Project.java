@@ -7,6 +7,8 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.time.OffsetDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 @Builder
 @Getter
@@ -20,4 +22,5 @@ public class Project {
     private Long ownerId;
     private OffsetDateTime createdAt;
     private OffsetDateTime updatedAt;
+    private List<K8sCluster> k8sClusters = new ArrayList<>();
 }
