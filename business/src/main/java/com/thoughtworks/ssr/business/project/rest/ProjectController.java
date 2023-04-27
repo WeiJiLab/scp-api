@@ -50,7 +50,7 @@ public class ProjectController {
     @GetMapping
     @ResponseStatus(OK)
     public Page<GetProjectCase.Response> pageProjects(
-            @PageableDefault(size = QueryConstants.DEFAULT_PAGE_SIZE) Pageable pageable,
+            @PageableDefault() Pageable pageable,
             @RequestParam(value = "name", required = false) String name,
             @RequestParam(value = "ownerId", required = false) Long ownerId
     ) {

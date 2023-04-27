@@ -1,10 +1,14 @@
 package com.thoughtworks.ssr.infrastructure.persistence.project.adapter;
 
+import com.thoughtworks.ssr.domain.project.model.K8sCluster;
 import com.thoughtworks.ssr.domain.project.model.Project;
 import com.thoughtworks.ssr.domain.project.query.ProjectQuery;
 import com.thoughtworks.ssr.domain.project.repository.ProjectRepository;
+import com.thoughtworks.ssr.infrastructure.persistence.project.converter.K8sClusterEntityConverter;
 import com.thoughtworks.ssr.infrastructure.persistence.project.converter.ProjectEntityConverter;
+import com.thoughtworks.ssr.infrastructure.persistence.project.entity.K8sClusterEntity;
 import com.thoughtworks.ssr.infrastructure.persistence.project.entity.ProjectEntity;
+import com.thoughtworks.ssr.infrastructure.persistence.project.repository.K8sClusterJpaRepository;
 import com.thoughtworks.ssr.infrastructure.persistence.project.repository.ProjectJpaRepository;
 import jakarta.persistence.criteria.Predicate;
 import lombok.RequiredArgsConstructor;
@@ -15,37 +19,49 @@ import org.springframework.stereotype.Component;
 import org.springframework.util.ObjectUtils;
 
 import java.util.LinkedList;
+import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Component
 @RequiredArgsConstructor
 public class ProjectRepositoryAdapter implements ProjectRepository {
 
     private final ProjectJpaRepository projectJpaRepository;
-    private final ProjectEntityConverter entityConverter;
+    private final K8sClusterJpaRepository k8sClusterJpaRepository;
+    private final ProjectEntityConverter projectEntityConverter;
+    private final K8sClusterEntityConverter k8sClusterEntityConverter;
 
     @Override
     public Project create(Project project) {
-        var projectEntity = projectJpaRepository.saveAndFlush(entityConverter.from(project));
-        return entityConverter.toDomain(projectEntity);
+        var projectEntity = projectJpaRepository.saveAndFlush(projectEntityConverter.from(project));
+        return projectEntityConverter.toDomain(projectEntity);
     }
 
     @Override
     public Project update(Project project) {
-        var projectEntity = projectJpaRepository.save(entityConverter.from(project));
-        return entityConverter.toDomain(projectEntity);
+        var projectEntity = projectJpaRepository.save(projectEntityConverter.from(project));
+        return projectEntityConverter.toDomain(projectEntity);
     }
 
     @Override
     public Optional<Project> findById(Long id) {
-        return projectJpaRepository.findById(id).map(entityConverter::toDomain);
+        return projectJpaRepository.findById(id)
+                .map(projectEntityConverter::toDomain)
+                .map(p -> {
+                    List<K8sCluster> allCls = k8sClusterJpaRepository.findAll(
+                            (root, query, criteriaBuilder) -> criteriaBuilder.equal(root.get(K8sClusterEntity.Fields.projectId), id))
+                            .stream().map(k8sClusterEntityConverter::toDomain).toList();
+                    p.setK8sClusters(allCls);
+                    return p;
+                });
     }
 
     @Override
     public Page<Project> pageProjects(ProjectQuery projectQuery, Pageable pageable) {
 
         var projectSpecifications = buildSpecifications(projectQuery);
-        return projectJpaRepository.findAll(projectSpecifications, pageable).map(entityConverter::toDomain);
+        return projectJpaRepository.findAll(projectSpecifications, pageable).map(projectEntityConverter::toDomain);
     }
 
     private Specification<ProjectEntity> buildSpecifications(ProjectQuery projectQuery) {
@@ -71,5 +87,6 @@ public class ProjectRepositoryAdapter implements ProjectRepository {
     @Override
     public void deleteById(Long id) {
         projectJpaRepository.deleteById(id);
+        k8sClusterJpaRepository.delete((root, query, criteriaBuilder) -> criteriaBuilder.equal(root.get(K8sClusterEntity.Fields.projectId), id));
     }
 }
