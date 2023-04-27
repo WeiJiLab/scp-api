@@ -17,10 +17,12 @@ public class K8sClusterService {
     private final K8sClusterRepository kClsRepo;
 
     public K8sCluster create(K8sCluster kCls) {
+        kCls.testConnection();
         return kClsRepo.create(kCls);
     }
 
     public K8sCluster update(K8sCluster kCls) {
+        kCls.testConnection();
         return kClsRepo.update(kCls);
     }
 

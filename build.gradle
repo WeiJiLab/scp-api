@@ -68,6 +68,10 @@ subprojects {
         // dev
         developmentOnly 'org.springframework.boot:spring-boot-devtools'
         annotationProcessor 'org.springframework.boot:spring-boot-configuration-processor'
+
+        // k8s
+        implementation 'io.kubernetes:client-java:18.0.0'
+
     }
 
     test {
